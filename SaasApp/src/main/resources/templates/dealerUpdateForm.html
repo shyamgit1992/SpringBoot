@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Update Dealer</title></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+<br><div>
+            <input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+            <input type="button" value="Add Dealer"
+				onclick="window.location.href='/home/AddDealersForm'; return false;"
+				class="btn btn-primary" />
+	        <input type="button" value="Show Dealers"
+			th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''"
+				class="btn btn-primary" />		
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-100">
+		<div class="cardadddealer">
+			<div class="card-header">
+				<h3>Update Dealer</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<form action="#" th:action="@{/deal/dealersUpdate/{id}(id=${ds.id})}" method="post" th:object="${ds}">
+					<div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-user"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="fullName" th:field="*{fullName}" placeholder="Full Name" required>
+                     </div>
+                     <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-home"></i></span>
+						  </div>
+                             <input type="text" class="form-control" name="address" th:field="*{address}" placeholder="Address" required>
+                      </div>     
+                      <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-key"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="aadhaar" th:field="*{aadhaarNo}"  placeholder="Aadhaar Number">
+                      </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-mobile"></i></span>
+						        </div>
+                              <input type="number" class="form-control" name="mobileNo" th:field="*{mobileNo}" maxlength="12" placeholder="Mobile Number" required>
+                       </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-circle"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="dealerShipDetails" th:field="*{dealerShipDetails}" placeholder="Any Dealership details">
+                       </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-barcode"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="gstnNo" th:field="*{gstnNo}" placeholder="GSTN Number">
+                       </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-bank"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="bankName" th:field="*{bankName}" placeholder="Name Of Bank">
+                       </div>
+                        <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-bank"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="bankAccNo" th:field="*{bankAccNo}" placeholder="Account Number">
+                       </div>
+                        <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-bank"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="bankAccOnName" th:field="*{bankAccOnName}" placeholder="Name on Account">
+                       </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-bank"></i></span>
+						        </div>
+                              <select class="form-control"  th:field="*{bankAccType}">
+                                <option value="None">None</option>
+                                <option value="Saving">Saving Account</option>
+                                <option value="Current">Current Account</option>
+                             </select>
+                       </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-bank"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="bankIfscCode" th:field="*{bankIfscCode}" placeholder="Bank IFSC Code">
+                       </div>
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-book"></i></span>
+						        </div>
+                               <input type="text" class="form-control" name="note" th:field="*{note}" placeholder="Any Note">
+                       </div>
+                       
+                            <hr>
+                            <div class="input-group form-group text-center">
+                                <button type="submit"  class="btn float-right login_btn">Update</button>
+                            </div>
+                           
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

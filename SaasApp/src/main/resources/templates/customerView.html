@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Customer Details of Account</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+
+  <!-- JS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
+
+  <!-- Angular Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+<body ng-app="myApp" ng-controller="PageCtrl as list">
+    <label>Id:</label><a><span id="ids" th:text="${ct.id}"></span></a></br>
+    <label>Name:</label><a><span th:text="${ct.fullName}"></span></a></br>
+    <label>Total Amount         :</label><a><span>{{getTotalAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Paid Amount    :</label><a><span>{{getTotalPaidAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Due Amount     :</label><a><span>{{getTotalDueAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Interest Amount:</label><a><span>{{getTotalInterestAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total PayOut With Interest Amount:</label><a><span>{{getTotalInterestWithAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Debited Amount:</label><a><span>{{getTotalDebitAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Interest Pay Debited Amount:</label><a><span>{{getTotalInterestDebitAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total PayOut With Interest Debited Amount:</label><a><span>{{getTotalDebitInterestWithAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Pay Amount:</label><a><span>{{getTotalPayAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Credited Amount:</label><a><span>{{getTotalCreditAmount() | currency:"&#8377;"}}</span></a></br>
+   <!--  <label>Total Final PayOut Amount:</label><a><span>{{getTotalPayOutAmount() | currency:"&#8377;"}}</span></a></br> -->
+    <label>Pay Out Status:</label><a><span>{{getPayOutStatus()}}</span></a></br>
+    -------------------------------------------------------------------------------------------------------------</br>
+    <label>Total Sell Amount:</label><a><span>{{ getTotalSellAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Sell Paid Amount:</label><a><span>{{getTotalSellPaidAmount() | currency:"&#8377;"}}</span></a></br>
+    <label>Total Sell Due Amount:</label><a><span>{{getTotalSellDueAmount()}}</span></a></br>
+   ----------------------------------------------------------------------------------------------------------------</br>
+    <label>Total Final PayOut Amount:</label><a><span>{{getTotalPayOutAmount() | currency:"&#8377;"}}</span></a></br>
+</body>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ui.bootstrap']);
+
+app.controller('PageCtrl', ['$scope', 'filterFilter', '$http', function ($scope, filterFilter, $http) {
+	var id = document.getElementById("ids").innerText;
+	$scope.CustomerId = id;
+	//var custTotal = 0;
+	$http.get("http://localhost:8083/cust/customers/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items.bill);
+		$scope.getTotalSellAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.sbill, function(value,key){
+			    total += parseFloat(value.totalAmount);
+			  })
+			  return total;
+			}
+		
+		$scope.getTotalSellPaidAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.sbill, function(value,key){
+			    total += parseFloat(value.paidAmount);
+			  })
+			  return total;
+			}
+		$scope.getTotalSellDueAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.sbill, function(value,key){
+			    total += parseFloat(value.dueAmount);
+			  })
+			  return total;
+			}
+		$scope.getTotalSellDue($scope.getTotalSellDueAmount());
+		$scope.getTotalAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.bill, function(value,key){
+			    //console.log(value.totalAmount);
+			    total += parseFloat(value.totalAmount);
+			  })
+			  //console.log("total: " + total);
+			  return total;
+			}
+		$scope.getTotalPaidAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.bill, function(value,key){
+			    //console.log(value.totalAmount);
+			    total += parseFloat(value.paidAmount);
+			  })
+			  //console.log("total: " + total);
+			  return total;
+			}
+		$scope.getTotalDueAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.bill, function(value,key){
+			    //console.log(value.totalAmount);
+			    total += parseFloat(value.dueAmount);
+			  })
+			  //console.log("total: " + total);
+			  return total;
+			}
+		$scope.getTotalInterestAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.bill, function(value,key){
+			    //console.log(value.totalInterestAmount);
+			    total += parseFloat(value.totalInterestAmount);
+			    //console.log(total);
+			  })
+			 // console.log(total);
+			  return total;
+			}
+		$scope.getTotalInterestWithAmount = function(){
+			  var total = 0;
+			  var d = 0;
+			  var i = 0;
+			  angular.forEach($scope.bill, function(value,key){
+			    //console.log(value.totalInterestAmount);
+			    d = $scope.getTotalDueAmount();
+			    i += parseFloat(value.totalInterestAmount);
+			    total=d+i;
+			    //console.log(total);
+			  })
+			 // console.log(total);
+			  return total;
+			}
+		$scope.totalint=null;
+			var cur = null;
+			var ex = null;
+			var day = null;
+			var IntRate = null;
+			//var totalint = null;
+			//$scope.itemList = [];
+			$scope.bill = [];
+			 angular.forEach($scope.items.bill, function(value,key){
+				 cur = new Date();
+				 ex = new Date(value.billingDate);
+				 day=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 $scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 IntRate = value.interestRate;
+				 dueAmo = value.dueAmount;
+				 $scope.totalint = (((((dueAmo * IntRate)/100)*day))/30);
+                 $scope.bill.push({ 
+                	 id : value.id,
+                	 status : value.status,
+                	 note : value.note,
+                	 guarantorName : value.guarantorName,
+                	 billingDate : value.billingDate,
+                	 subtotalAmount : value.subtotalAmount,
+                	 totalGst : value.totalGSTAmount,
+                	 totalDiscount : value.totalDiscountAmount,
+                	 totalAmount  : value.totalAmount,
+                	 paidAmount  : value.paidAmount,
+                	 dueAmount  : value.dueAmount,
+                	 interestRate: value.interestRate,
+                	 dueDays: $scope.days.toFixed(2),
+                	 totalInterestAmount :  $scope.totalint,
+                	 credibilityStatus : value.credibilityStatus
+                	 });
+			 });
+		
+		 
+			 $scope.getTotalIntAmount($scope.getTotalInterestWithAmount());
+		
+	});
+	//console.log(custTotal);
+	var x = null;
+	var id = document.getElementById("ids").innerText;
+	$scope.CustomerId = id;
+	 $http.get("http://localhost:8083/creditAmo/getAmo/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+		$scope.itemsCredit = data.data;
+		$scope.getTotalCreditAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.itemsCredit, function(value,key){
+			    total += parseFloat(value.creditAmount);
+			  });
+			  return total;
+			}
+		 $scope.getCreditAmount($scope.getTotalCreditAmount());
+		 
+		});
+	 $http.get("http://localhost:8083/debitAmo/getAmo/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+		 $scope.itemsDebit = data.data;
+		 $scope.getTotalDebitAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.itemsDebit, function(value,key){
+			    total += parseFloat(value.debitAmount);
+			  });
+			  return total;
+			},
+		
+		 $scope.getTotalInterestDebitAmount = function(){
+		 $scope.totalint=null;
+			var cur = null;
+			var ex = null;
+			var day = null;
+			var IntRate = null;
+			var total = 0;
+			
+			 angular.forEach($scope.itemsDebit, function(value,key){
+				 cur = new Date();
+				 ex = new Date(value.debitDate);
+				 day=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 $scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 IntRate = value.debitInt;
+				 dAmo = value.debitAmount;
+				 $scope.totalint = (((((dAmo * IntRate)/100)*day))/30);
+				 total += parseFloat($scope.totalint);
+	             
+			 });
+			 return total;
+		 },
+		 $scope.getTotalDebitInterestWithAmount = function(){
+			  var total = 0;
+			  var d = 0;
+			  var i = 0;
+			  angular.forEach($scope.itemsDebit, function(value,key){
+			    //console.log(value.totalInterestAmount);
+			    d = $scope.getTotalDebitAmount();
+			    i += parseFloat($scope.getTotalInterestDebitAmount());
+			    total=d+i;
+			  })
+			 
+			  return total;
+			}
+		 $scope.getDebitAmount($scope.getTotalDebitInterestWithAmount());
+		 });  
+	 $scope.getTotalSellDue = function(x){
+		 $scope.sd = x;
+	 }
+	 $scope.getCreditAmount = function(x){
+		 $scope.cr = x;
+		 }
+	 $scope.getDebitAmount = function(x){
+		 $scope.dr = x;
+		 }
+	 $scope.getTotalIntAmount = function(x){
+		 $scope.Int = x;
+	 }
+	 $scope.getTotalPayAmount = function(){
+		return $scope.dr+$scope.Int;
+	 }
+	 $scope.getTotalPayOutAmount = function(){
+			return  $scope.getTotalPayAmount()-$scope.cr-$scope.sd;
+	}
+	 $scope.getPayOutStatus = function(){
+		   if($scope.getTotalPayAmount()>$scope.cr){
+			 var u = "Unpaid"; 
+			 return u;
+		 }
+		 if($scope.getTotalPayAmount()==$scope.cr){
+			 var p = "Paid"; 
+			 return p;
+		 } 
+		 if($scope.getTotalPayAmount()<$scope.cr){
+			 var o = "Over Paid"; 
+			 return o;
+		 } 
+		
+	}
+	  
+	 
+	 
+}]);
+</script>
+</html>

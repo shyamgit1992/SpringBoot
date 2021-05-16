@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<style type="text/css">
+
+  @media print
+{
+    
+body{
+  background-color:#F6F4F4 !important; 
+  -webkit-print-color-adjust: exact; 
+}
+h1, p{
+  margin:0px; 
+}
+.main-section{
+  background-color: #FFF !important;
+  -webkit-print-color-adjust: exact; 
+  border: 1px solid #8D43AC;
+}
+.header{
+  background-color: #FF6347 !important; 
+  -webkit-print-color-adjust: exact; 
+  padding:30px 15px 20px 15px ;  
+  color:#fff;
+  
+}
+.content{
+  padding:20px 15px 20px 15px;
+  -webkit-print-color-adjust: exact; 
+}
+.table th{
+  background-color: #FFF8DC !important;
+  -webkit-print-color-adjust: exact; 
+  color: black;  
+  text-align: right;
+} 
+.table td:nth-child(1),
+.table th:nth-child(1){
+  text-align:left; 
+}
+.lastSection{
+  padding: 20px 15px 30px 15px;
+  -webkit-print-color-adjust: exact; 
+  
+} 
+.thColor{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact;
+border-top: none;
+border-bottom: none;
+}
+.thColorN{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact;
+border-bottom: none;
+}
+.thColorO{
+background-color: #00FFFF !important;
+-webkit-print-color-adjust: exact;
+
+}
+.st{
+  font-weight:bold !important;
+  border-radius: 16px;
+  -webkit-print-color-adjust: exact;
+}
+.note{
+text-decoration:underline;
+-webkit-print-color-adjust: exact;
+} 
+}
+body{
+  background-color:#F6F4F4 !important; 
+  -webkit-print-color-adjust: exact; 
+}
+h1, p{
+  margin:0px;  
+  -webkit-print-color-adjust: exact; 
+}
+.main-section{
+  background-color: #FFF !important;
+  -webkit-print-color-adjust: exact; 
+  border: 1px solid #8D43AC;
+}
+.header{
+  background-color: #B22222 !important; 
+  -webkit-print-color-adjust: exact; 
+  padding:30px 15px 20px 15px ;  
+  color:#fff;
+  
+}
+.content{
+  padding:20px 15px 20px 15px;
+  -webkit-print-color-adjust: exact; 
+}
+th{
+  background-color: #FFF8DC !important;
+  -webkit-print-color-adjust: exact; 
+  color: black;  
+  text-align: right;
+} 
+.table td:nth-child(1),
+.table th:nth-child(1){
+  text-align:left; 
+ 
+}
+.lastSection{
+  padding: 20px 15px 30px 15px;
+  -webkit-print-color-adjust: exact; 
+} 
+.thColor{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact; 
+border-top: none !important;
+border-bottom: none !important;
+}
+.thColorN{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact; 
+border-bottom: none !important;
+}
+.thColorO{
+background-color: #00FFFF !important;
+-webkit-print-color-adjust: exact; 
+}
+.st{
+  font-weight:bold !important;
+  -webkit-print-color-adjust: exact; 
+  border-radius: 16px;
+ 
+}
+.note{
+text-decoration:underline;
+-webkit-print-color-adjust: exact;
+} 
+	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+</head>
+<body>
+     <div class="container" ng-app="invoice">
+        <div class="row" ng-controller="InvoiceController">
+        
+           <div class="col-md-8 col-md-offset-2">
+                <div class="row main-section">
+                    <div class="col-md-12 col-sm-12 header">
+                    
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <p style="color:#fff; font-size:20px;"><i class="fa fa-cloud" aria-hidden="true"></i> SHYAM AGRO & SONS</p>
+                                <p style="color:#fff;">(Dahod Road, Front of Rahi HP Patrol Pump)</p>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                            <label>GSTN No. :</label> <label style="color:#fff; ">23AFGPG5948A2ZT</label><br/>
+                            <label>Mobile No. :</label> <label style="color:#fff; ">9425413147</label><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 content">
+                    <center><h4>Dealer Sell Invoice</h4></center><hr>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <label>Full Name : </label> <a><span th:text="${ds.fullName}"></span></a></br>
+                                <label>Address : </label> <span th:text="${ds.address}"></span> </br>
+                                <label>Customer Mobile No : </label><span th:text="${ds.mobileNo}"></span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                                 <label>Bill No. : </label> <a id = "Invoiceids"><span th:text="${firmSellBills.id}"></span></a></br>
+                                 <span Style="display:none;" th:text="${ds.id}" type="hidden" id ="ids"></span>
+                                 <label>Billing Date : </label><span><span th:text="${#dates.format(firmSellBills.billingDate, 'dd MMM yyyy HH:mm')}"></span></span></br>
+                                
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 text-right">
+                          <table class="table">
+                              <thead>
+                                <tr>
+                                   <th style="text-align: center;">No.</th>
+                                   <th style="text-align: center;">Name</th>
+                                   <th style="text-align: center;">Description</th>
+                                   <th style="text-align: center;">Qty</th>
+                                   <th style="text-align: center;">Unit</th>
+                                   <th style="text-align: center;">Unit Price</th>
+                                   <th style="text-align: center;">No. Of Items</th>
+                                   <th style="text-align: center;">Cut</th>
+                                   <th style="text-align: center;">Other Cut</th>
+                                   <th style="text-align: center;">Qty After Cut</th>
+                                   <th style="text-align: center;">Total</th>
+          
+                                </tr>
+                              </thead>
+                              <tbody>
+                             
+                                <tr ng-repeat="pro in invoice.items | orderBy:'proId'">
+                                  <td style="font-weight: bold;">{{pro.proId}}</td>
+                                  <td style="text-align: center;">{{pro.name}}</td>
+                                  <td style="text-align: center;">{{pro.description}}</td>
+                                  <td style="text-align: center;">{{pro.qty}}</td>
+                                  <td style="text-align: center;">{{pro.unit}}</td>
+                                  <td style="text-align: center;">{{pro.price | currency:"&#8377;"}}</td>
+                                  <td style="text-align: center;">{{pro.itemno}}</td>
+                                  <td style="text-align: center;">{{pro.cut}}</td>
+                                  <td style="text-align: center;">{{pro.otherCut}}</td>
+                                  <td style="text-align: center;">{{pro.qtyCut}} Kg</td>
+                                  <td style="text-align: center;">{{pro.amount | currency:"&#8377;"}}</td>
+                                </tr>
+                               
+                                 <tr>
+                                  <th class="thColorN" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">SubTotal :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{subTotalAmount | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                                 <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Total Item :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{totalItem}} Nos</lable></div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Weight :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{totalWeight}} Kg</lable></div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Cut in Kg :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{totalCut}} Kg</lable></div></th>
+                                </tr>
+                                 <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Net Weight :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{totalNetWeight}} Kg</lable></div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Cut Amo. :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{totalCutAmo | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Other Cut :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{totalOtherCut| currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Brokerage :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{brokerage | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                                
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;"><lable style="font-size:small;">Fare :</lable></th>
+                                  <th class="thColorO"><div><lable style="font-size:small;">{{fare | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                      
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th colspan="1" style="text-align: right;"><lable style="font-size:small;">Total Amo. :</lable></th>
+                                  <th><div><lable style="font-size:small;">{{TotalAmount | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="9"></th>
+                                  <th colspan="1" style="text-align: right;"><lable style="font-size:small;">Paid Amo. :</lable></th>
+                                  <th><div><lable style="font-size:small;">{{PaidAmount | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                                <tr>
+                                <th colspan="9"></th> 
+                                <th colspan="1" style="text-align: right;"><lable style="font-size:small;">Due Amo. :</lable></th>
+                                  <th><div><lable style="font-size:small;">{{DueAmount | currency:"&#8377;"}}</lable></div></th>
+                                </tr>
+                              </tbody>
+                          </table>
+                          <center><div style="color:{{st}};"><h3  class="st">{{Status}}</h3></div></center>
+  <hr/>
+                    </div>
+                    
+                   <div class="col-md-6 col-sm-6 lastSection">
+                        <p>
+                         <label class="note">Note :- {{Note}}</label> 
+                      </p><br>
+                      
+                    </div> 
+                    <div class="col-md-6 col-sm-6 text-right">
+                    <p>
+                    <label>Signature</label>
+                    </p><br>
+                    </div>
+                    
+                </div>
+                <br/>
+                <center>
+                <div class="col-md-12 col-sm-12">
+                <button  class="btn btn-info" th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''">Home</button>
+                <a class="btn btn-info" ng-href="/firmSell/viewFirmBill/{{DealerId}}/bill/{{InvoiceId}}">Check</a>
+                <button  class="btn btn-info" onclick="window.print()">Print Bill</button>
+                </div>
+                </center>
+       
+            </div>
+            
+        </div>
+        
+    </div> 
+    
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$http){
+
+	/*  $scope.invoice = {
+		    items: [{
+		      proId: '',
+		      name: '',
+		      description: '',
+		      qty: '',
+		      unit: '',
+		      price: '',
+		      dis: '',
+		      gst: '',
+		      amount: ''
+		  
+}]
+		  };  */
+    $scope.invoice = {items: []};	  
+	var id = document.getElementById("ids").innerText;
+	var Invoiceid = document.getElementById("Invoiceids").innerText;
+	$scope.DealerId = id;
+	$scope.InvoiceId = Invoiceid;
+$http.get("http://localhost:8083/firmSell/DealerViewFirmBill/"+$scope.DealerId+"/bill/"+$scope.InvoiceId+"").then(function(data, status, headers, config) {
+		 $scope.firmSellBillItem = data.data.firmSellBillItem;
+		 console.log($scope.firmSellBillItem);
+		 $scope.firmSellBill = data.data;
+		 console.log($scope.firmSellBill);
+		 $scope.retData =  $scope.firmSellBillItem;
+		
+		 angular.forEach($scope.retData, function(item){
+			
+			  /* $scope.Dis = function(){
+					if(item.dis == ""){
+						 $scope.di = "0";
+					 }
+					 else{
+						 $scope.di = item.dis;
+					 }
+					return $scope.di;
+					};
+					
+					$scope.Gst = function(){
+					 if(item.gst == ""){
+						 $scope.gs = "0%";
+					 }
+					 else{
+						 $scope.gs = item.gst;
+					 }
+					 return $scope.gs;
+					}
+			console.log(item.proId); */
+
+			  $scope.invoice.items.push({
+			      proId: item.proId,
+			      name: item.name,
+			      description: item.description,
+			      qty: item.qty,
+			      unit: item.unit,
+			      price: item.price,
+			      itemno: item.itemno,
+			      cut: item.cut,
+			      otherCut: item.otherCut,
+			      qtyCut: item.qtyCut,
+			      amount: item.amount
+			    
+			    }); 
+			
+			
+		}); 
+		 
+
+		 var retDataAct = $scope.firmSellBill;
+		 console.log(retDataAct);
+		 $scope.subTotalAmount = retDataAct.subTotalAmount;
+		 $scope.totalItem = retDataAct.totalItem;
+		 $scope.totalWeight = retDataAct.totalWeight;
+		 $scope.totalNetWeight = retDataAct.totalNetWeight;
+		 $scope.totalCut = retDataAct.totalCut;
+		 $scope.totalCutAmo = retDataAct.totalCutAmo;
+		 $scope.totalOtherCut = retDataAct.totalOtherCut;
+		 $scope.brokerage = retDataAct.brokerage;
+		 $scope.fare = retDataAct.fare;
+		 $scope.TotalAmount = retDataAct.totalAmount;
+		 $scope.PaidAmount = retDataAct.paidAmount;
+		 $scope.DueAmount = retDataAct.dueAmount;
+		 $scope.Status = retDataAct.status;
+		 $scope.Note = retDataAct.note;
+		 console.log($scope.Status);
+		 
+		 if($scope.Status == "Unpaid"){
+			 $scope.st = "red"; 
+		 }
+		if($scope.Status == "Paid"){
+			 $scope.st = "blue";
+		 }
+		
+
+	 }); 
+
+ });
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>EditDebitAmo</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
+<link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script>
+
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+</head>
+<body data-ng-app="invoice" data-ng-controller="InvoiceController">
+<input type="button" value="Back To Debit List"
+			th:onclick="'window.location.href = \'' + @{/debitAmo/getDebitAmoView/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />
+				<br><br>
+<div align="center">
+    <h1>Edit Debit Customer Amount</h1>
+    <label>Id:</label><a id="ids"><span th:text="${ct.id}"></span></a>
+    <label>Debit Id:</label><a id="debitAmoids"><span th:text="${db}"></span></a>
+    <label>Name:</label><a><span th:text="${ct.fullName}"></span></a>
+   <hr>
+    <form name="myForm">
+        
+       <!--  <label>Id:</label>
+        <input type="number" th:field="*{id}" /><br/> -->
+         
+        <label>Debit Amount:</label>
+        <input type="number"  data-ng-model="debitAmount" /><br/>
+        
+        <label>Rate of Interest (%)</label>
+        <input type="number"  data-ng-model="debitInt" /><br/>
+ 
+        <label>Status:</label>
+        <input type="text"  data-ng-model="status"/><br/>
+        
+        <label>Note:</label>
+        <input type="text"  data-ng-model="note"/><br/>
+        
+        <button type="submit" data-ng-click="Debit()">Update Debit Amount</button>    
+    </form>
+    
+</div>
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+	$scope.Debit = function(){
+		var id = document.getElementById("ids").innerText;
+		var did = document.getElementById("debitAmoids").innerText;
+		var data={
+				"debitAmount" : $scope.debitAmount,
+				"debitInt" : $scope.debitInt,
+				"status" : $scope.status,
+				"note" : $scope.note,
+				};
+		console.log("Data ::");
+		console.log(data);
+		$scope.CustomerId = id;
+		$scope.DebitAmoId = did;
+		var URL = "http://localhost:8083/debitAmo/updateDebitAmo/"+$scope.CustomerId+"/db/"+$scope.DebitAmoId+"";
+		$http.post(URL, data); 
+		$window.location.href = "/debitAmo/getDebitAmoView/"+$scope.CustomerId+"";
+	}
+	var id = document.getElementById("debitAmoids").innerText;
+	$scope.DebitAmoId = id;
+	 $http.get("http://localhost:8083/debitAmo/GetDebitAmo/db/"+$scope.DebitAmoId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+		console.log($scope.items.debitAmount);
+		$scope.debitAmount = parseFloat($scope.items.debitAmount);
+		$scope.debitInt = parseInt($scope.items.debitInt)
+		$scope.status = $scope.items.status;
+		$scope.note = $scope.items.note;
+		}); 
+});
+</script>
+</html>

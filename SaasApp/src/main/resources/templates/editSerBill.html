@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <title>Edit Ser Bill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+
+  <!-- JS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
+
+  <!-- Angular Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body ng-app="invoice">
+	<div class="container-fluid">
+		<div class="col-md-12" ng-controller="InvoiceController">
+			<h2>Edit Ser Bill</h2>
+			<hr />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+			<hr />	
+			<section class="row">  
+			<!-- <span th:text="${billNo}" id ="ids"></span> -->
+			<span Style="display:none;" th:text="${id}" type="hidden" id ="ids"></span>
+			<span Style="display:none;" th:text="${cid}" type="hidden" id ="cids"></span>
+			<form name="myForm">	
+			<table class="table">
+   <tbody>
+     <thead>
+        <tr>
+          <th style="background-color:#191e1e;color:#fff;">Full Name :</th>
+          <th style="background-color:#191e1e;color:#fff;">Address</th>
+          <th style="background-color:#191e1e;color:#fff;">Mobile No.</th>
+        </tr>
+   </thead>
+        <tr>
+        <td><input type="text" th:field="${ss.customer.fullName}" class="form-control" disabled required /></td>
+		<td><input type="text" th:field="${ss.customer.address}" class="form-control" disabled  required/></td>
+	    <td><input type="number" th:field="${ss.customer.mobileNo}" class="form-control" disabled required /></td>
+		
+        </tr>
+   </tbody>
+   </table>
+			
+   <table class="table">
+   <tbody>
+     <thead>
+        <tr>
+          <th style="background-color:#191e1e;color:#fff;">Bill No.</th>
+          <th style="background-color:#191e1e;color:#fff;">Name</th>
+          <th style="background-color:#191e1e;color:#fff;">Description</th>
+          <th style="background-color:#191e1e;color:#fff;">Qty</th>
+          <th style="background-color:#191e1e;color:#fff;">Unit</th>
+          <th style="background-color:#191e1e;color:#fff;">Unit Price</th>
+          <th style="background-color:#191e1e;color:#fff;">Total</th>
+          <th style="background-color:#191e1e;color:#fff;">Action</th>
+          
+        
+          
+          <!-- <th style="background-color:#191e1e;color:#fff;">Enable/Disable</th> -->
+        </tr>
+   </thead>
+     <tr ng-repeat="d in updatedData.selections track by $index">
+         <td>
+         
+           <input type="number" data-ng-model="updatedData.selections[$index].row[0].billId" class="form-control" disabled/>
+         </td>
+         <td> 
+          <input type="text" data-ng-model="updatedData.selections[$index].row[0].name" class="form-control" ng-disabled="updatedData.selections[$index].row[0].disabled"  placeholder="Product Name" required/>
+         </td>
+         <td> 
+           <input type="text"  data-ng-model="updatedData.selections[$index].row[0].description" class="form-control" ng-disabled="updatedData.selections[$index].row[0].disabled" placeholder="Product Description" required/>
+         </td>
+          <td> 
+           <input type="number" id="qt" data-ng-model="updatedData.selections[$index].row[0].qty" class="form-control" ng-disabled="updatedData.selections[$index].row[0].disabled" placeholder="Product Quantity" required/>
+         </td>
+         <td> 
+           <input type="text"  data-ng-model="updatedData.selections[$index].row[0].unit" class="form-control" ng-disabled="updatedData.selections[$index].row[0].disabled" placeholder="Measure Unit" required/>
+         </td>
+         <td> 
+           <input type="number"  id="pr"  data-ng-model="updatedData.selections[$index].row[0].price" ng-disabled="updatedData.selections[$index].row[0].disabled" class="form-control" placeholder="Price" required/>
+         </td>  
+          
+         <td>
+       {{(updatedData.selections[$index].row[0].qty*updatedData.selections[$index].row[0].price) | currency:"&#8377;"}}
+         </td>
+         <td>
+         <a type="button" class="btn btn-success" ng-click="EnbDis($index)"><i class="fa fa-eye"></i></a>
+        </td>
+           
+      
+         <tr ng-repeat="d in updatedData.selections track by $index">
+          <th colspan="6" style="background-color:#595959;color:#fff;"></th>
+          <th style="background-color:#595959;color:#fff;"><label>Note</label><input type="text" ng-model="updatedData.selections[$index].row[0].note"  class="form-control" placeholder="Note"/></th>
+          <th style="background-color:#595959;color:#fff;"><label>Status</label><input type="text" ng-model="updatedData.selections[$index].row[0].status"  class="form-control" placeholder="Status"/></th>
+         </tr>
+    </tr>
+        
+       
+        </tbody>
+  </table>
+  <button class="btn btn-primary" type="submit"  data-ng-click="update()">Update</button>
+			</form>
+  </section>
+	<br/>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+     var ids = document.getElementById("ids").innerText;
+	 var cids = document.getElementById("cids").innerText;
+	 $scope.idb = ids;
+	 $scope.cidb = cids;
+	  
+		$scope.updatedData ={selections:[]};
+		 $http.get("http://localhost:8083/serBill/showSerBillss/"+$scope.idb+"").then(function(data, status, headers, config) {
+			$scope.items = data.data;
+			console.log($scope.items);
+			$scope.updatedData ={
+				       selections:[{
+				                 row : [{billId:parseInt($scope.items.id),
+				                	     name:$scope.items.itemName,
+				                	     description:$scope.items.itemDescription,
+				                	     qty: parseFloat($scope.items.itemQty),
+				                	     unit: $scope.items.itemUnit,
+				                	     price: parseFloat($scope.items.itemPrice),
+				                	     note: $scope.items.note,
+				                	     status: $scope.items.status,
+				                	     disabled: true
+				                	     
+				                	  }]
+				       }]
+				   };
+			});	 
+	 $index= 0;
+	  
+	 
+	  $scope.TotalAmount = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				total += (item.row[0].qty * item.row[0].price);
+			})
+			return total;
+		},
+		
+	  $scope.reset = function(){
+	  	window.location.reload(true);
+	  },
+		  
+	   $scope.update = function(){
+		  if(!$scope.myForm.$valid){
+				console.log("Invalid")
+				$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
+				}
+		  if($scope.myForm.$valid){
+
+		  angular.forEach($scope.updatedData.selections, function(item){
+			  $scope.name = item.row[0].name;
+			  $scope.description = item.row[0].description;
+			  $scope.qty = item.row[0].qty;
+			  $scope.unit = item.row[0].unit;
+			  $scope.price = item.row[0].price;
+			  $scope.am = (item.row[0].qty * item.row[0].price);
+			  $scope.note = item.row[0].note;
+			  $scope.status = item.row[0].status;
+			 var Data={
+							"itemName" : $scope.name,
+							"itemDescription" : $scope.description,
+							"itemQty" : $scope.qty,
+							"itemUnit" : $scope.unit,
+							"itemPrice" : $scope.price,
+							"itemTotalAmount" : $scope.am, 
+				            "note"   : $scope.note,
+				            "status"   : $scope.status
+							}; 
+			  console.log("Data ::");
+			  console.log(Data);
+			  var URL2 = "http://localhost:8083/serBill/UpdateSerBill/"+$scope.idb+"";
+			  $http.post(URL2, Data);
+			  
+			  
+			 
+			  
+		  });
+		 $window.location.href = "/serBill/showSerBills/"+$scope.cidb+"";
+	  }
+	  },
+	  $scope.EnbDis = function (index) { 
+	    	 console.log(index);
+	    	 $scope.updatedData.selections[index].row[0].disabled = !$scope.updatedData.selections[index].row[0].disabled;
+	  } 
+	  
+	
+});
+</script>
+</html>

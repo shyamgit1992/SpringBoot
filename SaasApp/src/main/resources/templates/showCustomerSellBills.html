@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Customer Sell Bill Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+
+  <!-- JS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
+
+  <!-- Angular Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body ng-app="myApp">
+<div class="container-fluid">
+<div align="center">
+<h1>Customer Sell Bill List</h1>
+<hr>
+    <div class="col-md-3">
+    <table class="table table-hover table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+    <th>Customer Id</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Invoice Number</th>
+    </tr>
+    </thead>
+    <tr>
+    <td><span id="ids" th:text="${ct.id}"></span></td>
+    <td><span th:text="${ct.fullName}"></span></td>
+    <td><span th:text="${ct.address}"></span></td>
+    <td><span id="Invoiceids" th:text="${ctb.id}"></span></td>
+    </tr>
+    </table>
+    </div>
+</div>    
+   <hr>
+		<div class="col-md-12" ng-controller="PageCtrl as list">
+			
+			
+            <!-- <div class="input-group">
+				<input type="search" class="form-control"  ng-model="search.fullName" placeholder="Enter your search name" />
+			    <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span> </span>
+			</div> -->
+			</br>
+			<input type="button" value="Add sell Bills"
+				th:onclick="'window.location.href = \'' + @{/Scust/customersSellBill/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />
+			<input type="button" value="Back To sell Bills"
+			th:onclick="'window.location.href = \'' + @{/Scust/customersSBillss/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />	
+			<input type="button" value="Edit sell Bill"
+			th:onclick="'window.location.href = \'' + @{/Scust/editSBill/{CustomerId}/sbill/{invoiceNo}(CustomerId=${ct.id},invoiceNo=${ctb.id})} + '\''"
+				class="btn btn-primary" />	
+			<input type="button" value="Print sell Bill"
+			th:onclick="'window.location.href = \'' + @{/Scust/printSBill/{CustomerId}/sbill/{invoiceNo}(CustomerId=${ct.id},invoiceNo=${ctb.id})} + '\''"
+				class="btn btn-primary" />			
+				<!-- onclick="window.location.href='/cust/customersBillss/1'; return false;" -->
+				
+				<br/><br/>
+			<div><label>Total number of Customers Sell Bill: </label> <span th:text="${count_CustomersSellBill}"></span></div>	
+			<div class="card">
+				
+					<div class="card-header bg-primary text-white">Customer Sell Bills List</div>
+				
+				<div class="card-body">
+					<table class="table table-hover table-striped table-bordered">
+					<tr>
+				
+	
+					<th scope="col">Product id</th>
+					<th scope="col">No.</th>
+					<th scope="col">name</th>
+					<th scope="col">Description</th>
+					<th scope="col">Quantity</th>
+					<th scope="col">Unit</th>
+					<th scope="col">Per Unit Price</th>
+					<th scope="col">GST %</th>
+					<th scope="col">Discount</th>
+					<th scope="col">Amount</th>
+					
+					</tr>
+					<tr ng-repeat="c in items.sellBill | orderBy:'proId'">
+					<td>{{c.id}}</td>
+					<td>{{c.proId}}</td>
+					<td>{{c.name}}</td>
+					<td>{{c.description}}</td>
+					<td>{{c.qty}}</td>
+					<td>{{c.unit}}</td>
+					<td>{{c.price | currency:"&#8377;"}}</td>
+					<td>{{c.gst}} %</td>
+					<td>{{c.dis | currency:"&#8377;"}}</td>
+					<td>{{c.amount | currency:"&#8377;"}}</td>
+					</tr>
+					</table>
+                    
+           
+               
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ui.bootstrap']);
+
+app.controller('PageCtrl', ['$scope', 'filterFilter', '$http', function ($scope, filterFilter, $http) {
+	var id = document.getElementById("ids").innerText;
+	var Invoiceid = document.getElementById("Invoiceids").innerText;
+	$scope.CustomerId = id;
+	$scope.InvoiceId = Invoiceid;
+	$http.get("http://localhost:8083/Scust/CustomerViewSellBill/"+$scope.CustomerId+"/sbill/"+$scope.InvoiceId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+	});
+}]);
+</script>
+</html>

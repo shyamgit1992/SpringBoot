@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>CreditDealerAmo</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
+<link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script>
+
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+</head>
+<body data-ng-app="invoice" data-ng-controller="InvoiceController">
+<input type="button" value="Back To Dealer Bill"
+			th:onclick="'window.location.href = \'' + @{/deal/dealersBillss/{id}(id=${ds.id})} + '\''"
+				class="btn btn-primary" />
+<input type="button" value="Back To Dealers"
+			th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''"
+				class="btn btn-primary" />				
+				<br><br>
+<div align="center">
+    <h1>Credit Dealer Amount</h1>
+    <label>Id:</label><a id="ids"><span th:text="${ds.id}"></span></a>
+    <label>Dealer Name:</label><a><span th:text="${ds.fullName}"></span></a>
+   <hr>
+    <form name="myForm">
+        
+       <!--  <label>Id:</label>
+        <input type="number" th:field="*{id}" /><br/> -->
+         
+        <label>Credit Amount:</label>
+        <input type="number" data-ng-model="creditAmount" /><br/>
+ 
+        <label>Status:</label>
+        <input type="text" data-ng-model="status"/><br/>
+        
+        <label>Note:</label>
+        <input type="text" data-ng-model="note"/><br/>
+        
+        <button type="submit" data-ng-click="Credit()">Credit Amount</button>    
+    </form>
+    <hr><hr>
+     <h3>Credit Amount List</h3>
+  <table  class="table table-hover table-striped table-bordered">
+    <thead>
+        <tr>
+            <th> Id </th>
+            <th> Credit Amount </th>
+            <th> Status </th>
+            <th> Note </th>
+            <th> Credit Date/Time </th>
+            <th> Action </th>
+        </tr>
+    </thead>
+    <tbody>
+	
+        <tr ng-repeat="i in filtered = items | orderBy:columnToOrder:forward">
+            <td>{{i.id}}</td>
+            <td>{{i.creditAmount}}</td>
+            <td>{{i.status}}</td>
+            <td>{{i.note}}</td>
+            <td>{{i.creditDate | date:'d/M/yyyy hh:mm:ss'}}</td>
+            <td>
+            <div style='display: inline-block;'><a type="button" href="/creditDealerAmo/editCreditDealerAmo/{{DealerId}}/cr/{{i.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a></div>
+            <div style='display: inline-block;'><a type="button" href="/creditDealerAmo/deleteCreditDealerAmo/{{DealerId}}/cr/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+	$scope.Credit = function(){
+		var id = document.getElementById("ids").innerText;
+		var data={
+				"creditAmount" : $scope.creditAmount,
+				"status" : $scope.status,
+				"note" : $scope.note,
+				};
+		console.log("Data ::");
+		console.log(data);
+		$scope.DealerId = id;
+		var URL = "http://localhost:8083/creditDealerAmo/AddCreditDealerAmo/"+$scope.DealerId+"";
+		$http.post(URL, data); 
+		//$window.location.href = "/creditAmo/getCreditAmoView/"+$scope.CustomerId+"";
+		$window.location.reload();
+	}
+	var id = document.getElementById("ids").innerText;
+	$scope.DealerId = id;
+	 $http.get("http://localhost:8083/creditDealerAmo/getDealerAmo/"+$scope.DealerId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+		//$window.location.reload();
+		}); 
+});
+</script>
+</html>

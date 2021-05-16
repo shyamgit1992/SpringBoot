@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles">
+    <title>Log in</title>
+</head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="cardlogin">
+			<div class="card-header">
+				<h3>Sign In</h3>
+				<div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div>
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<form  name="f" th:action="@{/signin}" method="Post">
+					<!-- //Thymeleaf + Spring Security error display -->
+                        <div th:if="${param.error}" class="alert alert-danger">
+                            Invalid username and password.
+                        </div>
+                      <!--   <div class="alert alert-danger" th:if="${credential_err}">Invalid username and password.</div> -->
+
+                        <div th:if="${param.logout}" class="alert alert-success">
+                            You have been logged out.
+                        </div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" class="form-control" id="txtUsername" name="txtUsername"
+                                   placeholder="Username" required>
+						
+					</div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" class="form-control" id="txtPassword" name="txtPassword"
+                                   placeholder="Password" required>
+					</div>
+					<div class="row align-items-center remember">
+						<input type="checkbox" id="checkRememberMe" name="checkRememberMe">Remember Me
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Login" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+			<div class="card-footer">
+				<div class="d-flex justify-content-center links">
+					<a style="color:#fff;" href="/resetForm">Forgot Username and password?</a>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

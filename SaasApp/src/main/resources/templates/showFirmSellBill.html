@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="myApp">
+
+<head>
+  <meta charset="utf-8">
+  <title>Firm Sell Bill Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+
+  <!-- JS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
+
+  <!-- Angular Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body ng-app="instantsearch">
+	<div class="container-fluid">
+		<div class="col-md-12" ng-controller="PageCtrl as list">
+			<h2>Firm Sell Bill List</h2>
+			<hr />
+           <!--  <div class="input-group">
+				<input type="search" class="form-control"  ng-model="search.fullName" placeholder="Enter your search name" />
+			    <span class="input-group-addon">
+                <span class="glyphicon glyphicon-search"></span> </span>
+			</div> -->
+			</br>
+			<input type="button" value="Add Customer"
+				onclick="window.location.href='/AddCustomerForm'; return false;"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+				<br/><br/>	
+				<br/><br/>
+			<div><label>Total number of Firm Sell Bill : </label> <span th:text="${count_fsb}"></span></div>	
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">Firm Sell Bill List</div>
+				</div>
+				<div class="panel-body">
+					<table class="table table-hover table-striped table-bordered">
+						<tr>
+						    <th scope="col">Id</th>
+							<th scope="col">Invoice No.</th>
+							<th scope="col">Status</th>
+					        <th scope="col">Note</th>
+					        <th scope="col">Subtotal Amount</th>
+					        <th scope="col">Total GST</th>
+					        <th scope="col">Total Discount</th>
+					        <th scope="col">Total Amount</th>
+					        <th scope="col">Paid Amount</th>
+					        <th scope="col">Due Amount</th>
+					        <th scope="col">BillingDate</th>
+					        <th scope="col">Action</th>
+					    </tr>
+ <tr ng-repeat="f in filtered = items | orderBy:columnToOrder:reverse">
+                    <td>{{f.id}}</td>
+                    <td>{{f.invoiceNo}}</td>
+					<td>{{f.status}}</td>
+					<td>{{f.note}}</td>
+					<td>{{f.subtotalAmount | currency:"&#8377;"}}</td>
+					<td>{{f.totalGst | currency:"&#8377;"}}</td>
+					<td>{{f.totalDiscount | currency:"&#8377;"}}</td>
+					<td>{{f.totalAmount | currency:"&#8377;"}}</td>
+					<td>{{f.paidAmount | currency:"&#8377;"}}</td>
+					<td>{{f.dueAmount | currency:"&#8377;"}}</td>
+					<td>{{f.billingDate|date:'d/M/yyyy hh:mm:ss'}}</td>
+					<td>
+                     <div style='display: inline-block;'><a type="button" href="/firmSell/viewFirmBillItems/{{f.id}}" class="btn btn-primary btn-sm rounded-0" ><i class="fa fa-user"></i></a></div>
+                     <div style='display: inline-block;'><a type="button" href="/firmSell/editFirmBillItems/{{f.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a></div>
+                     <div style='display: inline-block;'><a type="button" href="/firmSell/DeleteFirmBillItems/{{f.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a></div>
+                     <div style='display: inline-block;'><a type="button" href="/firmSell/printFirmBill/{{f.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-print"></i></a></div>
+                    </td>
+                 </tr>
+					</table>
+              <!--   <pagination page="currentPage" max-size="noOfPages" total-items="totalItems" items-per-page="entryLimit"></pagination> -->
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ui.bootstrap']);
+
+/* app.filter('startFrom', function () {
+	return function (input, start) {
+		if (input) {
+			start = +start;
+			return input.slice(start);
+		}
+		return [];
+	};
+});
+ */
+app.controller('PageCtrl', ['$scope', 'filterFilter', '$http', function ($scope, filterFilter, $http) {
+	$http.get('http://localhost:8083/firm/getSellBillList').then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+	
+	
+	/* // create empty search model (object) to trigger $watch on update
+	$scope.search = {};
+
+	$scope.resetFilters = function () {
+		// needs to be a function or it won't trigger a $watch
+		$scope.search = {};
+	};
+
+	// pagination controls
+	$scope.currentPage = 1;
+	$scope.totalItems = $scope.items.length;
+	$scope.entryLimit = 9; // items per page
+	$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+
+	// $watch search to update pagination
+	$scope.$watch('search', function (newVal, oldVal) {
+		$scope.filtered = filterFilter($scope.items, newVal);
+		$scope.totalItems = $scope.filtered.length;
+		$scope.noOfPages = Math.ceil($scope.totalItems / $scope.entryLimit);
+		$scope.currentPage = 1;
+	}, true); */
+	});
+}]);
+</script>
+</html>

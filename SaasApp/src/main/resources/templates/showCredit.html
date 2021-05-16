@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Show Credits</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+
+  <!-- JS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
+
+  <!-- Angular Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body ng-app="invoice">
+	<div class="container-fluid">
+		<div class="col-md-12" ng-controller="InvoiceController">
+			<h2>Show Credits</h2>
+			<hr />
+            
+			<br/>
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+			<br/><br/>	
+			<h2>Add Credit</h2>
+			<form action="#" th:action="@{/creditDebitAmo/AddCreditAmo}" method="post" th:object="${credit}">	
+			<label>Credit Amount:</label>
+			<input type="text" th:field="*{Credit}" /><br/>
+			<label>Credit Note:</label>
+			<input type="text" th:field="*{Note}" /><br/>
+			<button class="btn btn-primary" type="submit">Credit</button>
+			</form>
+			</br>	
+				<div><label>Total number of Credits : </label> <span th:text="${count_Credit}"></span></div>	
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<div class="panel-title">Credit List</div>
+				</div>
+				<div class="panel-body">
+					<table class="table table-hover table-striped table-bordered">
+						<tr>
+							<th scope="col">Id</th>
+							<th scope="col">Credit Amount</th>
+							<th scope="col">Note</th>
+							<th scope="col">Credit Date&Time</th>
+							<th scope="col">Action</th>
+							
+						</tr>
+                <tr ng-repeat="i in itemsCredit">
+                     <td>{{i.id}}</td>
+                     <td>{{i.credit}}</td>
+                     <td>{{i.note}}</td>
+                     <td>{{i.creditDate}}</td>
+                     <td>
+                     <a type="button" href="/creditDebitAmo/editCreditAmo/{{i.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a>
+                     <a type="button" href="/creditDebitAmo/deleteCreditAmo/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a>
+                     </td>
+                     
+                     
+                 </tr>
+					</table>
+               
+				</div>
+			</div>
+			<hr>	
+				<br/><br/>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+	 $http.get("http://localhost:8083/creditDebitAmo/showCredit").then(function(data, status, headers, config) {
+		$scope.itemsCredit = data.data;
+		}); 
+	
+});
+</script>
+</html>

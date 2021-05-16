@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+  <link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.css">
+  <link rel="stylesheet" href="https://material.angularjs.org/1.2.2/docs.css">
+  <link rel="stylesheet" th:href="@{/css/md.css}">
+  
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+  <script src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+  <script src = "https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.js"></script>
+  </head>
+  <body>
+	<div ng-controller="AppCtrl" class="md-padding dialogdemoBasicUsage" id="popupContainer" ng-cloak="" ng-app="MyApp">
+	
+	   <div class="dialog-demo-content" layout="row" layout-wrap="" layout-margin="" layout-align="center">
+         <md-button class="md-primary md-raised" ng-click="showConfirm($event)">
+           Confirm Dialog
+         </md-button>
+       </div>
+       <div ng-if="status" id="status">
+         <b layout="row" layout-align="center center" class="md-padding">
+           {{status}}
+         </b>
+       </div>
+    </div>      
+  </body>
+  <script type="text/javascript">
+  angular.module('MyApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache'])
+  .controller('AppCtrl', function($scope, $mdDialog) {
+    $scope.status = '  ';
+    $scope.customFullscreen = false;
+
+    
+
+    $scope.showConfirm = function(ev) {
+      var confirm = $mdDialog.confirm()
+        .title('Would You Like To Delete This Data ?')
+        .textContent('Please Confirm Your Request!!!')
+        .ariaLabel('')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function () {
+        $scope.status = 'Deleted';
+      }, function () {
+        $scope.status = 'Canceled';
+      });
+    };
+
+
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+  });
+
+
+  </script>
+</html>

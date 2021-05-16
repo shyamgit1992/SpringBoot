@@ -1,0 +1,516 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="myApp">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Show Customers</title></head>
+<!-- <head>
+  <meta charset="utf-8">
+  <title>Customers Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.css">
+  <link rel="stylesheet" th:href="@{/css/md.css}">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-aria.min.js"></script>
+  
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-messages.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+  <script src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+  <script src = "https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.js"></script>
+  
+  
+<link rel="stylesheet" th:href="@{/assets/bootstrap-4.5.2-dist/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/assets/bootstrap-4.5.2-dist/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/bootstrap-4.5.2-dist/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/dist/viewer.js}"></script>
+<link rel="stylesheet" th:href="@{/assets/dist/viewer.css}">
+
+</head> -->
+
+<body ng-app="instantsearch">
+<header th:insert="fragments.html :: nav"></header>
+   <div class="container-fluid">
+	   
+		<div class="col-md-12" ng-controller="PageCtrl as list">
+			<center><h4 style="text-decoration: underline;">Customer Bill List</h4></center>
+			<hr/>
+			<div align="center">
+    
+   
+    <div class="col-md-3">
+    <table class="table table-hover table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Address</th>
+    </tr>
+    </thead>
+    <tr>
+    <td><span id="ids" th:text="${ct.id}"></span></td>
+    <td><span th:text="${ct.fullName}"></span></td>
+    <td><span th:text="${ct.address}"></span></td>
+    </tr>
+    </table>
+    </div>
+   
+</div>    
+   <hr>
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
+			
+			<!-- <input type="button" value="Add Customer"
+				onclick="window.location.href='/home/AddCustomerForm'; return false;"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	 -->
+				<input type="button" value="Add Bills"
+				th:onclick="'window.location.href = \'' + @{/cust/customersBuyBill/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Customers"
+			th:onclick="'window.location.href = \'' + @{/cust/customers} + '\''"
+				class="btn btn-primary" />	
+			<input type="button" value="Credit Amount"
+			th:onclick="'window.location.href = \'' + @{/creditAmo/getCreditAmoView/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />	
+			<input type="button" value="Debit Amount"
+			th:onclick="'window.location.href = \'' + @{/debitAmo/getDebitAmoView/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />		
+				<br/>
+				<hr>	
+				
+			<div><label style="font-weight:bold;">Total number of Customers Bills : </label> <span class="badge badge-success" th:text="${count_CustomersBill}"></span></div>	
+			<hr>
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					Customer Bills List
+				</div>
+				<div style="overflow-x:auto;" class="card-body">
+					<table class="table table-hover table-striped table-bordered">
+						<tr>
+							<th ng-click="sort('id')"><a href="#">Bill No.</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+					        <th scope="col">Status</th>
+					        <th scope="col">Note</th>
+					        <th scope="col">guarantorName</th>
+					        <th scope="col">Subtotal Amount</th>
+					        <th scope="col">Total GST</th>
+					        <th scope="col">Total Discount</th>
+					        <th scope="col">Total Amount</th>
+					        <th scope="col">Paid Amount</th>
+					        <th scope="col">Due Amount</th>
+					        <th scope="col">Interest Rate</th>
+					        <th scope="col">Days From Due</th>
+					        <th scope="col">Total Interest Amount</th>
+					        <th scope="col">BillingDate</th>
+					        <th>Action</th>
+						</tr>
+               <tr dir-paginate="i in bill|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                    <td>{{i.id}}</td>
+					<td>{{i.status}}</td>
+					<td>{{i.note}}</td>
+					<td>{{i.guarantorName}}</td>
+					<td>{{i.subtotalAmount | currency:"&#8377;"}}</td>
+					<td>{{i.totalGst | currency:"&#8377;"}}</td>
+					<td>{{i.totalDiscount | currency:"&#8377;"}}</td>
+					<td>{{i.totalAmount | currency:"&#8377;"}}</td>
+					<td>{{i.paidAmount | currency:"&#8377;"}}</td>
+					<td>{{i.dueAmount | currency:"&#8377;"}}</td>
+					<td>{{i.interestRate}} %</td>
+					<td>{{i.dueDays}}</td>
+					<td>{{i.totalInterestAmount | currency:"&#8377;"}}</td>
+					<td>{{i.billingDate|date:'d/M/yyyy hh:mm:ss'}}</td>
+                   
+                     <td>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" ng-click="showCustomerBillData(i.id)" class="btn btn-primary"><a><i class="fa fa-user"></i></a></button>
+                          <button type="button" ng-click="showConfirmPrint($event,i.id)" class="btn btn-warning"><a><i class="fa fa-print"></i></a></button> 
+                          <button type="button" ng-click="showConfirmEdit($event,i.id)" class="btn btn-success"><a><i class="fa fa-edit"></i></a></button>
+                          <button type="button" ng-click="showConfirmDelete($event,i.id)" class="btn btn-danger"><a><i class="fa fa-trash"></i></a></button>
+                        </div>
+                     </div>
+                     </td>
+                     
+                     
+                 </tr>
+					</table>
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+ <footer class="bg-success text-center text-white">
+ 
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">Shyam Agro & Sons</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+</body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	var id = document.getElementById("ids").innerText;
+	$scope.CustomerId = id;
+	$scope.items = []; 
+	$http.get("http://localhost:8083/cust/customers/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+		$scope.getTotalSellAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.sbill, function(value,key){
+			    total += parseFloat(value.totalAmount);
+			  })
+			  return total;
+			}
+		
+		$scope.getTotalSellPaidAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.sbill, function(value,key){
+			    total += parseFloat(value.paidAmount);
+			  })
+			  return total;
+			}
+		$scope.getTotalSellDueAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.sbill, function(value,key){
+			    total += parseFloat(value.dueAmount);
+			  })
+			  return total;
+			}
+		$scope.getTotalSellDue($scope.getTotalSellDueAmount());
+		$scope.getTotalAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.bill, function(value,key){
+			    //console.log(value.totalAmount);
+			    total += parseFloat(value.totalAmount);
+			  })
+			  //console.log("total: " + total);
+			  return total;
+			}
+		$scope.getTotalPaidAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.bill, function(value,key){
+			    //console.log(value.totalAmount);
+			    total += parseFloat(value.paidAmount);
+			  })
+			  //console.log("total: " + total);
+			  return total;
+			}
+		$scope.getTotalDueAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.items.bill, function(value,key){
+			    //console.log(value.totalAmount);
+			    total += parseFloat(value.dueAmount);
+			  })
+			  //console.log("total: " + total);
+			  return total;
+			}
+		$scope.getTotalInterestAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.bill, function(value,key){
+			    //console.log(value.totalInterestAmount);
+			    total += parseFloat(value.totalInterestAmount);
+			    //console.log(total);
+			  })
+			 // console.log(total);
+			  return total;
+			}
+		$scope.getTotalInterestWithAmount = function(){
+			  var total = 0;
+			  var d = 0;
+			  var i = 0;
+			  angular.forEach($scope.bill, function(value,key){
+			    //console.log(value.totalInterestAmount);
+			    d = $scope.getTotalDueAmount();
+			    i += parseFloat(value.totalInterestAmount);
+			    total=d+i;
+			    //console.log(total);
+			  })
+			 // console.log(total);
+			  return total;
+			}
+		$scope.totalint=null;
+			var cur = null;
+			var ex = null;
+			var day = null;
+			var IntRate = null;
+			//var totalint = null;
+			//$scope.itemList = [];
+			$scope.bill = [];
+			 angular.forEach($scope.items.bill, function(value,key){
+				 cur = new Date();
+				 ex = new Date(value.billingDate);
+				 day=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 $scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 IntRate = value.interestRate;
+				 dueAmo = value.dueAmount;
+				 $scope.totalint = (((((dueAmo * IntRate)/100)*day))/30);
+               $scope.bill.push({ 
+              	 id : value.id,
+              	 status : value.status,
+              	 note : value.note,
+              	 guarantorName : value.guarantorName,
+              	 billingDate : value.billingDate,
+              	 subtotalAmount : value.subtotalAmount,
+              	 totalGst : value.totalGSTAmount,
+              	 totalDiscount : value.totalDiscountAmount,
+              	 totalAmount  : value.totalAmount,
+              	 paidAmount  : value.paidAmount,
+              	 dueAmount  : value.dueAmount,
+              	 interestRate: value.interestRate,
+              	 dueDays: $scope.days.toFixed(2),
+              	 totalInterestAmount :  $scope.totalint,
+              	 credibilityStatus : value.credibilityStatus
+              	 });
+			 });
+		
+		 
+			 $scope.getTotalIntAmount($scope.getTotalInterestWithAmount());
+});
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	////////////////////////////////////////////////////
+	  $scope.status = '  ';
+    $scope.customFullscreen = false;
+
+    
+
+    $scope.showConfirmDelete = function(ev,id) {
+      $scope.BillId = id;
+      var confirm = $mdDialog.confirm()
+        .title('Would You Like To Delete This Bill No : '+$scope.BillId+' ?')
+        .textContent('Please Confirm Your Request!!!')
+        .ariaLabel('')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function () {
+        $scope.status = 'Deleted';
+        if($scope.status = 'Deleted'){
+        	$window.location.href = "/cust/BillDelete/"+$scope.CustomerId+"/bill/"+$scope.BillId+"";
+        }
+        
+      }, function () {
+        $scope.status = 'Canceled';
+      });
+    };
+    
+    $scope.showConfirmEdit = function(ev,id) {
+        $scope.BillId = id;
+        var confirm = $mdDialog.confirm()
+          .title('Would You Like To Edit This Bill No : '+$scope.BillId+' ?')
+          .textContent('Please Confirm Your Request!!!')
+          .ariaLabel('')
+          .targetEvent(ev)
+          .ok('Edit')
+          .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+          $scope.status = 'Edited';
+          if($scope.status = 'Edited'){
+          	$window.location.href = "/cust/editBill/"+$scope.CustomerId+"/bill/"+$scope.BillId+"";
+          }
+          
+        }, function () {
+          $scope.status = 'Canceled';
+        });
+      };
+     
+        $scope.showConfirmPrint = function(ev,id) {
+            $scope.BillId = id;
+            var confirm = $mdDialog.confirm()
+              .title('Would You Like To Print This Bill No : '+$scope.BillId+' ?')
+              .textContent('Please Confirm Your Request!!!')
+              .ariaLabel('')
+              .targetEvent(ev)
+              .ok('print')
+              .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function () {
+              $scope.status = 'Printed';
+              if($scope.status = 'Printed'){
+              	$window.location.href = "/cust/printBill/"+$scope.CustomerId+"/bill/"+$scope.BillId+"";
+              }
+              
+            }, function () {
+              $scope.status = 'Canceled';
+            });
+          }; 
+          $scope.showCustomerBillData = function(id) {
+              $scope.BillId = id;
+             
+                	$window.location.href = "/cust/viewBuyBill/"+$scope.CustomerId+"/bill/"+$scope.BillId+"";
+             
+            }; 
+        
+  
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    /////////////////////////////////////////////////////
+    $scope.showCustomerData = function(id) {
+    	$scope.CustomerId = id;
+    	$window.location.href = "/cust/view/"+$scope.CustomerId+"";
+    }
+    
+    //////////////////////////////
+    var x = null;
+	var id = document.getElementById("ids").innerText;
+	$scope.CustomerId = id;
+	 $http.get("http://localhost:8083/creditAmo/getAmo/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+		$scope.itemsCredit = data.data;
+		$scope.getTotalCreditAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.itemsCredit, function(value,key){
+			    total += parseFloat(value.creditAmount);
+			  });
+			  return total;
+			}
+		 $scope.getCreditAmount($scope.getTotalCreditAmount());
+		 
+		});
+	 $http.get("http://localhost:8083/debitAmo/getAmo/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+		 $scope.itemsDebit = data.data;
+		 $scope.getTotalDebitAmount = function(){
+			  var total = 0;
+			  angular.forEach($scope.itemsDebit, function(value,key){
+			    total += parseFloat(value.debitAmount);
+			  });
+			  return total;
+			},
+		
+		 $scope.getTotalInterestDebitAmount = function(){
+		 $scope.totalint=null;
+			var cur = null;
+			var ex = null;
+			var day = null;
+			var IntRate = null;
+			var total = 0;
+			
+			 angular.forEach($scope.itemsDebit, function(value,key){
+				 cur = new Date();
+				 ex = new Date(value.debitDate);
+				 day=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 $scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 IntRate = value.debitInt;
+				 dAmo = value.debitAmount;
+				 $scope.totalint = (((((dAmo * IntRate)/100)*day))/30);
+				 total += parseFloat($scope.totalint);
+	             
+			 });
+			 return total;
+		 },
+		 $scope.getTotalDebitInterestWithAmount = function(){
+			  var total = 0;
+			  var d = 0;
+			  var i = 0;
+			  angular.forEach($scope.itemsDebit, function(value,key){
+			    //console.log(value.totalInterestAmount);
+			    d = $scope.getTotalDebitAmount();
+			    i += parseFloat($scope.getTotalInterestDebitAmount());
+			    total=d+i;
+			  })
+			 
+			  return total;
+			}
+		 $scope.getDebitAmount($scope.getTotalDebitInterestWithAmount());
+		 });  
+	 $scope.getTotalSellDue = function(x){
+		 $scope.sd = x;
+	 }
+	 $scope.getCreditAmount = function(x){
+		 $scope.cr = x;
+		 }
+	 $scope.getDebitAmount = function(x){
+		 $scope.dr = x;
+		 }
+	 $scope.getTotalIntAmount = function(x){
+		 $scope.Int = x;
+	 }
+	 $scope.getTotalPayAmount = function(){
+		return $scope.dr+$scope.Int;
+	 }
+	 $scope.getTotalPayOutAmount = function(){
+			return  $scope.getTotalPayAmount()-$scope.cr-$scope.sd;
+	}
+	 $scope.getPayOutStatus = function(){
+		   if($scope.getTotalPayAmount()>$scope.cr){
+			 var u = "Unpaid"; 
+			 return u;
+		 }
+		 if($scope.getTotalPayAmount()==$scope.cr){
+			 var p = "Paid"; 
+			 return p;
+		 } 
+		 if($scope.getTotalPayAmount()<$scope.cr){
+			 var o = "Over Paid"; 
+			 return o;
+		 } 
+		
+	}
+   
+});
+</script>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+ 
+<head>
+  <meta charset="utf-8">
+  <title>Add Service</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+
+  <!-- JS Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
+
+  <!-- Angular Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+</head>
+
+<body ng-app="invoice">
+	<div class="container-fluid">
+		<div class="col-md-12" ng-controller="InvoiceController">
+			<h2>Add Service</h2>
+			<hr />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+			<hr />	
+			<section class="row">  
+			<span Style="display:none;" th:text="${billNo}" type="hidden" id ="ids"></span>
+			<form name="myForm">	
+			<table class="table">
+   <tbody>
+     <thead>
+        <tr>
+          <th style="background-color:#191e1e;color:#fff;">Bill No. :</th>
+          <th style="background-color:#191e1e;color:#fff;">Full Name :</th>
+          <th style="background-color:#191e1e;color:#fff;">Address</th>
+          <th style="background-color:#191e1e;color:#fff;">Mobile No.</th>
+          <th style="background-color:#191e1e;color:#fff;">Transporter Name</th>
+          <th style="background-color:#191e1e;color:#fff;">Transporter Address</th>
+          <th style="background-color:#191e1e;color:#fff;">Transporter Number</th>
+        </tr>
+   </thead>
+        <tr>
+        <td><input type="text" ng-model="idb" class="form-control" disabled required /></td>
+       	<td><input type="text" ng-model="fullName" class="form-control" placeholder="Customer Name" required /></td>
+		<td><input type="text" ng-model="address" class="form-control" placeholder="Address" required/></td>
+	    <td><input type="number" ng-model="mobileNo" class="form-control" placeholder="Mobile Number" required /></td>
+		<td><input type="text" ng-model="transporterName" class="form-control" placeholder="Transporter Name"/></td>
+		<td><input type="text" ng-model="transporterAddress" class="form-control" placeholder="Transporter Address"/></td>
+		<td><input type="number" ng-model="transporterNumber" class="form-control" placeholder="Transporter Mobile Number"/></td>
+        </tr>
+   </tbody>
+   </table>
+			
+   <table class="table">
+   <tbody>
+     <thead>
+        <tr>
+          <th style="background-color:#191e1e;color:#fff;">No.</th>
+          <th style="background-color:#191e1e;color:#fff;">Name</th>
+          <th style="background-color:#191e1e;color:#fff;">Description</th>
+          <th style="background-color:#191e1e;color:#fff;">Qty</th>
+          <th style="background-color:#191e1e;color:#fff;">Unit</th>
+          <th style="background-color:#191e1e;color:#fff;">Unit Price</th>
+          <th style="background-color:#191e1e;color:#fff;">Total</th>
+          <th style="background-color:#191e1e;color:#fff;">Action</th>
+        
+          
+          <!-- <th style="background-color:#191e1e;color:#fff;">Enable/Disable</th> -->
+        </tr>
+   </thead>
+     <tr ng-repeat="d in updatedData.selections track by $index">
+         <td>
+           <input type="text"  data-ng-model="updatedData.selections[$index].row[0].proId" class="form-control" disabled/>
+         </td>
+         <td> 
+         <!--  <input type="text"  data-ng-model="updatedData.selections[$index].row[0].name" class="form-control" placeholder="Product Name" required/> -->
+          <select required class="form-control" ng-model="updatedData.selections[$index].row[0].name" 
+                   ng-options="item.productName for item in itemsSer"
+                                            ng-change="getValues(updatedData.selections[$index].row[0].name,$index)">
+                <option value="">Select Product Name</option>
+            </select>
+         </td>
+         <td> 
+           <input type="text"  data-ng-model="updatedData.selections[$index].row[0].description" class="form-control" placeholder="Product Description" required/>
+         </td>
+          <td> 
+           <input type="number" id="qt" data-ng-model="updatedData.selections[$index].row[0].qty" class="form-control" placeholder="Product Quantity" required ng-disabled="updatedData.selections[$index].row[0].disabled"/>
+         </td>
+         <td> 
+           <input type="text"  data-ng-model="updatedData.selections[$index].row[0].unit" class="form-control" placeholder="Measure Unit" required/>
+         </td>
+         <td> 
+           <input type="number"  id="pr"  data-ng-model="updatedData.selections[$index].row[0].price" class="form-control" placeholder="Price" required/>
+         </td>  
+          
+         <td>
+       {{(updatedData.selections[$index].row[0].qty*updatedData.selections[$index].row[0].price) | currency:"&#8377;"}}
+         </td>
+           
+        <td>
+        <a type="button" class="btn btn-primary" ng-click="addRow($index)" ng-show="$last"><i class="fa fa-plus"></i></a>
+        <a type="button" class="btn btn-danger" ng-click="deleteRow($index)" ng-show="$last"><i class="fa fa-trash"></i></a>
+       <!--  <a type="button" class="btn btn-success" ng-click="EnbDis($index)" ng-show="$last"><i class="fa fa-eye"></i></a> -->
+        </td>
+        
+    </tr>
+         <tr>
+          <th colspan="4" style="background-color:#595959;color:#fff;"></th>
+          <th style="background-color:#595959;color:#fff;"><label>Note</label><input type="text" ng-model="note"  class="form-control" placeholder="Note"/></th>
+          <th style="background-color:#595959;color:#fff;"><label>Paid Amount</label><input type="number" ng-model="paids" class="form-control"  min="0" max="{{TotalAmount().toFixed(2)}}" limit-to-max step="0.01" placeholder="Paid Amount"/></th>
+          <th style="background-color:#595959;color:#fff;"><label>Due Amount</label><input type="number"  ng-model="due"   class="form-control" disabled min="0"/></th>
+          <th style="background-color:#595959;color:#fff;"><label>Status</label><input type="text" ng-Value="paidStatus()"  class="form-control" disabled/></th>
+         </tr>
+        <tr>
+         <th colspan="6" style="border-top: none;border-bottom: none;background-color:#fff;"></th>
+         <th style="font-weight:bold; background-color:#191e1e;color:#fff;">Total Amount : </th>
+         <th style="background-color:#191e1e;color:#fff;">{{TotalAmount() | currency:"&#8377;"}} INR</th>
+        </tr>
+         <tr>
+         <th colspan="6" style="border-top: none;border-bottom: none;background-color:#fff;"></th>
+         <th style="font-weight:bold; background-color:#191e1e;color:#fff;">Paid Amount : </th>
+         <th style="background-color:#191e1e;color:#fff;">{{PaidAmount() | currency:"&#8377;"}} INR</th>
+        </tr>
+        <tr>
+         <th colspan="6" style="border-top: none;border-bottom: none;background-color:#fff;"></th>
+         <th style="font-weight:bold; background-color:#191e1e;color:#fff;">Due Amount : </th>
+         <th style="background-color:#191e1e;color:#fff;">{{DueAmount() | currency:"&#8377;"}} INR</th>
+        </tr>
+        </tbody>
+  </table>
+  <button class="btn btn-primary" type="submit"  data-ng-click="sell()">Submit</button>
+			</form>
+  </section>
+	<br/>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+	var ids = document.getElementById("ids").innerText;
+	//console.log(ids);
+	 $scope.idb = ids;
+	 $http.get("http://localhost:8083/pro/productsForService").then(function(data, status, headers, config) {
+		 $scope.itemsSer = data.data;
+		 });
+	 $http.get("http://localhost:8083/service/showServiceSellById/"+$scope.idb+"").then(function(data, status, headers, config) {
+		 $scope.service= data.data
+		 $scope.fullName = $scope.service.fullName;
+		 $scope.address = $scope.service.address;
+		 $scope.mobileNo = parseInt($scope.service.mobileNo);
+		 $scope.transporterName = $scope.service.transporterName;
+		 $scope.transporterAddress = $scope.service.transporterAddress;
+		 $scope.transporterNumber = parseInt($scope.service.transporterNumber);
+		 $scope.note = $scope.service.note;
+		 $scope.pAmount  =  $scope.service.itemTotalPaidAmount;
+	     $scope.PaidsAmount = function() {return $scope.pAmount;}
+	     console.log($scope.PaidsAmount());
+		 $scope.p=parseFloat($scope.PaidsAmount());
+		 $scope.serviceBill= data.data.serviceBill;
+		 console.log($scope.service);
+		
+		}); 
+	 $index= 0;
+	  
+	  $scope.updatedData ={
+	       selections:[{
+	                 row : [{proId:"1",
+	                	     name:"",
+	                	     description:"",
+	                	     qty: "",
+	                	     unit: "",
+	                	     price: "",
+	                	     paid: "",
+	                	     due: "",
+	                	     note: ""
+	                	     
+	                	  }]
+	       }]
+	   };
+	 
+	  $scope.TotalAmount = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				total += (item.row[0].qty * item.row[0].price);
+			})
+			return total;
+		},
+		$scope.PaidAmount = function() {
+			var total =0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				$scope.paid = (($scope.TotalAmount()).toFixed(2))-(($scope.DueAmount()).toFixed(2));
+			})
+			return $scope.paid;
+		}, 
+		$scope.paids = "0";
+		$scope.DueAmount = function() {
+			 var total =0;
+			 angular.forEach($scope.updatedData.selections, function(item){
+				total += (item.row[0].qty * item.row[0].price);
+				$scope.due = (($scope.TotalAmount()).toFixed(2))-$scope.paids;
+			})
+			 return $scope.due;
+		},
+		$scope.paidStatus = function() {
+			var total =0;
+		  	var tot =0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				tot += (item.row[0].qty * item.row[0].price);
+				total  = ($scope.DueAmount()).toFixed(2);
+				if(total > 0){
+					 $scope.St = "Unpaid";
+				 }
+				 if(total == 0){
+					$scope.St = "Paid";
+				 }  
+				 if(tot == 0){
+		 			$scope.St = "Null";
+		 		 }
+			  })
+		     return $scope.St;
+		},
+	  $scope.count = 1;
+	  $scope.click = function(){
+	  	$scope.count++;
+	  },
+	  $scope.removeId = function(){
+	  	$scope.count--;
+	  },
+	  $scope.reset = function(){
+	  	window.location.reload(true);
+	  },
+		  
+	   $scope.sell = function(){
+		  if(!$scope.myForm.$valid){
+				console.log("Invalid")
+				$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
+				}
+		  if($scope.myForm.$valid){
+				//var id = document.getElementById("ids").innerText;
+		 		//var InvoiceNo = document.getElementById("InvoiceNo").innerText;
+		 		
+				var BillData={
+						 "fullName" : $scope.fullName,
+						 "address" : $scope.address,
+						 "mobileNo" : $scope.mobileNo, 
+						 "transporterName" : $scope.transporterName, 
+						 "transporterAddress" : $scope.transporterAddress, 
+						 "transporterNumber" : $scope.transporterNumber,  
+			             "itemTotalAmount" : ($scope.TotalAmount()).toFixed(2),
+			             "itemTotalPaidAmount" :  ($scope.PaidAmount()).toFixed(2),
+			             "itemTotalDueAmount" :  ($scope.DueAmount()).toFixed(2),
+			             "status" : $scope.paidStatus(), 
+			             "note"   : $scope.note
+			             };
+				console.log("BillData ::");
+				console.log(BillData);
+				var URL1 = "http://localhost:8083/service/updateAddServiceSell/"+$scope.idb+"";
+				$http.post(URL1, BillData);
+				
+		  angular.forEach($scope.updatedData.selections, function(item){
+			  $scope.proId = item.row[0].proId
+			  $scope.name = item.row[0].name.productName;
+			  $scope.description = item.row[0].description;
+			  $scope.qty = item.row[0].qty;
+			  $scope.unit = item.row[0].unit;
+			  $scope.price = item.row[0].price;
+			  $scope.am = (item.row[0].qty * item.row[0].price);
+			 var Data={
+							"proId" : $scope.proId,
+							"name" : $scope.name,
+							"description" : $scope.description,
+							"qty" : $scope.qty,
+							"unit" : $scope.unit,
+							"price" : $scope.price,
+							"amount" : $scope.am
+							}; 
+			  console.log("Data ::");
+			  console.log(Data);
+			  var URL2 = "http://localhost:8083/service/AddServiceBill/"+$scope.idb+"";
+			  $http.post(URL2, Data);
+			  
+			  
+			 
+			  
+		  });
+		 $window.location.href = "/service/showService";
+	  }
+	  }, 
+	  
+	  $scope.addRow = function(index){
+		$scope.click();
+	    $scope.index = 0;
+	    var row = [];
+	    var name = {name:""};
+	    var description = {description:""};
+	    row.push(name);
+	       if($scope.updatedData.selections.length <= index+1){
+	            $scope.updatedData.selections.splice(index+1,0,{
+	            	 row : [{proId: $scope.count,
+	            		 name:"",
+	            		 description:"",
+	            		 qty: "",
+	            		 unit: "",
+	            		 price: "",
+	            		 paid: "",
+	            		 due: "",
+	            		 note: ""
+	            		// disabled: true
+	            		 }]
+	       });
+	        }
+	    };
+	     
+	   $scope.getValues = function(val,index){
+	     $scope.updatedData.selections[index].row[0].description = val.productDescription;
+	     $scope.updatedData.selections[index].row[0].price = parseFloat(val.productPrice);
+	     $scope.updatedData.selections[index].row[0].unit = val.productUnit;
+	    
+	    };
+	  
+	  $scope.deleteRow = function(index){
+		  $scope.removeId();
+	       $scope.updatedData.selections.splice(index,1);
+	       
+	  
+	    }
+	
+});
+</script>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<style type="text/css">
+
+  @media print
+{
+    
+body{
+  background-color:#F6F4F4 !important; 
+  -webkit-print-color-adjust: exact; 
+}
+h1, p{
+  margin:0px; 
+}
+.main-section{
+  background-color: #FFF !important;
+  -webkit-print-color-adjust: exact; 
+  border: 1px solid #8D43AC;
+}
+.header{
+  background-color: #FF6347 !important; 
+  -webkit-print-color-adjust: exact; 
+  padding:30px 15px 20px 15px ;  
+  color:#fff;
+  
+}
+.content{
+  padding:20px 15px 20px 15px;
+  -webkit-print-color-adjust: exact; 
+}
+.table th{
+  background-color: #FFF8DC !important;
+  -webkit-print-color-adjust: exact; 
+  color: black;  
+  text-align: right;
+} 
+.table td:nth-child(1),
+.table th:nth-child(1){
+  text-align:left; 
+}
+.lastSection{
+  padding: 20px 15px 30px 15px;
+  -webkit-print-color-adjust: exact; 
+  
+} 
+.thColor{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact;
+border-top: none;
+border-bottom: none;
+}
+.thColorN{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact;
+border-bottom: none;
+}
+.thColorO{
+background-color: #00FFFF !important;
+-webkit-print-color-adjust: exact;
+
+}
+.st{
+  font-weight:bold !important;
+  border-radius: 16px;
+  -webkit-print-color-adjust: exact;
+}
+.note{
+text-decoration:underline;
+-webkit-print-color-adjust: exact;
+} 
+}
+body{
+  background-color:#F6F4F4 !important; 
+  -webkit-print-color-adjust: exact; 
+}
+h1, p{
+  margin:0px;  
+  -webkit-print-color-adjust: exact; 
+}
+.main-section{
+  background-color: #FFF !important;
+  -webkit-print-color-adjust: exact; 
+  border: 1px solid #8D43AC;
+}
+.header{
+  background-color: #B22222 !important; 
+  -webkit-print-color-adjust: exact; 
+  padding:30px 15px 20px 15px ;  
+  color:#fff;
+  
+}
+.content{
+  padding:20px 15px 20px 15px;
+  -webkit-print-color-adjust: exact; 
+}
+th{
+  background-color: #FFF8DC !important;
+  -webkit-print-color-adjust: exact; 
+  color: black;  
+  text-align: right;
+} 
+.table td:nth-child(1),
+.table th:nth-child(1){
+  text-align:left; 
+ 
+}
+.lastSection{
+  padding: 20px 15px 30px 15px;
+  -webkit-print-color-adjust: exact; 
+} 
+.thColor{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact; 
+border-top: none !important;
+border-bottom: none !important;
+}
+.thColorN{
+background-color: #fff !important;
+-webkit-print-color-adjust: exact; 
+border-bottom: none !important;
+}
+.thColorO{
+background-color: #00FFFF !important;
+-webkit-print-color-adjust: exact; 
+}
+.st{
+  font-weight:bold !important;
+  -webkit-print-color-adjust: exact; 
+  border-radius: 16px;
+ 
+}
+.note{
+text-decoration:underline;
+-webkit-print-color-adjust: exact;
+} 
+	</style>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
+</head>
+<body>
+     <div class="container" ng-app="invoice">
+        <div class="row" ng-controller="InvoiceController">
+        
+           <div class="col-md-8 col-md-offset-2">
+                <div class="row main-section">
+                    <div class="col-md-12 col-sm-12 header">
+                    
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <p style="color:#fff; font-size:20px;"><i class="fa fa-cloud" aria-hidden="true"></i> SHYAM AGRO & SONS</p>
+                                <p style="color:#fff;">(Dahod Road, Front of Rahi HP Patrol Pump)</p>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                            <label>GSTN No. :</label> <label style="color:#fff; ">23AFGPG5948A2ZT</label><br/>
+                            <label>Mobile No. :</label> <label style="color:#fff; ">9425413147</label><br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 content">
+                    <center><h4>Invoice</h4></center><hr>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6 col-xs-6">
+                                <label>Full Name : </label> <a><span th:text="${ct.fullName}"></span></a></br>
+                                <label>Address : </label> <span th:text="${ct.address}"></span> </br>
+                                <label>Customer Mobile No : </label><span th:text="${ct.mobileNo}"></span>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+                                 <label>Invoice No. : </label> <a id = "Invoiceids"><span th:text="${sbills.id}"></span></a></br>
+                                 <span Style="display:none;" th:text="${ct.id}" type="hidden" id ="ids"></span>
+                                 <label>Billing Date : </label><span><span th:text="${#dates.format(sbills.billingDate, 'dd MMM yyyy HH:mm')}"></span></span>
+                                 
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 text-right">
+                          <table class="table">
+                              <thead>
+                                <tr>
+                                   <th style="text-align: center;">No.</th>
+                                   <th style="text-align: center;">Name</th>
+                                   <th style="text-align: center;">Description</th>
+                                   <th style="text-align: center;">Qty</th>
+                                   <th style="text-align: center;">Unit</th>
+                                   <th style="text-align: center;">Unit Price</th>
+                                   <th style="text-align: center;">Discount</th>
+                                   <th style="text-align: center;">GST %</th>
+                                   <th style="text-align: center;">Total</th>
+          
+                                </tr>
+                              </thead>
+                              <tbody>
+                             
+                                <tr ng-repeat="pro in invoice.items | orderBy:'proId'">
+                                  <td style="font-weight: bold;">{{pro.proId}}</td>
+                                  <td style="text-align: center;">{{pro.name}}</td>
+                                  <td style="text-align: center;">{{pro.description}}</td>
+                                  <td style="text-align: center;">{{pro.qty}}</td>
+                                  <td style="text-align: center;">{{pro.unit}}</td>
+                                  <td style="text-align: center;">{{pro.price}}</td>
+                                  <td style="text-align: center;">{{pro.dis}}</td>
+                                  <td style="text-align: center;">{{pro.gst}}</td>
+                                  <td style="text-align: center;">{{pro.amount}}</td>
+                                </tr>
+                               
+                                <tr>
+                                  <th class="thColorN" colspan="7"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;">Subtotal Amount :</th>
+                                  <th class="thColorO"><div>{{SubtotalAmount | currency:"&#8377;"}}</div></th>
+                                </tr>
+                                
+                                <tr>
+                                  <th class="thColorN" colspan="7"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;">GST Amount :</th>
+                                  <th class="thColorO"><div>{{TotalGSTAmount | currency:"&#8377;"}}</div></th>
+                                </tr>
+                                
+                                <tr>
+                                  <th class="thColor" colspan="7"></th>
+                                  <th class="thColorO" colspan="1" style="text-align: right;">Discount :</th>
+                                  <th class="thColorO"><div>{{TotalDiscountAmount | currency:"&#8377;"}}</div></th>
+                                </tr>
+                      
+                                <tr>
+                                  <th class="thColor" colspan="7"></th>
+                                  <th colspan="1" style="text-align: right;">Total Amount :</th>
+                                  <th><div>{{TotalAmount | currency:"&#8377;"}}</div></th>
+                                </tr>
+                                <tr>
+                                  <th class="thColor" colspan="7"></th>
+                                  <th colspan="1" style="text-align: right;">Paid Amount :</th>
+                                  <th><div>{{PaidAmount | currency:"&#8377;"}}</div></th>
+                                </tr>
+                                <tr>
+                                <th colspan="7"></th> 
+                                <th colspan="1" style="text-align: right;">Due Amount :</th>
+                                  <th><div>{{DueAmount | currency:"&#8377;"}}</div></th>
+                                </tr>
+                              </tbody>
+                          </table>
+                          <center><div style="color:{{st}};"><h3  class="st">{{Status}}</h3></div></center>
+  <hr/>
+                    </div>
+                    
+                   <div class="col-md-6 col-sm-6 lastSection">
+                        <p>
+                         <label class="note">Note :- {{Note}}</label> 
+                      </p><br>
+                      
+                    </div> 
+                    <div class="col-md-6 col-sm-6 text-right">
+                    <p>
+                    <label>Signature</label>
+                    </p><br>
+                    </div>
+                    
+                </div>
+                <br/>
+                <center>
+                <div class="col-md-12 col-sm-12">
+                <button  class="btn btn-info" th:onclick="'window.location.href = \'' + @{/cust/customers} + '\''">Home</button>
+                <a class="btn btn-info" ng-href="/Scust/viewSellBill/{{CustomerId}}/sbill/{{InvoiceId}}">Check</a>
+                <button  class="btn btn-info" onclick="window.print()">Print Bill</button>
+                 <button type="button" class="btn btn-danger" th:onclick="'window.location.href = \'' + @{/Scust/SBillDelete/{id}/sbill/{invoiceNo}(id=${ct.id},invoiceNo=${sbills.id})} + '\''">Delete</button>
+                </div>
+                </center>
+       
+            </div>
+            
+        </div>
+        
+    </div> 
+    
+</body>
+<script type="text/javascript">
+var invoice = angular.module('invoice', []);
+invoice.controller('InvoiceController', function($scope,$http){
+
+	/*  $scope.invoice = {
+		    items: [{
+		      proId: '',
+		      name: '',
+		      description: '',
+		      qty: '',
+		      unit: '',
+		      price: '',
+		      dis: '',
+		      gst: '',
+		      amount: ''
+		  
+}]
+		  };  */
+    $scope.invoice = {items: []};	  
+	var id = document.getElementById("ids").innerText;
+	var Invoiceid = document.getElementById("Invoiceids").innerText;
+	$scope.CustomerId = id;
+	$scope.InvoiceId = Invoiceid;
+$http.get("http://localhost:8083/Scust/CustomerViewSellBill/"+$scope.CustomerId+"/sbill/"+$scope.InvoiceId+"").then(function(data, status, headers, config) {
+		 $scope.sellBill = data.data.sellBill;
+		 $scope.Sbill = data.data;
+		 $scope.retData =  $scope.sellBill;
+		
+		 angular.forEach($scope.retData, function(item){
+			
+			  $scope.Dis = function(){
+					if(item.dis == ""){
+						 $scope.di = "0";
+					 }
+					 else{
+						 $scope.di = item.dis;
+					 }
+					return $scope.di;
+					};
+					
+					$scope.Gst = function(){
+					 if(item.gst == ""){
+						 $scope.gs = "0%";
+					 }
+					 else{
+						 $scope.gs = item.gst;
+					 }
+					 return $scope.gs;
+					}
+			console.log(item.proId);
+
+			  $scope.invoice.items.push({
+			      proId: item.proId,
+			      name: item.name,
+			      description: item.description,
+			      qty: item.qty,
+			      unit: item.unit,
+			      price: item.price,
+			      dis: $scope.Dis(),
+			      gst: $scope.Gst(),
+			      amount: item.amount
+			    
+			    }); 
+			
+			
+		}); 
+		 
+
+		 var retDataAct = $scope.Sbill;
+		 console.log(retDataAct);
+		 $scope.InvoiceNo = retDataAct.invoiceNo;
+		 $scope.TotalGSTAmount = retDataAct.totalGSTAmount;
+		 $scope.TotalDiscountAmount = retDataAct.totalDiscountAmount;
+		 $scope.SubtotalAmount = retDataAct.subtotalAmount;
+		 $scope.TotalAmount = retDataAct.totalAmount;
+		 $scope.PaidAmount = retDataAct.paidAmount;
+		 $scope.DueAmount = retDataAct.dueAmount;
+		 $scope.Status = retDataAct.status;
+		 $scope.Note = retDataAct.note;
+		 
+		 console.log($scope.Status);
+		 
+		 if($scope.Status == "Unpaid"){
+			 $scope.st = "red"; 
+		 }
+		if($scope.Status == "Paid"){
+			 $scope.st = "blue";
+		 }
+		
+
+	 }); 
+
+ });
+</script>
+</html>

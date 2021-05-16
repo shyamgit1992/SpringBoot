@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html lang="en" ng-app="myApp">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Customer Buy Bill Details</title></head>
+<body ng-app="instantsearch">
+<header th:insert="fragments.html :: nav"></header>
+   <div class="container-fluid">
+	   
+		<div class="col-md-12" ng-controller="PageCtrl as list">
+			<center><h4 style="text-decoration: underline;">Customer Buy Bill List</h4></center>
+			<hr/>
+			<div align="center">
+    
+   
+    <div class="col-md-3">
+    <table class="table table-hover table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+    <th>Customer Id</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Invoice Number</th>
+    </tr>
+    </thead>
+    <tr>
+    <td><span id="ids" th:text="${ct.id}"></span></td>
+    <td><span th:text="${ct.fullName}"></span></td>
+    <td><span th:text="${ct.address}"></span></td>
+    <td><span id="Invoiceids" th:text="${ctb.id}"></span></td>
+    </tr>
+    </table>
+    </div>
+   
+</div>    
+   <hr>
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
+			
+			
+				<input type="button" value="Add Purchase Bills"
+				th:onclick="'window.location.href = \'' + @{/cust/customersBuyBill/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Purchase Bill"
+			th:onclick="'window.location.href = \'' + @{/cust/customersBillss/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />	
+			<input type="button" value="Edit Purchase Bill"
+			th:onclick="'window.location.href = \'' + @{/cust/editBill/{CustomerId}/bill/{invoiceNo}(CustomerId=${ct.id},invoiceNo=${ctb.id})} + '\''"
+				class="btn btn-primary" />	
+			<input type="button" value="Print Purchase Bill"
+			th:onclick="'window.location.href = \'' + @{/cust/printBill/{CustomerId}/bill/{invoiceNo}(CustomerId=${ct.id},invoiceNo=${ctb.id})} + '\''"
+				class="btn btn-primary" />			
+				<!-- onclick="window.location.href='/cust/customersBillss/1'; return false;" -->
+				<br/>
+				<hr>	
+				
+			<div><label style="font-weight:bold;">Total number of Customers Buy Bill : </label> <span class="badge badge-success" th:text="${count_CustomersBuyBill}"></span></div>	
+			<hr>
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					Customer Buy Bills List
+				</div>
+				<div style="overflow-x:auto;" class="card-body">
+					<table class="table table-hover table-striped table-bordered">
+						<tr>
+							<th ng-click="sort('id')"><a href="#">Product Id</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+					        
+					        <th scope="col">No.</th>
+					        <th scope="col">name</th>
+					        <th scope="col">Description</th>
+					        <th scope="col">Quantity</th>
+					        <th scope="col">Unit</th>
+					        <th scope="col">Per Unit Price</th>
+					        <th scope="col">GST %</th>
+					        <th scope="col">Discount</th>
+					        <th scope="col">Amount</th>
+						</tr>
+               <tr dir-paginate="i in items.buyBill|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                    <td>{{i.id}}</td>
+					<td>{{i.proId}}</td>
+					<td>{{i.name}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.qty}}</td>
+					<td>{{i.unit}}</td>
+					<td>{{i.price | currency:"&#8377;"}}</td>
+					<td>{{i.gst}} %</td>
+					<td>{{i.dis | currency:"&#8377;"}}</td>
+					<td>{{i.amount | currency:"&#8377;"}}</td>
+                   
+                    
+                     
+                     
+                 </tr>
+					</table>
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+ <footer class="bg-success text-center text-white">
+ 
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">Shyam Agro & Sons</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+</body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	var id = document.getElementById("ids").innerText;
+	var Invoiceid = document.getElementById("Invoiceids").innerText;
+	$scope.CustomerId = id;
+	$scope.InvoiceId = Invoiceid;
+	$http.get("http://localhost:8083/cust/CustomerViewBuyBill/"+$scope.CustomerId+"/bill/"+$scope.InvoiceId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+		
+});
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	
+   
+});
+</script>
+</html>

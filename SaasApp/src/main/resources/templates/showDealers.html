@@ -1,0 +1,281 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Show Dealers</title></head>
+<body ng-app="instantsearch">
+<header th:insert="fragments.html :: nav"></header>
+   <div class="container-fluid">
+	   
+		<div class="col-md-12" ng-controller="PageCtrl as list">
+			<center><h4 style="text-decoration: underline;">Dealer List</h4></center>
+			<hr/>
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
+			
+			<input type="button" value="Add Dealer"
+				onclick="window.location.href='/home/AddDealersForm'; return false;"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+				<br/>
+				<hr>	
+				
+			<div><label style="font-weight:bold;">Total number of Dealers : </label> <span class="badge badge-success" th:text="${count_Deal}"></span></div>	
+			<hr>
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					Dealer List
+				</div>
+				<div style="overflow-x:auto;" class="card-body">
+					<table class="table table-hover table-striped table-bordered">
+						<tr>
+							<th ng-click="sort('id')"><a href="#">Id</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('fullName')"><a href="#">Full Name</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='fullName'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th scope="col">Aadhaar No.</th>
+							<th scope="col">DealerShip Details</th>
+							<th scope="col">Gstn No</th>
+							<th scope="col">Bank Name</th>
+							<th scope="col">Bank Acc No.</th>
+							<th scope="col">Bank Acc On Name</th>
+							<th scope="col">Bank Acc Type</th>
+							<th scope="col">Bank Ifsc Code</th>
+							<th scope="col">Address</th>
+							<th scope="col">Mobile No.</th>
+							<th scope="col">Note</th>
+							<th ng-click="sort('createDate')"><a href="#">Create Date & Time</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='createDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th>Logger</th>
+							<th>Action</th>
+						</tr>
+               <tr dir-paginate="i in items|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                     <td>{{i.id}}</td>
+                     <!-- <td><span th:text="${no}"></span></td> -->
+                     <!-- <td>{{i.uniqueId}}</td> -->
+                     <td><a style="font-weight:bold;" href="{{i.id}}">{{i.fullName}}</a></td>
+                     <td>{{i.aadhaarNo}}</td>
+                     <td>{{i.dealerShipDetails}}</td>
+					 <td>{{i.gstnNo}}</td>
+					 <td>{{i.bankName}}</td>
+					 <td>{{i.bankAccNo}}</td>
+					 <td>{{i.bankAccOnName}}</td>
+					 <td>{{i.bankAccType}}</td>
+					 <td>{{i.bankIfscCode}}</td>
+                     <td>{{i.address}}</td>
+                     <td>{{i.mobileNo}}</td>
+                     <td>{{i.note}}</td>
+                     <td>{{i.createDate | date:'d/M/yyyy hh:mm:ss'}}</td>
+                    <td>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firm/firmPurchaseBill/{{i.id}}">Purchase</a></button>
+                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firm/dealerPurchaseBillss/{{i.id}}">View Purchase</a></button>
+                        </div>
+                     </div>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firmSell/firmSellBill/{{i.id}}">Sell</a></button>
+                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firmSell/dealerSellBillss/{{i.id}}">View Sell</a></button>
+                        </div>
+                     </div>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firm/dealerPurchaseBillss/{{i.id}}">none</a></button>
+                        </div>
+                     </div>
+                     </td>
+                     <td>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" ng-click="showConfirmEdit($event,i.id)" class="btn btn-success"><a><i class="fa fa-edit"></i></a></button>
+                          <button type="button" ng-click="showConfirmDelete($event,i.id)" class="btn btn-danger"><a><i class="fa fa-trash"></i></a></button>
+                        </div>
+                     </div>
+                     </td>
+                     
+                     
+                 </tr>
+					</table>
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+ <footer class="bg-success text-center text-white">
+ 
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">Shyam Agro & Sons</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+</body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	$scope.items = []; 
+	$http.get('http://localhost:8083/deal/dealer').then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+});
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	////////////////////////////////////////////////////
+	  $scope.status = '  ';
+    $scope.customFullscreen = false;
+
+    
+
+    $scope.showConfirmDelete = function(ev,id) {
+      $scope.DealerId = id;
+      var confirm = $mdDialog.confirm()
+        .title('Would You Like To Delete This Data ?')
+        .textContent('Please Confirm Your Request!!!')
+        .ariaLabel('')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function () {
+        $scope.status = 'Deleted';
+        if($scope.status = 'Deleted'){
+        	$window.location.href = "/deal/dealersDel/"+$scope.DealerId+"";
+        }
+        
+      }, function () {
+        $scope.status = 'Canceled';
+      });
+    };
+    
+    $scope.showConfirmEdit = function(ev,id) {
+        $scope.DealerId = id;
+        var confirm = $mdDialog.confirm()
+          .title('Would You Like To Edit This Data ?')
+          .textContent('Please Confirm Your Request!!!')
+          .ariaLabel('')
+          .targetEvent(ev)
+          .ok('Edit')
+          .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+          $scope.status = 'Edited';
+          if($scope.status = 'Edited'){
+          	$window.location.href = "/deal/edit/"+$scope.DealerId+"";
+          }
+          
+        }, function () {
+          $scope.status = 'Canceled';
+        });
+      };
+      
+      /* $scope.showConfirmEditImage = function(ev,id) {
+          $scope.CustomerId = id;
+          var confirm = $mdDialog.confirm()
+            .title('Would You Like To Edit Image ?')
+            .textContent('Please Confirm Your Request!!!')
+            .ariaLabel('')
+            .targetEvent(ev)
+            .ok('Edit Image')
+            .cancel('Cancel');
+
+          $mdDialog.show(confirm).then(function () {
+            $scope.status = 'EditedImg';
+            if($scope.status = 'EditedImg'){
+            	$window.location.href = "/cust/customersUpdateImg/"+$scope.CustomerId+"";
+            }
+            
+          }, function () {
+            $scope.status = 'Canceled';
+          });
+        };
+ */
+
+
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    /////////////////////////////////////////////////////
+    $scope.showDealerData = function(id) {
+    	$scope.DealerId = id;
+    	$window.location.href = "/deal/view/"+$scope.DealerId+"";
+    }
+    
+    /* $scope.getTooltip = function (photo) {
+        var path1 = "/imagedata/" + photo;
+        var image = new Image();
+        image.src = path1;
+    	var viewer = new Viewer(image, {
+    		hidden : function() {
+    			viewer.destroy();
+    		},
+    		toolbar : {
+    			zoomIn : true,
+    			zoomOut : true,
+    			oneToOne : false,
+    			reset : true,
+    			prev : false,
+    			play : false,
+    			next : false,
+    			rotateLeft : true,
+    			rotateRight : true,
+    			flipHorizontal : false,
+    			flipVertical : false,
+    		},
+    	});
+    	viewer.show();
+      }; */
+   
+});
+</script>
+</html>
