@@ -8,8 +8,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alpha.demo.Repository.ServiceSellRepository;
 import com.alpha.demo.exception.NotFoundException;
 import com.alpha.demo.model.ServiceSell;
-import com.alpha.demo.model.Bill;
-import com.alpha.demo.model.BuyBill;
-import com.alpha.demo.model.Customer;
-import com.alpha.demo.model.FirmPurchaseBillItem;
 import com.alpha.demo.model.ServiceBill;
 import com.alpha.demo.Repository.ServiceBillRepository;
 
@@ -58,9 +52,9 @@ public class ServiceBillController {
 	public List<ServiceBill> showServiceBill() {
 		return ServiceBillRepository.findAll();
 	}
-	@GetMapping("/showService")
-	public ModelAndView showService(Model model,@ModelAttribute @Valid ServiceBill serviceBill,@ModelAttribute @Valid ServiceSell serviceSell) {
-		ModelAndView mv = new ModelAndView("showServiceSell.html");
+	@GetMapping("/addService")
+	public ModelAndView addService(Model model,@ModelAttribute @Valid ServiceBill serviceBill,@ModelAttribute @Valid ServiceSell serviceSell) {
+		ModelAndView mv = new ModelAndView("AddService.html");
 		if(ServiceSellRepository.getNextSeriesId()==null) {
 			ServiceSellRepository.getNext();
 			Long InvoiceNo = (long) 1;
@@ -73,6 +67,11 @@ public class ServiceBillController {
 		
 		}
 		
+		return mv;
+	}
+	@GetMapping("/showService")
+	public ModelAndView showService(Model model,@ModelAttribute @Valid ServiceBill serviceBill,@ModelAttribute @Valid ServiceSell serviceSell) {
+		ModelAndView mv = new ModelAndView("showServices.html");
 		long count_ServiceSell = ServiceSellRepository.findAll().size();
 		model.addAttribute("count_ServiceSell", count_ServiceSell);
 		return mv;

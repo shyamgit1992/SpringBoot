@@ -1,86 +1,196 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>CreditDealerAmo</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
-<link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
-<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script>
-
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-</head>
-<body data-ng-app="invoice" data-ng-controller="InvoiceController">
-<input type="button" value="Back To Dealer Bill"
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Credit Dealer Amount</title></head>
+<body ng-app="myApp" ng-controller="PageCtrl as list">
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+<br><div>
+           <input type="button" value="Back To Dealer Bill"
 			th:onclick="'window.location.href = \'' + @{/deal/dealersBillss/{id}(id=${ds.id})} + '\''"
 				class="btn btn-primary" />
-<input type="button" value="Back To Dealers"
+           <input type="button" value="Back To Dealers"
 			th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''"
-				class="btn btn-primary" />				
-				<br><br>
-<div align="center">
-    <h1>Credit Dealer Amount</h1>
-    <label>Id:</label><a id="ids"><span th:text="${ds.id}"></span></a>
-    <label>Dealer Name:</label><a><span th:text="${ds.fullName}"></span></a>
-   <hr>
-    <form name="myForm">
-        
-       <!--  <label>Id:</label>
-        <input type="number" th:field="*{id}" /><br/> -->
-         
-        <label>Credit Amount:</label>
-        <input type="number" data-ng-model="creditAmount" /><br/>
- 
-        <label>Status:</label>
-        <input type="text" data-ng-model="status"/><br/>
-        
-        <label>Note:</label>
-        <input type="text" data-ng-model="note"/><br/>
-        
-        <button type="submit" data-ng-click="Credit()">Credit Amount</button>    
-    </form>
-    <hr><hr>
-     <h3>Credit Amount List</h3>
-  <table  class="table table-hover table-striped table-bordered">
-    <thead>
-        <tr>
-            <th> Id </th>
-            <th> Credit Amount </th>
-            <th> Status </th>
-            <th> Note </th>
-            <th> Credit Date/Time </th>
-            <th> Action </th>
-        </tr>
-    </thead>
-    <tbody>
-	
-        <tr ng-repeat="i in filtered = items | orderBy:columnToOrder:forward">
-            <td>{{i.id}}</td>
-            <td>{{i.creditAmount}}</td>
-            <td>{{i.status}}</td>
-            <td>{{i.note}}</td>
-            <td>{{i.creditDate | date:'d/M/yyyy hh:mm:ss'}}</td>
-            <td>
-            <div style='display: inline-block;'><a type="button" href="/creditDealerAmo/editCreditDealerAmo/{{DealerId}}/cr/{{i.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a></div>
-            <div style='display: inline-block;'><a type="button" href="/creditDealerAmo/deleteCreditDealerAmo/{{DealerId}}/cr/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a></div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+				class="btn btn-primary" />		
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-50">
+		<div class="cardcustcredit">
+			<div class="card-header">
+				<h3>Credit Dealer Amount</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<!-- <form method="POST" th:action="@{~/creditAmo/AddCreditAmo/{id}(id=${ct.id})}" th:object="${creditAmo}"> -->
+				 <form name="myForm">
+				 <span hidden id="ids" th:text="${ds.id}"></span>
+				 <span hidden id="fullName" th:text="${ds.fullName}"></span>
+					<div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-user"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="fullName" th:field="${ds.fullName}" disabled>
+                     </div>
+                            
+                     <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-money"></i></span>
+						  </div>
+                             <input type="number" class="form-control" name="creditAmount" data-ng-model="creditAmount" placeholder="Credit Amount" required>
+                      </div>     
+                      <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-file-alt"></i></span>
+						        </div>
+                              <!-- <input type="text" class="form-control" name="status" th:field="*{status}"  placeholder="Status" required> -->
+                              <select name="status" class="form-control" type="text" data-ng-model="status" required>
+                                <option value="" disabled selected>Please Select...</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Unpaid">Unpaid</option>
+                             </select>
+                      </div>
+                       
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-book"></i></span>
+						        </div>
+                               <input type="text" class="form-control" name="note" data-ng-model="note" placeholder="Any Note">
+                       </div>
+                      
+                     
+                            <hr>
+                            <div class="input-group form-group text-center">
+                                <button type="submit" data-ng-click="Credit()"  class="btn float-right login_btn_credit">Credit Amount</button>
+                            </div>
+                           
+				</form>
+				
+			</div>
+			
+		</div>
+	</div>
 </div>
+
+<div style="margin-top:-150px;"  class="container-fluid">
+	   <hr>
+		<div class="col-md-12">
+			<center><h4 style="text-decoration: underline;">Credit Amount List</h4></center>
+			<hr/>
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
+			
+			<input type="button" value="Add Customer"
+				onclick="window.location.href='/home/AddCustomerForm'; return false;"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+				<br/>
+				<hr>	
+				
+			<div><label style="font-weight:bold;">Total number of Credits : </label> <span class="badge badge-success" th:text="${count_CreditDealerAmo}"></span></div>	
+			<hr>
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					Credit Amount List
+				</div>
+				<div style="overflow-x:auto;" class="card-body">
+					<table class="table table-hover table-striped table-bordered">
+						<tr>
+							<th ng-click="sort('id')"><a href="#">Id</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th> Credit Amount </th>
+							<th> Status </th>
+                            <th> Note </th>
+							<th ng-click="sort('createDate')"><a href="#">Create Date & Time</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='createDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th>Action</th>
+						</tr>
+               <tr dir-paginate="i in items|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                          <td>{{i.id}}</td>
+                          <td>{{i.creditAmount}}</td>
+                          <td>{{i.status}}</td>
+                          <td>{{i.note}}</td>
+                          <td>{{i.creditDate | date:'d/M/yyyy hh:mm:ss'}}</td>
+                     <td>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" ng-click="showConfirmEdit($event,i.id)" class="btn btn-success"><a><i class="fa fa-edit"></i></a></button>
+                          <button type="button" ng-click="showConfirmDelete($event,i.id)" class="btn btn-danger"><a><i class="fa fa-trash"></i></a></button>
+                        </div>
+                     </div>
+                     </td>
+                     
+                     
+                 </tr>
+					</table>
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
+				</div>
+			</div>
+		</div>
+
+	</div>
 </body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
 <script type="text/javascript">
-var invoice = angular.module('invoice', []);
-invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	$scope.items = []; 
+	var id = document.getElementById("ids").innerText;
+	$scope.DealerId = id;
+	$http.get("http://localhost:8083/creditDealerAmo/getDealerAmo/"+$scope.DealerId+"").then(function(data, status, headers, config) {
+		$scope.items = data.data;
+		console.log($scope.items);
+});
+	//$scope.fullName = document.getElementById("fullName").innerText;
+	//console.log($scope.fullName);
 	$scope.Credit = function(){
+		 if(!$scope.myForm.$valid){
+				console.log("Invalid")
+				$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
+				}
+		  if($scope.myForm.$valid){
 		var id = document.getElementById("ids").innerText;
-		var data={
+		if($scope.note == null){
+ 			$scope.note = "None";
+ 		}
+	    var data={
 				"creditAmount" : $scope.creditAmount,
 				"status" : $scope.status,
 				"note" : $scope.note,
@@ -90,16 +200,80 @@ invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
 		$scope.DealerId = id;
 		var URL = "http://localhost:8083/creditDealerAmo/AddCreditDealerAmo/"+$scope.DealerId+"";
 		$http.post(URL, data); 
-		//$window.location.href = "/creditAmo/getCreditAmoView/"+$scope.CustomerId+"";
+		$window.location.href = "/creditDealerAmo/getCreditDealerAmoView/"+$scope.DealerId+"";
 		$window.location.reload();
 	}
-	var id = document.getElementById("ids").innerText;
-	$scope.DealerId = id;
-	 $http.get("http://localhost:8083/creditDealerAmo/getDealerAmo/"+$scope.DealerId+"").then(function(data, status, headers, config) {
-		$scope.items = data.data;
-		console.log($scope.items);
-		//$window.location.reload();
-		}); 
+		  }
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	////////////////////////////////////////////////////
+	  $scope.status = '  ';
+    $scope.customFullscreen = false;
+
+    
+
+    $scope.showConfirmDelete = function(ev,id) {
+      $scope.Id = id;
+      var confirm = $mdDialog.confirm()
+        .title('Would You Like To Delete This Id No. : '+$scope.Id+' ?')
+        .textContent('Please Confirm Your Request!!!')
+        .ariaLabel('')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function () {
+        $scope.status = 'Deleted';
+        if($scope.status = 'Deleted'){
+        	$window.location.href = "/creditDealerAmo/deleteCreditDealerAmo/"+$scope.DealerId+"/cr/"+$scope.Id+"";
+        }
+        
+      }, function () {
+        $scope.status = 'Canceled';
+      });
+    };
+    
+    $scope.showConfirmEdit = function(ev,id) {
+        $scope.Id = id;
+        var confirm = $mdDialog.confirm()
+          .title('Would You Like To Edit This Id No. : '+$scope.Id+' ?')
+          .textContent('Please Confirm Your Request!!!')
+          .ariaLabel('')
+          .targetEvent(ev)
+          .ok('Edit')
+          .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+          $scope.status = 'Edited';
+          if($scope.status = 'Edited'){
+          	$window.location.href = "/creditDealerAmo/editCreditDealerAmo/"+$scope.DealerId+"/cr/"+$scope.Id+"";
+          }
+          
+        }, function () {
+          $scope.status = 'Canceled';
+        });
+      };
+      
+ 
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    /////////////////////////////////////////////////////
+
+    
+    
 });
 </script>
 </html>

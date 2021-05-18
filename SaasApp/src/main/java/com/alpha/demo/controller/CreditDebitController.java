@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.demo.model.Credit;
 import com.alpha.demo.model.Debit;
-import com.alpha.demo.model.Product;
 import com.alpha.demo.Repository.CreditRepository;
 import com.alpha.demo.Repository.DebitRepository;
 

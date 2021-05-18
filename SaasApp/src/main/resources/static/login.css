@@ -20,6 +20,27 @@ margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
 }
+.cardtax{
+height: 210px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+.cardcredit{
+height: 260px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+.cardpro{
+height: 590px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
 
 .cardadd{
 height: 700px;

@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
 
-    private String userName;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String userName;
     private String password;
     private boolean active;
     private List<GrantedAuthority> authorities;

@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alpha.demo.Repository.CustomerRepository;
 import com.alpha.demo.Repository.DebitAmoRepository;
 import com.alpha.demo.exception.NotFoundException;
-import com.alpha.demo.model.CreditAmo;
 import com.alpha.demo.model.Customer;
 import com.alpha.demo.model.DebitAmo;
 

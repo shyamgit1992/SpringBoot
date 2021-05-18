@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,14 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.alpha.demo.Repository.SBillRepository;
 import com.alpha.demo.Repository.SellBillRepository;
 import com.alpha.demo.Repository.CustomerRepository;
 import com.alpha.demo.exception.NotFoundException;
 import com.alpha.demo.model.SBill;
 import com.alpha.demo.model.SellBill;
-import com.alpha.demo.model.Bill;
-import com.alpha.demo.model.BuyBill;
 import com.alpha.demo.model.Customer;
 
 
@@ -113,8 +113,8 @@ public class SBillController {
 	public ModelAndView showCustomerBillss(@PathVariable("id") long id, @ModelAttribute @Valid @RequestBody SBill sbill,
 			@ModelAttribute @Valid @RequestBody SellBill sellBill, Model model, Pageable pageable) {
 		Customer ct = customerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id)); 
-		long count_CustomersSBill = ct.getSBill().size(); model.addAttribute("ct", ct);
-		model.addAttribute("count_CustomersSBill", count_CustomersSBill);
+		long count_CustomersSellBill = ct.getSBill().size(); model.addAttribute("ct", ct);
+		model.addAttribute("count_CustomersSellBill", count_CustomersSellBill);
 		ModelAndView mv = new ModelAndView("showCustomerSbills.html");
 		return mv;
 		 

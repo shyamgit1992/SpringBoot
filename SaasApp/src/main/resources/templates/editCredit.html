@@ -1,49 +1,59 @@
-<!DOCTYPE HTML>
-<html lang="en" ng-app="myApp">
-
-<head>
-  <meta charset="utf-8">
-  <title>Edit Credit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Kim Maida">
-
-  <!-- JS Libraries -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-  <!-- Angular Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-</head>
-
-<body ng-app="instantsearch">
-	<div class="container-fluid">
-		<div class="col-md-12" ng-controller="PageCtrl as list">
-			<h2>Edit Credit</h2>
-			<hr />
-            
-			</br>
-			<input type="button" value="Back To Home"
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Update Credit</title></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+<br><div>
+            <input type="button" value="Back To Home"
 			th:onclick="'window.location.href = \'' + @{/} + '\''"
-				class="btn btn-primary" />	
-			<form action="#" th:action="@{/creditDebitAmo/updateCreditAmo/{id}(id=${id})}" method="post" th:object="${credit}">	
-			<label>Credit Amount:</label>
-			<input type="text" th:field="*{Credit}" /><br/>
-			<label>Credit Note:</label>
-			<input type="text" th:field="*{Note}" /><br/>
-			<button class="btn btn-primary" type="submit">Update Credit</button>
-			</form>
-			<br/>		
-			
+				class="btn btn-primary" />
+	        <input type="button" value="Show Customers"
+			th:onclick="'window.location.href = \'' + @{/cust/customers} + '\''"
+				class="btn btn-primary" />		
+		
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-50">
+		<div class="cardcredit">
+			<div class="card-header">
+				<h3>Update Credit</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<form action="#" th:action="@{/creditDebitAmo/updateCreditAmo/{id}(id=${id})}" method="post" th:object="${credit}">
+				 <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-inr"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="Credit" th:field="*{Credit}" placeholder="Credit Amount"  required>
+                     </div>
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-pencil-square-o"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="Note" th:field="*{Note}" placeholder="Any Note">
+                     </div>
+                       
+                            <hr>
+                            <div class="input-group form-group text-center">
+                                <button type="submit" class="btn float-right login_btn_credit">Update Credit</button>
+                            </div>
+				</form>
+				
+				
+			</div>
 			
 		</div>
-
 	</div>
+</div>
 </body>
 
 </html>

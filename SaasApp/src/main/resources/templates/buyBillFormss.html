@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <!-- <head th:insert="fragments.html :: headerfiles"></head> -->
-<head><title>Purchase Invoice</title>
-
+<head>
+<title>Purchase Invoice</title>
 <meta name="description" content="">
   <meta name="author" content="Kim Maida">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -43,8 +43,10 @@
   <div class="mx-md-auto">
     <a class="navbar-brand" href="#">Purchase Invoice</a>
   </div>
+  
 </nav>
 <div ng-app="app" ng-controller="MainCtrl">
+<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">**Something Went Wrong**</span></div></center>
 <div style = "background-color:#e6e6ff;" class ="container-fluid">
 <!-- <div class="raw" style = "background-color:#cc3300;color:#fff;">
 <span class="text-center" >
@@ -56,8 +58,6 @@
 <section class="row" style = "background-color:#1a1aff;color:#fff;">
 
 <span Style="display:none;" th:text="${ct.id}" type="hidden" id ="ids"></span>
-
-<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">*Error*</span></div></center>
 
 <div class="col-md-6">
 <label>Invoice No. :</label> <a id = "InvoiceNo" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${invoiceNo}"></span></a>
@@ -303,6 +303,7 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 			$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
 			}
 	  if($scope.myForm.$valid){
+		
 			var id = document.getElementById("ids").innerText;
 	 		var InvoiceNo = document.getElementById("InvoiceNo").innerText;
 	 		var CredibilityStatus = "very Good";
@@ -372,7 +373,9 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		  
 	  });
 	  $window.location.href = "/cust/printBill/"+$scope.CustomerId+"/bill/"+$scope.InvoiceNo+""
+		  
   }
+	  
   },
   
   $scope.addRow = function(index){
@@ -409,16 +412,17 @@ app.controller('MainCtrl', function($scope,$http,$window) {
     };
   
   $scope.deleteRow = function(index){
+	  console.log(index);
+	  if(index==0){
+		  alert("Index 0 is Not Deleted !!!")
+	  }
+	  else{
 	  $scope.removeId();
-       $scope.updatedData.selections.splice(index,1);
-       
+      $scope.updatedData.selections.splice(index,1);
+	  }
   
     }
- /*  
-    $scope.EnbDis = function (index) { 
-    	 console.log(index);
-    	 $scope.updatedData.selections[index].row[0].disabled = !$scope.updatedData.selections[index].row[0].disabled;
-  }  */
+
 });
 </script>
 </body>

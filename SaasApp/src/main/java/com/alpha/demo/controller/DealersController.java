@@ -20,19 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import com.alpha.demo.Repository.DealerRepository;
-import com.alpha.demo.Repository.FpbiRepository;
 import com.alpha.demo.exception.NotFoundException;
-import com.alpha.demo.model.Customer;
 import com.alpha.demo.model.Dealers;
-import com.alpha.demo.model.FirmPurchaseBillItem;
 
 @RestController
 @RequestMapping("/deal")
 public class DealersController {
 	@Autowired
 	private DealerRepository dealerRepository;
-	@Autowired
-	private FpbiRepository fpbiRepository;
 	@GetMapping("/dealer")
     public List<Dealers> getAllDealers() {
     	return dealerRepository.findAll();

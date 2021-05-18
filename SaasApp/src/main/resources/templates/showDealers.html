@@ -95,19 +95,19 @@
                     <td>
                      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firm/firmPurchaseBill/{{i.id}}">Purchase</a></button>
-                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firm/dealerPurchaseBillss/{{i.id}}">View Purchase</a></button>
+                          <button type="button" class="btn btn-secondary" ng-click="firmPurchaseBill(i.id)"><a style="color:white;">Purchase</a></button>
+                          <button type="button" class="btn btn-secondary" ng-click="dealerPurchaseBillss(i.id)"><a style="color:white;">View Purchase</a></button>
                         </div>
                      </div>
                      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firmSell/firmSellBill/{{i.id}}">Sell</a></button>
-                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firmSell/dealerSellBillss/{{i.id}}">View Sell</a></button>
+                          <button type="button" class="btn btn-secondary" ng-click="firmSellBill(i.id)"><a style="color:white;">Sell</a></button>
+                          <button type="button" class="btn btn-secondary" ng-click="dealerSellBillss(i.id)"><a style="color:white;">View Sell</a></button>
                         </div>
                      </div>
                      <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                          <button type="button" class="btn btn-secondary"><a style="color:white;" href="/firm/dealerPurchaseBillss/{{i.id}}">none</a></button>
+                          <button type="button" class="btn btn-secondary" ng-click="dealerPurchaseBillss(i.id)"><a style="color:white;">none</a></button>
                         </div>
                      </div>
                      </td>
@@ -208,30 +208,7 @@ app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
           $scope.status = 'Canceled';
         });
       };
-      
-      /* $scope.showConfirmEditImage = function(ev,id) {
-          $scope.CustomerId = id;
-          var confirm = $mdDialog.confirm()
-            .title('Would You Like To Edit Image ?')
-            .textContent('Please Confirm Your Request!!!')
-            .ariaLabel('')
-            .targetEvent(ev)
-            .ok('Edit Image')
-            .cancel('Cancel');
-
-          $mdDialog.show(confirm).then(function () {
-            $scope.status = 'EditedImg';
-            if($scope.status = 'EditedImg'){
-            	$window.location.href = "/cust/customersUpdateImg/"+$scope.CustomerId+"";
-            }
-            
-          }, function () {
-            $scope.status = 'Canceled';
-          });
-        };
- */
-
-
+     
     function DialogController($scope, $mdDialog) {
       $scope.hide = function () {
         $mdDialog.hide();
@@ -251,31 +228,30 @@ app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
     	$window.location.href = "/deal/view/"+$scope.DealerId+"";
     }
     
-    /* $scope.getTooltip = function (photo) {
-        var path1 = "/imagedata/" + photo;
-        var image = new Image();
-        image.src = path1;
-    	var viewer = new Viewer(image, {
-    		hidden : function() {
-    			viewer.destroy();
-    		},
-    		toolbar : {
-    			zoomIn : true,
-    			zoomOut : true,
-    			oneToOne : false,
-    			reset : true,
-    			prev : false,
-    			play : false,
-    			next : false,
-    			rotateLeft : true,
-    			rotateRight : true,
-    			flipHorizontal : false,
-    			flipVertical : false,
-    		},
-    	});
-    	viewer.show();
-      }; */
-   
+    $scope.firmPurchaseBill = function(id) {
+    	$scope.DealerId = id;
+    	$window.location.href = "/firm/firmPurchaseBill/"+$scope.DealerId+"";
+    }
+    
+    $scope.dealerPurchaseBillss = function(id) {
+    	$scope.DealerId = id;
+    	$window.location.href = "/firm/dealerPurchaseBillss/"+$scope.DealerId+"";
+    }
+    
+    $scope.firmSellBill = function(id) {
+    	$scope.DealerId = id;
+    	$window.location.href = "/firmSell/firmSellBill/"+$scope.DealerId+"";
+    }
+    
+    $scope.dealerSellBillss = function(id) {
+    	$scope.DealerId = id;
+    	$window.location.href = "/firmSell/dealerSellBillss/"+$scope.DealerId+"";
+    }
+    
+    $scope.dealerPurchaseBillss = function(id) {
+    	$scope.DealerId = id;
+    	$window.location.href = "/firm/dealerPurchaseBillss/"+$scope.DealerId+"";
+    }
 });
 </script>
 </html>

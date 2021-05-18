@@ -1,91 +1,165 @@
-<!DOCTYPE HTML>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <title>Show Products</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Kim Maida">
-
-  <!-- JS Libraries -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-  <!-- Angular Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-</head>
-
-<body ng-app="invoice">
-	<div class="container-fluid">
-		<div class="col-md-12" ng-controller="InvoiceController">
-			<h2>Products List</h2>
-			<hr />
-            
-			<br/>
-		<!-- 	 <label for="repeatSelect"> Repeat select: </label>
-    <select name="repeatSelect" id="repeatSelect" ng-model="data.model">
-      <option ng-repeat="option in items" value="{{option.id}}">{{option.productName}}</option>
-    </select>
-    <input type="text" ng-options="c.productBrand for c in items" /><br/> -->
-   <!--  $scope.userListSelected = function(userList){ $scope.email = userList.email; $scope.phoneNumber = userList.phoneNumber; -->
-<select ng-options="item.productName for item in items" ng-model="item" ng-change = "GetData(item)">
-
-<input type="text"  ng-model="productBrand"/> 
-<!-- <select ng-model="itemList" ng-options="item.productName for item in items" ng-change="itemListSelected(itemList)">
-<input type=text ng-model="item.productBrand" /> -->
-			<input type="button" value="Back To Dealers Bill"
-			th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''"
-				class="btn btn-primary" />	
-			<br/><br/>	
-			<form action="#" th:action="@{/pro/addProduct}" method="post" th:object="${product}">	
-			<label>Product Name:</label>
-			<input type="text" th:field="*{productName}" /><br/>
-			<label>Product Brand Name:</label>
-			<input type="text" th:field="*{productBrand}" /><br/>
-			<label>Product Type:</label>
-			<input type="text" th:field="*{productType}" /><br/>
-			<label>Product Description:</label>
-			<input type="text" th:field="*{productDescription}" /><br/>
-			<label>Product Measure:</label>
-			<input type="text" th:field="*{productMeasure}" /><br/>
-			<label>Product Price:</label>
-			<input type="text" th:field="*{productPrice}" /><br/>
-			<label>Product Per Unit:</label>
-			<select th:field="*{productUnit}">
-			<option value="">---Please select---</option>
-            <option value="Price/Nos">Price/Nos</option> 
-            <option value="Price/Kg">Price/Kg</option>
-            </select><br/>
-			<label>Product Nature:</label>
-			<select th:field="*{productNature}">
-			<option value="">---Please select---</option>
-            <option value="ForSelling">Sell Side</option> 
-            <option value="ForBuying">Buy Side</option>
-            <option value="ForService">Service Side</option>
-            <option value="ForDBuying">Dealer Buy Side</option>
-            <option value="ForDSelling">Dealer Sell Side</option>
-             
-            </select><br/>
-			<button class="btn btn-primary" type="submit">Submit</button>
-			</form>
-			</br>		
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Add/Show Products</title></head>
+<body ng-app="myApp" ng-controller="PageCtrl as list">
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+<br><div>
+            <input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />
+	        <input type="button" value="Show Customers"
+			th:onclick="'window.location.href = \'' + @{/cust/customers} + '\''"
+				class="btn btn-primary" />		
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-100">
+		<div class="cardpro">
+			<div class="card-header">
+				<h3>Add Product</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<!-- <form method="POST" th:action="@{~/creditAmo/AddCreditAmo/{id}(id=${ct.id})}" th:object="${creditAmo}"> -->
+				 <form  action="#" th:action="@{/pro/addProduct}" method="post" th:object="${product}">
+				
+					 <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-th"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productName" th:field="*{productName}" placeholder="Product Name"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-eye"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productBrand" th:field="*{productBrand}" placeholder="Product Brand"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="	fa fa-file"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productType" th:field="*{productType}" placeholder="Product Type"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-keyboard-o"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productDescription" th:field="*{productDescription}" placeholder="Product Description"  required>
+                     </div>
+                     
+                      <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-microchip"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productMeasure" th:field="*{productMeasure}" placeholder="Product Measure"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-inr"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productPrice" th:field="*{productPrice}" placeholder="Product Price"  required>
+                     </div>
+                    
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-balance-scale"></i></span>
+						  </div>
+                              <select type="text" class="form-control" name="productUnit" th:field="*{productUnit}" required>
+                                <option value="" selected>Please Select Product Unit...</option>
+                                <option value="Price/Nos">Price/Nos</option> 
+                                <option value="Price/Kg">Price/Kg</option>
+                             </select>
+                      </div>
+                       <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-file-alt"></i></span>
+						  </div>
+                              <select type="text" class="form-control" name="productNature" th:field="*{productNature}" required>
+                                 <option value="" selected>Please Select Product Nature...</option>
+                                 <option value="ForSelling">Sell Side</option> 
+                                 <option value="ForBuying">Buy Side</option>
+                                 <option value="ForService">Service Side</option>
+                                 <option value="ForDBuying">Dealer Buy Side</option>
+                                 <option value="ForDSelling">Dealer Sell Side</option>
+                             </select>
+                      </div>
+                       
+                            <hr>
+                            <div class="input-group form-group text-center">
+                                <button type="submit" class="btn float-right login_btn_credit">Add Product</button>
+                            </div>
+                           
+				</form>
+				
+			</div>
 			
-				<br/><br/>
-			<div><label>Total number of Products : </label> <span th:text="${count_Products}"></span></div>	
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<div class="panel-title">Products List</div>
+		</div>
+	</div>
+</div>
+
+<div style="margin-top:100px;"  class="container-fluid">
+	   <hr>
+		<div class="col-md-12">
+			<center><h4 style="text-decoration: underline;">Product List</h4></center>
+			<hr/>
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
+			
+			<input type="button" value="Add Customer"
+				onclick="window.location.href='/home/AddCustomerForm'; return false;"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+				<br/>
+				<hr>	
+				
+			<div><label style="font-weight:bold;">Total number of Products : </label> <span class="badge badge-success" th:text="${count_Products}"></span></div>	
+			<hr>
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					Product List
 				</div>
-				<div class="panel-body">
+				<div style="overflow-x:auto;" class="card-body">
 					<table class="table table-hover table-striped table-bordered">
 						<tr>
-							<th scope="col">Id</th>
+							<th ng-click="sort('id')"><a href="#">Id</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
 							<th scope="col">Product Name</th>
 							<th scope="col">Product Brand</th>
 							<th scope="col">Product Type</th>
@@ -95,11 +169,13 @@
 							<th scope="col">Product Unit</th>
 							<th scope="col">Product Nature</th>
 							<th scope="col">Current Stock</th>
-							<th scope="col">Action</th>
-							
+						    <th ng-click="sort('createDate')"><a href="#">Create Date & Time</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='createDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th>Action</th>
 						</tr>
-                <tr ng-repeat="i in items">
-                     <td>{{i.id}}</td>
+               <tr dir-paginate="i in items|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                         <td>{{i.id}}</td>
                      <td>{{i.productName}}</td>
                      <td>{{i.productBrand}}</td>
                      <td>{{i.productType}}</td>
@@ -109,35 +185,114 @@
                      <td>{{i.productUnit}}</td>
                      <td>{{i.productNature}}</td>
                      <td></td>
+                     <td>{{i.createDate| date:'d/M/yyyy hh:mm:ss'}}</td>
                      <td>
-                     <a type="button" href="/pro/editProduct/{{i.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a>
-                     <a type="button" href="/pro/deleteProduct/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" ng-click="showConfirmEdit($event,i.id)" class="btn btn-success"><a><i class="fa fa-edit"></i></a></button>
+                          <button type="button" ng-click="showConfirmDelete($event,i.id)" class="btn btn-danger"><a><i class="fa fa-trash"></i></a></button>
+                        </div>
+                     </div>
                      </td>
                      
                      
                  </tr>
 					</table>
-               
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
 				</div>
 			</div>
 		</div>
 
 	</div>
 </body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
 <script type="text/javascript">
-var invoice = angular.module('invoice', []);
-invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
-	 $http.get("http://localhost:8083/pro/products").then(function(data, status, headers, config) {
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	$scope.items = []; 
+	$http.get("http://localhost:8083/pro/products").then(function(data, status, headers, config) {
 		$scope.items = data.data;
 		console.log($scope.items);
-		//$window.location.reload();
-		$scope.GetData = function(item){
-			  // Here Please add Code to fetch the data from database. Here userEmailFromDB and userPhoneFromDB are the values that you get from database. 
-               console.log(item);
-			   $scope.productBrand = item.productBrand; 
-			  console.log($scope.productBrand);
-			}
-		}); 
+});
+	//$scope.fullName = document.getElementById("fullName").innerText;
+	//console.log($scope.fullName);
+	
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	////////////////////////////////////////////////////
+	  $scope.status = '  ';
+    $scope.customFullscreen = false;
+
+    
+
+    $scope.showConfirmDelete = function(ev,id) {
+      $scope.Id = id;
+      var confirm = $mdDialog.confirm()
+        .title('Would You Like To Delete This Id No. : '+$scope.Id+' ?')
+        .textContent('Please Confirm Your Request!!!')
+        .ariaLabel('')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function () {
+        $scope.status = 'Deleted';
+        if($scope.status = 'Deleted'){
+        	$window.location.href = "/pro/deleteProduct/"+$scope.Id+"";
+        }
+        
+      }, function () {
+        $scope.status = 'Canceled';
+      });
+    };
+    
+    $scope.showConfirmEdit = function(ev,id) {
+        $scope.Id = id;
+        var confirm = $mdDialog.confirm()
+          .title('Would You Like To Edit This Id No. : '+$scope.Id+' ?')
+          .textContent('Please Confirm Your Request!!!')
+          .ariaLabel('')
+          .targetEvent(ev)
+          .ok('Edit')
+          .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+          $scope.status = 'Edited';
+          if($scope.status = 'Edited'){
+          	$window.location.href = "/pro/editProduct/"+$scope.Id+"";
+          }
+          
+        }, function () {
+          $scope.status = 'Canceled';
+        });
+      };
+      
+ 
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    /////////////////////////////////////////////////////
+
+    
+    
 });
 </script>
 </html>

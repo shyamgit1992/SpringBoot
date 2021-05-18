@@ -1,72 +1,114 @@
-<!DOCTYPE HTML>
-<html lang="en" ng-app="myApp">
-
-<head>
-  <meta charset="utf-8">
-  <title>Edit Product</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Kim Maida">
-
-  <!-- JS Libraries -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-  <!-- Angular Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-</head>
-
-<body ng-app="instantsearch">
-	<div class="container-fluid">
-		<div class="col-md-12" ng-controller="PageCtrl as list">
-			<h2>Edit Product</h2>
-			<hr />
-            
-			</br>
-			<input type="button" value="Back To Dealers Bill"
-			th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''"
-				class="btn btn-primary" />	
-			<form action="#" th:action="@{/pro/updateProduct/{id}(id=${id})}" method="post" th:object="${product}">	
-			<label>Product Name:</label>
-			<input type="text" th:field="*{productName}" /><br/>
-			<label>Product Brand Name:</label>
-			<input type="text" th:field="*{productBrand}" /><br/>
-			<label>Product Type:</label>
-			<input type="text" th:field="*{productType}" /><br/>
-			<label>Product Description:</label>
-			<input type="text" th:field="*{productDescription}" /><br/>
-			<label>Product Measure:</label>
-			<input type="text" th:field="*{productMeasure}" /><br/>
-			<label>Product Price:</label>
-			<input type="text" th:field="*{productPrice}" /><br/>
-			<label>Product Per Unit:</label>
-			<select th:field="*{productUnit}">
-			<option value="">---Please select---</option>
-            <option value="Price/Nos">Price/Nos</option> 
-            <option value="Price/Kg">Price/Kg</option>
-            </select><br/>
-			<label>Product Nature:</label>
-			<select th:field="*{productNature}">
-			<option value="">---Please select---</option>
-            <option value="ForSelling">Sell Side</option> 
-            <option value="ForBuying">Buy Side</option>
-            <option value="ForService">Service Side</option> 
-            <option value="ForDBuying">Dealer Buy Side</option>
-            <option value="ForDSelling">Dealer Sell Side</option>
-            </select><br/>
-			<button class="btn btn-primary" type="submit">Update</button>
-			</form>
-			<br/>		
-			
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Update Product</title></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+<br><div>
+            <input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />
+	        <input type="button" value="Show Customers"
+			th:onclick="'window.location.href = \'' + @{/cust/customers} + '\''"
+				class="btn btn-primary" />		
+		
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-50">
+		<div class="cardpro">
+			<div class="card-header">
+				<h3>Update Product</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<form  action="#" th:action="@{/pro/addProduct}" method="post" th:object="${product}">
+				
+					 <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-th"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productName" th:field="*{productName}" placeholder="Product Name"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-eye"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productBrand" th:field="*{productBrand}" placeholder="Product Brand"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-file"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productType" th:field="*{productType}" placeholder="Product Type"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-keyboard-o"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productDescription" th:field="*{productDescription}" placeholder="Product Description"  required>
+                     </div>
+                     
+                      <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-microchip"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productMeasure" th:field="*{productMeasure}" placeholder="Product Measure"  required>
+                     </div>
+                     
+                     <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-inr"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="productPrice" th:field="*{productPrice}" placeholder="Product Price"  required>
+                     </div>
+                    
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-balance-scale"></i></span>
+						  </div>
+                              <select type="text" class="form-control" name="productUnit" th:field="*{productUnit}" required>
+                                <option value="" disabled selected>Please Select Product Unit...</option>
+                                <option value="Price/Nos">Price/Nos</option> 
+                                <option value="Price/Kg">Price/Kg</option>
+                             </select>
+                      </div>
+                       <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-file-alt"></i></span>
+						  </div>
+                              <select type="text" class="form-control" name="productNature" th:field="*{productNature}" required>
+                                <option value="" disabled selected>Please Select Product Nature...</option>
+                                 <option value="ForSelling">Sell Side</option> 
+                                 <option value="ForBuying">Buy Side</option>
+                                 <option value="ForService">Service Side</option>
+                                 <option value="ForDBuying">Dealer Buy Side</option>
+                                 <option value="ForDSelling">Dealer Sell Side</option>
+                             </select>
+                      </div>
+                       
+                            <hr>
+                            <div class="input-group form-group text-center">
+                                <button type="submit" class="btn float-right login_btn_credit">Update Product</button>
+                            </div>
+                           
+				</form>
+				
+				
+			</div>
 			
 		</div>
-
 	</div>
+</div>
 </body>
 
 </html>

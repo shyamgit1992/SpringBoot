@@ -11,14 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.alpha.demo.security.main.MyUserDetailsService;
 
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -45,6 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .antMatchers("/deal/**").hasRole("ADMIN")
         .antMatchers("/pro/**").hasRole("ADMIN")
         .antMatchers("/tax/**").hasRole("ADMIN")
+        .antMatchers("/firm/**").hasRole("ADMIN")
+        .antMatchers("/firmSell/**").hasRole("ADMIN")
         .antMatchers("/service/**").hasRole("ADMIN")
         .antMatchers("/creditDebitAmo/**").hasRole("ADMIN")
         .antMatchers("/creditAmo/**").hasRole("ADMIN")

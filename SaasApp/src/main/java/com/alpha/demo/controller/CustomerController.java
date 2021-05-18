@@ -29,8 +29,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.demo.Repository.CustomerRepository;
 import com.alpha.demo.exception.NotFoundException;
-import com.alpha.demo.model.Bill;
-import com.alpha.demo.model.BuyBill;
 import com.alpha.demo.model.Customer;
 
 @RestController

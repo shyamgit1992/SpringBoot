@@ -1,46 +1,67 @@
 <!DOCTYPE HTML>
-
-<html  xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8">
-  <title>Dealer Bill Items Details</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="Kim Maida">
-
-  <!-- JS Libraries -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-  <!-- Angular Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-</head>
-
-<body ng-app="myApp">
-<div class="container-fluid">
-<div align="center">
-    <h1>Dealer Bill Items List</h1>
-    <label>Dealer Id:</label><a><span id="ids" th:text="${ds.id}"></span></a>
-    <label>Invoice Number:</label><a><span id="Invoiceids" th:text="${dfb.id}"></span></a>
-    <label>Dealer Invoice Number:</label><a><span id="DInvoiceids" th:text="${dfb.dinvoice}"></span></a>
-    <label>Name:</label><a><span th:text="${ds.fullName}"></span></a>
+<html lang="en" ng-app="myApp">
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Dealers Buy Bill Details</title></head>
+<body ng-app="instantsearch">
+<header th:insert="fragments.html :: nav"></header>
+   <div class="container-fluid">
+	   
+		<div class="col-md-12" ng-controller="PageCtrl as list">
+			<center><h4 style="text-decoration: underline;">Dealer Buy Bill List</h4></center>
+			<hr/>
+			<div align="center">
+    
+   
+    <div class="col-md-3">
+    <table class="table table-hover table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+    <th>Dealer Id</th>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Invoice Number</th>
+    <th>Dealer Invoice Number</th>
+    </tr>
+    </thead>
+    <tr>
+    <td><span id="ids" th:text="${ds.id}"></span></td>
+    <td><span th:text="${ds.fullName}"></span></td>
+    <td><span th:text="${ds.address}"></span></td>
+    <td><span id="InvoiceNo" th:text="${dfb.id}"></span></td>
+    <td><span id="DInvoiceids" th:text="${dfb.dinvoice}"></span></td>
+    </tr>
+    </table>
+    </div>
+   
 </div>    
    <hr>
-		<div class="col-md-12" ng-controller="PageCtrl as list">
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
 			
 			
-            <!-- <div class="input-group">
-				<input type="search" class="form-control"  ng-model="search.fullName" placeholder="Enter your search name" />
-			    <span class="input-group-addon">
-                <span class="glyphicon glyphicon-search"></span> </span>
-			</div> -->
-			</br>
-			<input type="button" value="Add Dealer Bills"
+				<input type="button" value="Add Dealer Bills"
 				th:onclick="'window.location.href = \'' + @{/firm/firmPurchaseBill/{id}(id=${ds.id})} + '\''"
 				class="btn btn-primary" />
 			<input type="button" value="Back To Dealers Bill"
@@ -51,66 +72,94 @@
 				class="btn btn-primary" />	
 			<input type="button" value="Print Dealer Bill"
 			th:onclick="'window.location.href = \'' + @{/firm/printFirmBill/{DealerId}/bill/{invoiceNo}(DealerId=${ds.id},invoiceNo=${dfb.id})} + '\''"
-				class="btn btn-primary" />			
-				<!-- onclick="window.location.href='/cust/customersBillss/1'; return false;" -->
+				class="btn btn-primary" />	
+				<br/>
+				<hr>	
 				
-				<br/><br/>
-			<div><label>Total number of Dealer Bill Items: </label> <span th:text="${count_CustomersBuyBill}"></span></div>	
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<div class="panel-title">Dealer Bill Items List</div>
+			<div><label style="font-weight:bold;">Total number of Dealer Bill Items: : </label> <span class="badge badge-success" th:text="${count_DealerItemBill}"></span></div>	
+			<hr>
+			<div class="card">
+				<div class="card-header bg-primary text-white">
+					Dealer Bill Items List
 				</div>
-				<div class="panel-body">
+				<div style="overflow-x:auto;" class="card-body">
 					<table class="table table-hover table-striped table-bordered">
-					<tr>
-				
-	
-					<th scope="col">Product id</th>
-					<th scope="col">No.</th>
-					<th scope="col">name</th>
-					<th scope="col">Description</th>
-					<th scope="col">Quantity</th>
-					<th scope="col">Unit</th>
-					<th scope="col">Per Unit Price</th>
-					<th scope="col">GST %</th>
-					<th scope="col">Discount</th>
-					<th scope="col">Amount</th>
-					
-					</tr>
-					<tr ng-repeat="d in items.firmPurchaseBillItem | orderBy:'proId'">
-					<td>{{d.id}}</td>
-					<td>{{d.proId}}</td>
-					<td>{{d.name}}</td>
-					<td>{{d.description}}</td>
-					<td>{{d.qty}}</td>
-					<td>{{d.unit}}</td>
-					<td>{{d.price | currency:"&#8377;"}}</td>
-					<td>{{d.gst}} %</td>
-					<td>{{d.dis | currency:"&#8377;"}}</td>
-					<td>{{d.amount | currency:"&#8377;"}}</td>
-					</tr>
-					</table>
+						<tr>
+							<th ng-click="sort('id')"><a href="#">Product Id</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+					        
+					        <th scope="col">No.</th>
+					        <th scope="col">name</th>
+					        <th scope="col">Description</th>
+					        <th scope="col">Quantity</th>
+					        <th scope="col">Unit</th>
+					        <th scope="col">Per Unit Price</th>
+					        <th scope="col">GST %</th>
+					        <th scope="col">Discount</th>
+					        <th scope="col">Amount</th>
+						</tr>
+               <tr dir-paginate="i in items.firmPurchaseBillItem|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                    <td>{{i.id}}</td>
+					<td>{{i.proId}}</td>
+					<td>{{i.name}}</td>
+					<td>{{i.description}}</td>
+					<td>{{i.qty}}</td>
+					<td>{{i.unit}}</td>
+					<td>{{i.price | currency:"&#8377;"}}</td>
+					<td>{{i.gst}} %</td>
+					<td>{{i.dis | currency:"&#8377;"}}</td>
+					<td>{{i.amount | currency:"&#8377;"}}</td>
+                   
                     
-           
-               
+                     
+                     
+                 </tr>
+					</table>
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
 				</div>
 			</div>
 		</div>
 
 	</div>
-</body>
-<script type="text/javascript">
-var app = angular.module('myApp', ['ui.bootstrap']);
 
-app.controller('PageCtrl', ['$scope', 'filterFilter', '$http', function ($scope, filterFilter, $http) {
+ <footer class="bg-success text-center text-white">
+ 
+
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2021 Copyright:
+    <a class="text-white" href="https://mdbootstrap.com/">Shyam Agro & Sons</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+
+</body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
+<script type="text/javascript">
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
 	var id = document.getElementById("ids").innerText;
-	var Invoiceid = document.getElementById("Invoiceids").innerText;
+	var InvoiceNo = document.getElementById("InvoiceNo").innerText;
 	$scope.DealerId = id;
-	$scope.InvoiceId = Invoiceid;
-	$http.get("http://localhost:8083/firm/DealerViewFirmBill/"+$scope.DealerId+"/bill/"+$scope.InvoiceId+"").then(function(data, status, headers, config) {
+	$scope.InvoiceNo = InvoiceNo;
+	$http.get("http://localhost:8083/firm/DealerViewFirmBill/"+$scope.DealerId+"/bill/"+$scope.InvoiceNo+"").then(function(data, status, headers, config) {
 		$scope.items = data.data;
 		console.log($scope.items);
-	});
-}]);
+		
+});
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	
+   
+});
 </script>
 </html>

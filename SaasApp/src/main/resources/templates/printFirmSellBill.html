@@ -294,7 +294,8 @@ text-decoration:underline;
                 <center>
                 <div class="col-md-12 col-sm-12">
                 <button  class="btn btn-info" th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''">Home</button>
-                <a class="btn btn-info" ng-href="/firmSell/viewFirmBill/{{DealerId}}/bill/{{InvoiceId}}">Check</a>
+                <button  class="btn btn-info" ng-click="CheckData(DealerId,InvoiceId)">Check</button>
+               <!--  <a class="btn btn-info" href="/firmSell/viewFirmBill/{{DealerId}}/bill/{{InvoiceId}}">Check</a> -->
                 <button  class="btn btn-info" onclick="window.print()">Print Bill</button>
                 </div>
                 </center>
@@ -308,7 +309,7 @@ text-decoration:underline;
 </body>
 <script type="text/javascript">
 var invoice = angular.module('invoice', []);
-invoice.controller('InvoiceController', function($scope,$http){
+invoice.controller('InvoiceController', function($scope,$http,$window){
 
 	/*  $scope.invoice = {
 		    items: [{
@@ -405,7 +406,11 @@ $http.get("http://localhost:8083/firmSell/DealerViewFirmBill/"+$scope.DealerId+"
 		
 
 	 }); 
-
+$scope.CheckData = function(did,iid) {
+	$scope.DealerId = did;
+	$scope.InvoiceNo = iid;
+	$window.location.href = "/firmSell/viewFirmBill/"+$scope.DealerId+"/bill/"+$scope.InvoiceNo+"";
+}
  });
 </script>
 </html>

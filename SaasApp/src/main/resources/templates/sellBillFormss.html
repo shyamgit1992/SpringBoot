@@ -1,34 +1,63 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Sell</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
-<link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <head th:insert="fragments.html :: headerfiles"></head> -->
+<head><title>Sell Invoice</title>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+<meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.css">
+  <link rel="stylesheet" th:href="@{/css/md.css}">
+  <!-- <link th:href="@{~/bootstrap.min.css}" rel="stylesheet">-->
+  <link th:href="@{~/fontawesome/css/all.css}" rel="stylesheet">
+  <link th:href="@{~/login.css}" rel="stylesheet"> 
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
+  <link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
+  
+  <link rel="stylesheet" th:href="@{/assets/dist/viewer.css}">
+  <script type="text/javascript" th:src="@{/assets/dist/viewer.js}"></script>
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  
+ <!-- <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> -->
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 
-<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script>
-
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+  <script src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+  <script src = "https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.js"></script>
 </head>
 <body>
+<header th:insert="fragments.html :: nav"></header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="mx-md-auto">
+    <a class="navbar-brand" href="#">Sell Invoice</a>
+  </div>
+  
+</nav>
 <div ng-app="app" ng-controller="MainCtrl">
+<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">**Something Went Wrong**</span></div></center>
 <div style = "background-color:#e6e6ff;" class ="container-fluid">
-<header class="row" style = "background-color:#cc3300;color:#fff;" >
-<center><p style="color:#fff; font-size:20px;text-decoration:underline;"><i class="fa fa-cloud" aria-hidden="true"></i>SHYAM AGRO & SONS</p></center>
-<center><h4 style="color:#fff; font-size:20px;">Sell Invoice</h4></center>
-</header>
+<!-- <div class="raw" style = "background-color:#cc3300;color:#fff;">
+<span class="text-center" >
+
+<h4 style="color:#fff; font-size:20px;">Purchase Invoice</h4>
+</span>
+</div> -->
+
 <section class="row" style = "background-color:#1a1aff;color:#fff;">
 
 <span Style="display:none;" th:text="${ct.id}" type="hidden" id ="ids"></span>
-
-<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">*Error*</span></div></center>
 
 <div class="col-md-6">
 <label>Invoice No. :</label> <a id = "InvoiceNo" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${invoiceNo}"></span></a>
@@ -51,7 +80,7 @@
 </div>
 <div class="col-md-6 text-right"><label>Mobile No. :</label> <a id = "mobileNo" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${ct.mobileNo}"></span></a></div>
 </section>
-<section class="row">  
+<section class="row" style="overflow-x:auto;">  
  <form name="myForm">
    <table class="table">
    <tbody>
@@ -80,7 +109,7 @@
             <select required class="form-control" ng-model="updatedData.selections[$index].row[0].name" 
                    ng-options="item.productName for item in items"
                                             ng-change="getValues(updatedData.selections[$index].row[0].name,$index)">
-                <option value="">Select Product Name</option>
+                <option value="" disabled selected>Select Product Name</option>
             </select>
          </td>
          <td> 
@@ -157,7 +186,7 @@
         </tr>
         </tbody>
   </table>
-   <center><button type="submit" class="btn btn-success" data-ng-click="purchase()">Submit</button> <button type="button" class="btn btn-danger"  ng-click="reset()">Refresh</button> <button type="button" class="btn btn-info"    onclick="window.location.href = '/cust/customers';">Home</button></center>
+   <center><button type="submit" class="btn btn-success" data-ng-click="sell()">Submit</button> <button type="button" class="btn btn-danger"  ng-click="reset()">Refresh</button> <button type="button" class="btn btn-info"    onclick="window.location.href = '/cust/customers';">Home</button></center>
   </form>
   </section>
   </div>
@@ -227,7 +256,7 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		})
 		return $scope.paid;
 	}, 
-	$scope.paids = "0";
+	$scope.paids = 0;
 	$scope.DueAmount = function() {
 		 var total =0;
 		 angular.forEach($scope.updatedData.selections, function(item){
@@ -266,18 +295,26 @@ app.controller('MainCtrl', function($scope,$http,$window) {
   	window.location.reload(true);
   },
 	  
-  $scope.purchase = function(){
+  $scope.sell = function(){
 	  if(!$scope.myForm.$valid){
 			console.log("Invalid")
 			$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
 			}
 	  if($scope.myForm.$valid){
+		
 			var id = document.getElementById("ids").innerText;
 	 		var InvoiceNo = document.getElementById("InvoiceNo").innerText;
 	 		var CredibilityStatus = "very Good";
+	 		if($scope.guarantorName == null){
+	 			$scope.guarantorName = "None";
+	 		}
 	 		if($scope.note == null){
 	 			$scope.note = "None";
 	 		}
+	 		if($scope.interestRate == null){
+	 			$scope.interestRate = 0;
+	 		}
+	 		
 			var BillData={
 		   			 "totalGSTAmount" : ($scope.GST()).toFixed(2),
 		             "totalDiscountAmount" : $scope.Dis(),
@@ -285,7 +322,7 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		             "totalAmount" : ($scope.TotalAmount()).toFixed(2),
 		             "paidAmount" :  ($scope.PaidAmount()).toFixed(2),
 		             "dueAmount" :  ($scope.DueAmount()).toFixed(2),
-		             "status" : $scope.paidStatus(), 
+		             "status" : $scope.paidStatus(),
 		             "note"   : $scope.note
 		             };
 			console.log("BillData ::");
@@ -319,7 +356,7 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 						"gst" : $scope.gst,
 						"amount" : $scope.am
 						}; 
-		  console.log("Data ::");
+		  console.log(data);console.log("Data ::");
 		  console.log(data);
 		  $scope.CustomerId = id;
 		  $scope.InvoiceNo  = InvoiceNo;
@@ -330,8 +367,10 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		 
 		  
 	  });
-	 $window.location.href = "/Scust/printSBill/"+$scope.CustomerId+"/sbill/"+$scope.InvoiceNo+"";
+	  $window.location.href = "/Scust/printSBill/"+$scope.CustomerId+"/sbill/"+$scope.InvoiceNo+""
+		  
   }
+	  
   },
   
   $scope.addRow = function(index){
@@ -368,9 +407,14 @@ app.controller('MainCtrl', function($scope,$http,$window) {
     };
   
   $scope.deleteRow = function(index){
+	  console.log(index);
+	  if(index==0){
+		  alert("Index 0 is Not Deleted !!!")
+	  }
+	  else{
 	  $scope.removeId();
-       $scope.updatedData.selections.splice(index,1);
-       
+      $scope.updatedData.selections.splice(index,1);
+	  }
   
     }
  /*  

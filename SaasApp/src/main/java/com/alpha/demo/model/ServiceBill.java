@@ -1,6 +1,9 @@
 package com.alpha.demo.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -27,6 +35,10 @@ public class ServiceBill implements Serializable {
 	private String unit;
 	private String price;
 	private String amount;
+	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "serviceitem_date",updatable=false)
+	private Date serviceItemDate;
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "serviceSell_id", nullable = false)
     @JsonIgnore
@@ -35,8 +47,9 @@ public class ServiceBill implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
 	public ServiceBill(Long id, String proId, String name, String description, String qty, String unit, String price,
-			String amount, ServiceSell serviceSell) {
+			String amount, Date serviceItemDate, ServiceSell serviceSell) {
 		super();
 		this.id = id;
 		this.proId = proId;
@@ -46,8 +59,10 @@ public class ServiceBill implements Serializable {
 		this.unit = unit;
 		this.price = price;
 		this.amount = amount;
+		this.serviceItemDate = serviceItemDate;
 		this.serviceSell = serviceSell;
 	}
+
 	public Long getId() {
 		return id;
 	}
@@ -105,9 +120,18 @@ public class ServiceBill implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	public Date getServiceItemDate() {
+		return serviceItemDate;
+	}
+	public void setServiceItemDate(Date serviceItemDate) {
+		this.serviceItemDate = serviceItemDate;
+	}
 	@Override
 	public String toString() {
 		return "ServiceBill [id=" + id + ", proId=" + proId + ", name=" + name + ", description=" + description
-				+ ", qty=" + qty + ", unit=" + unit + ", price=" + price + ", amount=" + amount + "]";
+				+ ", qty=" + qty + ", unit=" + unit + ", price=" + price + ", amount=" + amount + ", serviceItemDate="
+				+ serviceItemDate + "]";
 	}
+	
 }

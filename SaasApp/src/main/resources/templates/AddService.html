@@ -1,39 +1,60 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<!-- <head th:insert="fragments.html :: headerfiles"></head> -->
 <head>
-  <meta charset="utf-8">
-  <title>Show Service</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
+<title>Add Service</title>
+<meta name="description" content="">
   <meta name="author" content="Kim Maida">
-
-  <!-- JS Libraries -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-  <!-- Angular Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.css">
+  <link rel="stylesheet" th:href="@{/css/md.css}">
+  <!-- <link th:href="@{~/bootstrap.min.css}" rel="stylesheet">-->
+  <link th:href="@{~/fontawesome/css/all.css}" rel="stylesheet">
+  <link th:href="@{~/login.css}" rel="stylesheet"> 
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
+  <link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
+  
+  <link rel="stylesheet" th:href="@{/assets/dist/viewer.css}">
+  <script type="text/javascript" th:src="@{/assets/dist/viewer.js}"></script>
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  
+ <!-- <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script> -->
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
 
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+  <script src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+  <script src = "https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.js"></script>
 </head>
+<body ng-app="app" ng-controller="MainCtrl">
+<header th:insert="fragments.html :: nav"></header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="mx-md-auto">
+    <a class="navbar-brand" href="#">Add Service</a>
+  </div>
+</nav>
+<div class="container-fluid">
+<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">**Something Went Wrong**</span></div></center>
+<div>
 
-<body ng-app="invoice">
-	<div class="container-fluid">
-		<div class="col-md-12" ng-controller="InvoiceController">
-			<h2>Service</h2>
-			<hr />
-			<input type="button" value="Back To Home"
-			th:onclick="'window.location.href = \'' + @{/} + '\''"
-				class="btn btn-primary" />	
-			<hr />	
-			<section class="row">  
-			<span Style="display:none;" th:text="${billNo}" type="hidden" id ="ids"></span>
-			<form name="myForm">	
-			<table class="table">
+				<section class="row">  
+	<span Style="display:none;" th:text="${billNo}" type="hidden" id ="ids"></span>
+				
+			
+				<!-- <form method="POST" th:action="@{~/creditAmo/AddCreditAmo/{id}(id=${ct.id})}" th:object="${creditAmo}"> -->
+				 <form name="myForm">
+				<table class="table">
    <tbody>
      <thead>
         <tr>
@@ -135,104 +156,26 @@
         </tr>
         </tbody>
   </table>
-  <button class="btn btn-primary" type="submit"  data-ng-click="sell()">Submit</button>
-			</form>
-  </section>
-	<br/>
-			<div><label>Total number of Service Bill : </label> <span th:text="${count_ServiceSell}"></span></div>	
-			<div class="card">
-				<div class="card-header bg-primary text-white">
-					Products List
-				</div>
-				<div style="overflow-x:auto;" class="card-body">
-					<table class="table table-hover table-striped table-bordered">
-						<tr>
-							<th scope="col">Bill No.</th>
-							<th scope="col">Full Name</th>
-							<th scope="col">Address</th>
-							<th scope="col">Mobile No.</th>
-							<th scope="col">Transporter Name</th>
-							<th scope="col">Transporter Address</th>
-							<th scope="col">Transporter Mobile No.</th>
-							<th scope="col">Total Amount</th>
-							<th scope="col">Paid Amount</th>
-							<th scope="col">Due Amount</th>
-							<th scope="col">Note</th>
-							<th scope="col">Status</th>
-							<th scope="col">Service Date/Time</th>
-							<th scope="col">Items</th>
-							<th scope="col">Action</th>
-							
-						</tr>
-                <tr ng-repeat="i in items | orderBy:'-id'">
-                     <td>{{i.id}}</td>
-                     <td>{{i.fullName}}</td>
-                     <td>{{i.address}}</td>
-                     <td>{{i.mobileNo}}</td>
-                     <td>{{i.transporterName}}</td>
-                     <td>{{i.transporterAddress}}</td>
-                     <td>{{i.transporterNumber}}</td>
-                     <td>{{i.itemTotalAmount}}</td>
-                     <td>{{i.itemTotalPaidAmount}}</td>
-                     <td>{{i.itemTotalDueAmount}}</td>
-                     <td>{{i.note}}</td>
-                     <td>{{i.status}}</td>
-                     <td>{{i.serviceCreateDate|date:'d/M/yyyy hh:mm:ss'}}</td>
-                     <td style="overflow-x:auto;">
-                     <table class="table table-hover table-striped table-bordered">
-						<tr>
-							<th scope="col">Product id</th>
-					        <th scope="col">No.</th>
-					        <th scope="col">name</th>
-					        <th scope="col">Description</th>
-					        <th scope="col">Quantity</th>
-					        <th scope="col">Unit</th>
-					        <th scope="col">Per Unit Price</th>
-					        <th scope="col">Amount</th>
-						</tr>
-						</tr>
-					    <tr ng-repeat="n in i.serviceBill | orderBy:'proId'">
-					    <td>{{n.id}}</td>
-					    <td>{{n.proId}}</td>
-					    <td>{{n.name}}</td>
-					    <td>{{n.description}}</td>
-					    <td>{{n.qty}}</td>
-					    <td>{{n.unit}}</td>
-					    <td>{{n.price | currency:"&#8377;"}}</td>
-					    <td>{{n.amount | currency:"&#8377;"}}</td>
-					    </tr>
-					    </table>
-                     </td>
-                     <td>
-                     <a type="button" href="/service/editService/{{i.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a>
-                     <a type="button" href="/service/deleteServiceSell/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a>
-                     <a type="button" href="/service/AddServiceSell/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-plus"></i></a>
-                     </td>
-                   
-                     
-                     
-                 </tr>
-					</table>
-               
-				</div>
-			</div>
-		</div>
+   <center><button type="submit" class="btn btn-success" data-ng-click="sell()">Submit</button> <button type="button" class="btn btn-danger"  ng-click="reset()">Refresh</button> <button type="button" class="btn btn-info"    onclick="window.location.href = '/cust/customers';">Home</button></center>
+					 
+				</form>
+			
+</section>
 
 	</div>
 </body>
+
 <script type="text/javascript">
-var invoice = angular.module('invoice', []);
-invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+var app = angular.module("app",[]);
+
+app.controller('MainCtrl', function($scope,$http,$window) {
 	var ids = document.getElementById("ids").innerText;
 	//console.log(ids);
 	 $scope.idb = ids;
 	 $http.get("http://localhost:8083/pro/productsForService").then(function(data, status, headers, config) {
 		 $scope.itemsSer = data.data;
 		 });
-	 $http.get("http://localhost:8083/service/showServiceSell").then(function(data, status, headers, config) {
-		$scope.items = data.data;
-		console.log($scope.items);
-		}); 
+	
 	 $index= 0;
 	  
 	  $scope.updatedData ={
@@ -265,7 +208,7 @@ invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
 			})
 			return $scope.paid;
 		}, 
-		$scope.paids = "0";
+		$scope.paids = 0;
 		$scope.DueAmount = function() {
 			 var total =0;
 			 angular.forEach($scope.updatedData.selections, function(item){
@@ -311,7 +254,18 @@ invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
 		  if($scope.myForm.$valid){
 				//var id = document.getElementById("ids").innerText;
 		 		//var InvoiceNo = document.getElementById("InvoiceNo").innerText;
-		 		
+			  if($scope.note == null){
+		 			$scope.note = "None";
+		 		}
+			  if($scope.transporterName == null){
+				  $scope.transporterName = "None";
+		 		}
+			  if($scope.transporterAddress == null){
+				  $scope.transporterAddress = "None";
+		 		}
+			  if($scope.transporterNumber == null){
+				  $scope.transporterNumber = 0;
+		 		}
 				var BillData={
 						 "fullName" : $scope.fullName,
 						 "address" : $scope.address,
@@ -391,13 +345,20 @@ invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
 	    
 	    };
 	  
-	  $scope.deleteRow = function(index){
-		  $scope.removeId();
-	       $scope.updatedData.selections.splice(index,1);
-	       
+	    $scope.deleteRow = function(index){
+	  	  console.log(index);
+	  	  if(index==0){
+	  		  alert("Index 0 is Not Deleted !!!")
+	  	  }
+	  	  else{
+	  	  $scope.removeId();
+	        $scope.updatedData.selections.splice(index,1);
+	  	  }
+	    
+	      }
+		
+		
 	  
-	    }
-	
 });
 </script>
 </html>

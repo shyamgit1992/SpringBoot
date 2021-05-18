@@ -49,15 +49,29 @@ public class Dealers implements Serializable{
 	private Set<FirmPurchaseBill> FirmPurchaseBill;
 	@OneToMany(mappedBy = "dealers", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
 	private Set<FirmSellBill> FirmSellBill;
+	@OneToMany(mappedBy = "dealers", cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
+	private Set<CreditDealerAmo> CreditDealerAmo;
+	
+	public Set<CreditDealerAmo> getCreditDealerAmo() {
+		return CreditDealerAmo;
+	}
+
+	public void setCreditDealerAmo(Set<CreditDealerAmo> creditDealerAmo) {
+		CreditDealerAmo = creditDealerAmo;
+	}
+
 	public Dealers() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+
 	public Dealers(Long id, String fullName, String aadhaarNo, String dealerShipDetails, String gstnNo, String bankName,
 			String bankAccNo, String bankAccOnName, String bankAccType, String bankIfscCode, String address,
 			String mobileNo, String note, Date createDate, Set<com.alpha.demo.model.FirmPurchaseBill> firmPurchaseBill,
-			Set<com.alpha.demo.model.FirmSellBill> firmSellBill) {
+			Set<com.alpha.demo.model.FirmSellBill> firmSellBill,
+			Set<com.alpha.demo.model.CreditDealerAmo> creditDealerAmo) {
 		super();
 		this.id = id;
 		this.fullName = fullName;
@@ -75,6 +89,7 @@ public class Dealers implements Serializable{
 		this.createDate = createDate;
 		FirmPurchaseBill = firmPurchaseBill;
 		FirmSellBill = firmSellBill;
+		CreditDealerAmo = creditDealerAmo;
 	}
 
 	public Set<FirmSellBill> getFirmSellBill() {
@@ -185,8 +200,10 @@ public class Dealers implements Serializable{
 				+ dealerShipDetails + ", gstnNo=" + gstnNo + ", bankName=" + bankName + ", bankAccNo=" + bankAccNo
 				+ ", bankAccOnName=" + bankAccOnName + ", bankAccType=" + bankAccType + ", bankIfscCode=" + bankIfscCode
 				+ ", address=" + address + ", mobileNo=" + mobileNo + ", note=" + note + ", createDate=" + createDate
-				+ ", FirmPurchaseBill=" + FirmPurchaseBill + ", FirmSellBill=" + FirmSellBill + "]";
+				+ ", FirmPurchaseBill=" + FirmPurchaseBill + ", FirmSellBill=" + FirmSellBill + ", CreditDealerAmo="
+				+ CreditDealerAmo + "]";
 	}
+
 	
 	
 	

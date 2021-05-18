@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alpha.demo.Repository.DealerRepository;
 import com.alpha.demo.exception.NotFoundException;
-import com.alpha.demo.model.CreditAmo;
 import com.alpha.demo.model.CreditDealerAmo;
 import com.alpha.demo.model.Dealers;
 import com.alpha.demo.Repository.CreditDealerAmoRepository;
@@ -40,6 +39,8 @@ public class CreditDealerAmoController {
 	public ModelAndView GetCreditDealerAmo(@PathVariable("id") long id,  @ModelAttribute @Valid @RequestBody CreditDealerAmo dAmo,Model model) {
 		ModelAndView mv = new ModelAndView("creditDealerAmo.html");
 		Dealers ds = dealerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid dealer Id:" + id));
+		long count_CreditDealerAmo = ds.getCreditDealerAmo().size();
+		model.addAttribute("count_CreditDealerAmo", count_CreditDealerAmo);
 		model.addAttribute("ds", ds);
 		model.addAttribute("creditDealerAmo", dAmo);
 		List<CreditDealerAmo> d = creditDealerAmoRepository.findByDealersId(id);

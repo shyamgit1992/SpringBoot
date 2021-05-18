@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.alpha.demo.model.Dealers;
 import com.alpha.demo.model.FirmSellBillItem;
 
 public interface FsbiRepository  extends JpaRepository<FirmSellBillItem, Long>{

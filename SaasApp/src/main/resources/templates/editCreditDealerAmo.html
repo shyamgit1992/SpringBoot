@@ -1,80 +1,138 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>EditCreditDealerAmo</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
-<link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
-<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script>
-
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-</head>
-<body data-ng-app="invoice" data-ng-controller="InvoiceController">
-<input type="button" value="Back To Dealer Credit List"
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Update Credit Dealer Amount</title></head>
+<body ng-app="myApp" ng-controller="PageCtrl as list">
+<header th:insert="fragments.html :: nav"></header>
+<div class="container">
+<br><div>
+            <input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />
+	        <input type="button" value="Show Customers"
+			th:onclick="'window.location.href = \'' + @{/deal/dealers} + '\''"
+				class="btn btn-primary" />		
+			<input type="button" value="Back To Dealer Credit List"
 			th:onclick="'window.location.href = \'' + @{/creditDealerAmo/getCreditDealerAmoView/{id}(id=${ds.id})} + '\''"
 				class="btn btn-primary" />
-				<br><br>
-<div align="center">
-    <h1>Edit Credit Dealer Amount</h1>
-    <label>Id:</label><a id="ids"><span th:text="${ds.id}"></span></a>
-    <label>Credit Id:</label><a id="creditDealerAmoids"><span th:text="${cr}"></span></a>
-    <label>Name:</label><a><span th:text="${ds.fullName}"></span></a>
-   <hr>
-    <form name="myForm">
-        
-       <!--  <label>Id:</label>
-        <input type="number" th:field="*{id}" /><br/> -->
-         
-        <label>Credit Amount:</label>
-        <input type="number"  data-ng-model="creditAmount" /><br/>
- 
-        <label>Status:</label>
-        <input type="text"  data-ng-model="status"/><br/>
-        
-        <label>Note:</label>
-        <input type="text"  data-ng-model="note"/><br/>
-        
-        <button type="submit" data-ng-click="Credit()">Update Dealer Credit Amount</button>    
-    </form>
-    
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-50">
+		<div class="cardcustcreditupdate">
+			<div class="card-header">
+				<h3>Update Credit Dealer Amount</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<!-- <form method="POST" th:action="@{~/creditAmo/AddCreditAmo/{id}(id=${ct.id})}" th:object="${creditAmo}"> -->
+				 <form name="myForm">
+				 <span hidden id="ids" th:text="${ds.id}"></span>
+				 <span hidden id="fullName" th:text="${ds.fullName}"></span>
+				 <span hidden id="crId" th:text="${cr}"></span>
+				 <div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="id" data-ng-model="CreditDealerAmoId" disabled>
+                     </div>
+					<div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-user"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="fullName" data-ng-model="fullName" disabled>
+                     </div>
+                            
+                     <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-money"></i></span>
+						  </div>
+                             <input type="number" class="form-control" name="creditAmount" data-ng-model="creditAmount" placeholder="Credit Amount" required>
+                      </div>     
+                      <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-file-alt"></i></span>
+						        </div>
+                              <!-- <input type="text" class="form-control" name="status" th:field="*{status}"  placeholder="Status" required> -->
+                              <select name="status" class="form-control" type="text" data-ng-model="status" required>
+                                <option value="" disabled selected>Please Select...</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Unpaid">Unpaid</option>
+                             </select>
+                      </div>
+                       
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-book"></i></span>
+						        </div>
+                               <input type="text" class="form-control" name="note" data-ng-model="note" placeholder="Any Note">
+                       </div>
+                      
+                     
+                            <hr>
+                            <div class="input-group form-group text-center">
+                                <button type="submit" data-ng-click="Credit()"  class="btn float-right login_btn_credit_update">Update Credit Amount</button>
+                            </div>
+                           
+				</form>
+				
+			</div>
+			
+		</div>
+	</div>
 </div>
 </body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
 <script type="text/javascript">
-var invoice = angular.module('invoice', []);
-invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	$scope.items = []; 
+	$scope.DealerId = document.getElementById("ids").innerText;
+	$scope.fullName = document.getElementById("fullName").innerText;
+	$scope.CreditDealerAmoId = document.getElementById("crId").innerText;
+	
+	 $http.get("http://localhost:8083/creditDealerAmo/GetCreditDealerAmo/cr/"+$scope.CreditDealerAmoId+"").then(function(data, status, headers, config) {
+			$scope.items = data.data;
+			console.log($scope.items);
+			console.log($scope.items.creditAmount);
+			$scope.creditAmount = parseFloat($scope.items.creditAmount);
+			$scope.status = $scope.items.status;
+			$scope.note = $scope.items.note;
+			}); 
+	
 	$scope.Credit = function(){
+		 if(!$scope.myForm.$valid){
+				console.log("Invalid")
+				$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
+				}
+		  if($scope.myForm.$valid){
 		var id = document.getElementById("ids").innerText;
-		var did = document.getElementById("creditDealerAmoids").innerText;
-		var data={
+		if($scope.note == null){
+ 			$scope.note = "None";
+ 		}
+	    var data={
 				"creditAmount" : $scope.creditAmount,
 				"status" : $scope.status,
 				"note" : $scope.note,
 				};
 		console.log("Data ::");
 		console.log(data);
-		$scope.DealerId = id;
-		$scope.CreditDealerAmoId = did;
 		var URL = "http://localhost:8083/creditDealerAmo/updateCreditDealerAmo/"+$scope.DealerId+"/cr/"+$scope.CreditDealerAmoId+"";
 		$http.post(URL, data); 
 		$window.location.href = "/creditDealerAmo/getCreditDealerAmoView/"+$scope.DealerId+"";
+		//$window.location.reload();
 	}
-	var id = document.getElementById("creditDealerAmoids").innerText;
-	$scope.CreditDealerAmoId = id;
-	 $http.get("http://localhost:8083/creditDealerAmo/GetCreditDealerAmo/cr/"+$scope.CreditDealerAmoId+"").then(function(data, status, headers, config) {
-		$scope.items = data.data;
-		console.log($scope.items);
-		console.log($scope.items.creditAmount);
-		$scope.creditAmount = parseFloat($scope.items.creditAmount);
-		$scope.status = $scope.items.status;
-		$scope.note = $scope.items.note;
-		}); 
+		  }
+
+
+    
+    
 });
 </script>
 </html>

@@ -1,37 +1,65 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
-<head>
-<title>Edit Firm Sell</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"  rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
-<link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- <head th:insert="fragments.html :: headerfiles"></head> -->
+<head><title>Edit Firm Sell Invoice</title>
+<meta name="description" content="">
+  <meta name="author" content="Kim Maida">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.css">
+  <link rel="stylesheet" th:href="@{/css/md.css}">
+  <!-- <link th:href="@{~/bootstrap.min.css}" rel="stylesheet">-->
+  <link th:href="@{~/fontawesome/css/all.css}" rel="stylesheet">
+  <link th:href="@{~/login.css}" rel="stylesheet"> 
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css"  rel="stylesheet">
+  <link href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css" rel = "stylesheet">
+  
+  <link rel="stylesheet" th:href="@{/assets/dist/viewer.css}">
+  <script type="text/javascript" th:src="@{/assets/dist/viewer.js}"></script>
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  
+ <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+ <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script> -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
-
-<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script>
-
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  
+  <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.js"></script>
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+  <script src = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/t-114/svg-assets-cache.js"></script>
+  <script src = "https://gitcdn.xyz/cdn/angular/bower-material/v1.2.2/angular-material.js"></script>
 </head>
 <body>
-<div ng-app="app" ng-controller="MainCtrl">
+<header th:insert="fragments.html :: nav"></header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="mx-md-auto">
+    <a class="navbar-brand" href="#">Edit Firm Sell Invoice</a>
+  </div>
+</nav>
+<div ng-app="myApp" ng-controller="PageCtrl">
+<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">**Something Went Wrong**</span></div></center>
 <div style = "background-color:#e6e6ff;" class ="container-fluid">
-<header class="row" style = "background-color:#cc3300;color:#fff;" >
-<center><p style="color:#fff; font-size:20px;text-decoration:underline;"><i class="fa fa-cloud" aria-hidden="true"></i>SHYAM AGRO & SONS</p></center>
-<center><h4 style="color:#fff; font-size:20px;">Edit Firm Sell Invoice</h4></center>
-</header>
+<!-- <div class="raw" style = "background-color:#cc3300;color:#fff;">
+<span class="text-center" >
+
+<h4 style="color:#fff; font-size:20px;">Purchase Invoice</h4>
+</span>
+</div> -->
+
 <section class="row" style = "background-color:#1a1aff;color:#fff;">
 
 <span Style="display:none;" th:text="${ds.id}" type="hidden" id ="ids"></span>
 
-<center><div><span style="color:#ff6347; font-weight:bolder; text-decoration:underline;" data-ng-show="err">*Error*</span></div></center>
 
 <div class="col-md-6">
-<label>Invoice No. :</label> <a id = "Invoiceids" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${firmSellBills.id}"></span></a>
+<label>Invoice No. :</label> <a id = "InvoiceNo" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${firmSellBills.id}"></span></a>
 </div>
 
 <div class="col-md-6 text-right">
@@ -39,7 +67,7 @@
 </div>
 
 <div class="col-md-6">
-<label>Dealer Name : </label> <a id="name" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${ds.fullName}"></span></a>
+<label>Customer Name : </label> <a id="name" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${ds.fullName}"></span></a>
 </div>
 
 <div class="col-md-6 text-right">
@@ -51,7 +79,7 @@
 </div>
 <div class="col-md-6 text-right"><label>Mobile No. :</label> <a id = "mobileNo" style = "font-weight:bolder;color:#7FFF00;text-decoration: underline;"><span th:text="${ds.mobileNo}"></span></a></div>
 </section>
-<section class="row">  
+<section class="row" style="overflow-x:auto;">  
  <form name="myForm">
    <table class="table">
    <tbody>
@@ -74,7 +102,7 @@
           <!-- <th style="background-color:#191e1e;color:#fff;">Enable/Disable</th> -->
         </tr>
    </thead>
-     <tr ng-repeat="d in updatedData.selections track by $index | orderBy:'id'">
+    <tr ng-repeat="d in updatedData.selections track by $index | orderBy:'id'">
          <td hidden>
          <input type="hidden" id="itemBillId" data-ng-model="updatedData.selections[$index].row[0].id" class="form-control"/>
          </td>
@@ -139,7 +167,7 @@
            
         <td>
          <a type="button" class="btn btn-success" ng-click="EnbDis($index)"><i class="fa fa-eye"></i></a>
-         <a type="button" class="btn btn-danger" ng-click="deleteRow($index)"><i class="fa fa-trash"></i></a>
+         <a type="button" class="btn btn-danger" ng-click="deleteRow($event,$index)"><i class="fa fa-trash"></i></a>
         </td>
         
     </tr>
@@ -153,7 +181,7 @@
           <th style="background-color:#595959;color:#fff;"><label>Due Amount</label><input type="number"  ng-Value="(DueAmount()).toFixed(2)" ng-model="due"   class="form-control" disabled min="0"/></th>
           <th style="background-color:#595959;color:#fff;"><label>Status</label><input type="text" ng-Value="paidStatus()"  class="form-control" disabled/></th>
          </tr>
-         <tr>
+        <tr>
           <th colspan="10" style="border-bottom: none;background-color:#fff;"></th>
           <th  style="font-weight:bold; background-color:#ffd8cc;">Subtotal : </th>
           <th style="background-color:#ffd8cc;">{{total() | currency:"&#8377;"}} INR</th>
@@ -215,30 +243,31 @@
         </tr>
         </tbody>
   </table>
-  <center><button type="submit" class="btn btn-success" data-ng-click="purchase()">Update</button> <button type="button" class="btn btn-danger"  ng-click="reset()">Refresh</button> <button type="button" class="btn btn-info"    onclick="window.location.href = '/deal/dealers';">Home</button> <button type="button" class="btn btn-danger" th:onclick="'window.location.href = \'' + @{/firmSell/deleteFirmBill/{id}/bill/{invoiceNo}(id=${ds.id},invoiceNo=${firmSellBills.id})} + '\''">Delete</button></center>
+   <center><button type="submit" class="btn btn-success" data-ng-click="sell()">Update</button> <button type="button" class="btn btn-danger"  ng-click="reset()">Refresh</button> <button type="button" class="btn btn-info"    onclick="window.location.href = '/deal/dealers';">Home</button> <button type="button" class="btn btn-danger" th:onclick="'window.location.href = \'' + @{/firmSell/deleteFirmBill/{id}/bill/{invoiceNo}(id=${ds.id},invoiceNo=${firmSellBills.id})} + '\''">Delete</button></center>
   </form>
   </section>
   </div>
 </div>
 
 <script>
-var app = angular.module("app",[]);
+var app = angular.module('myApp', ['ngMaterial']);
 
-app.controller('MainCtrl', function($scope,$http,$window) {	
+app.controller('PageCtrl', function ($scope, $http,$mdDialog,$window) {
 	$http.get("http://localhost:8083/pro/products").then(function(data, status, headers, config) {
 		 $scope.items = data.data;
 		 });
 	$http.get("http://localhost:8083/tax/taxes").then(function(data, status, headers, config) {
 		$scope.itemsTax = data.data;
 		}); 
+  
 	var id = document.getElementById("ids").innerText;
-	var Invoiceid = document.getElementById("Invoiceids").innerText;
+	var InvoiceNo= document.getElementById("InvoiceNo").innerText;
 	$scope.DealerId = id;
-	$scope.InvoiceId = Invoiceid;
+	$scope.InvoiceNo = InvoiceNo;
 	$scope.updatedData ={selections:[]};
 	$scope.brokerage = 0;
 	$scope.fare = 0;
-	$http.get("http://localhost:8083/firmSell/DealerViewFirmBill/"+$scope.DealerId+"/bill/"+$scope.InvoiceId+"").then(function(data, status, headers, config) {
+	$http.get("http://localhost:8083/firmSell/DealerViewFirmBill/"+$scope.DealerId+"/bill/"+$scope.InvoiceNo+"").then(function(data, status, headers, config) {
 		$scope.firmSellBillItem = data.data.firmSellBillItem;
 		$scope.firmSellBill = data.data;
 		$scope.note = $scope.firmSellBill.note;
@@ -246,9 +275,15 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		$scope.brokerage = parseFloat($scope.firmSellBill.brokerage);
 		$scope.fare = parseFloat($scope.firmSellBill.fare);
 		angular.forEach($scope.firmSellBillItem, function(item){
+			console.log(item.gst);
+			if(item.gst == null){
+				item.gst = 0;
+			}
+			$scope.namepro = item.name;
+			$scope.gstn = item.gst;
 			$scope.updatedData.selections.push({
 		row : [{
-			  id : item.id,
+			id : item.id,
 		      proId: item.proId,
 		      name: item.name,
 		      description: item.description,
@@ -256,9 +291,9 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		      unit: item.unit,
 		      price: parseFloat(item.price),
 		      itemno: parseFloat(item.itemno),
-     	      cut:  item.cut,
-     	      otherCut:  parseFloat(item.otherCut),
-     	      qtyCut: item.qtyCut,
+   	          cut:  item.cut,
+   	          otherCut:  parseFloat(item.otherCut),
+   	          qtyCut: item.qtyCut,
 		      amount: parseFloat(item.amount),
 		      //paid: parseFloat($scope.PaidsAmount()),
 		      due: '',
@@ -268,116 +303,117 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		    }); 
 		});
 		
-		 $scope.total = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				total += (item.row[0].qty * item.row[0].price);
-				})
-				return total;
-			},
-		$scope.totalItem = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				total += item.row[0].itemno;
-				})
-				return total;
-			},
-			$scope.totalCut = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				total += item.row[0].cut*item.row[0].itemno;
-				})
-				return total;
-			},
-			$scope.totalWeight = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				total += item.row[0].qty;
-				})
-				return total;
-			},
-			$scope.totalNetWeight = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				total += item.row[0].qty-(item.row[0].cut*item.row[0].itemno);
-				})
-				return total;
-			},
-			$scope.totalCutAmo = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				total += item.row[0].price*item.row[0].itemno*item.row[0].cut;
-				})
-				return total;
-			},
-		  $scope.TotalAmount = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-					total += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
-				})
-				return total-($scope.brokerage+$scope.fare);
-			},
-			$scope.totalOtherCut = function(){
-				var total = 0;
-				angular.forEach($scope.updatedData.selections, function(item){
-				  total += item.row[0].otherCut;
-				})
-				return total;
-			},
-			$scope.PaidAmount = function() {
-				var total =0;
-				angular.forEach($scope.updatedData.selections, function(item){
-					//total += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
-					$scope.paids = (($scope.TotalAmount()).toFixed(2))-(($scope.DueAmount()).toFixed(2));
-				})
-				return $scope.paids;
-			}, 
-			$scope.paids = "0";
-			$scope.DueAmount = function() {
-				 var total =0;
-				 angular.forEach($scope.updatedData.selections, function(item){
-					total += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
-					$scope.due = (($scope.TotalAmount()).toFixed(2))-$scope.paid;
-				})
-				 return $scope.due;
-			},
-			$scope.paidStatus = function() {
-				var total =0;
-			  	var tot =0;
-				angular.forEach($scope.updatedData.selections, function(item){
-					tot += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
-					total  = ($scope.DueAmount()).toFixed(2);
-					if(total > 0){
-						 $scope.St = "Unpaid";
-					 }
-					 if(total == 0){
-						$scope.St = "Paid";
-					 }  
-					 if(tot == 0){
-			 			$scope.St = "Null";
-			 		 }
-				  })
-			     return $scope.St;
-			},
-  $scope.count = 1;
-  $scope.click = function(){
-  	$scope.count++;
-  },
-  $scope.removeId = function(){
-  	$scope.count--;
-  },
-  $scope.reset = function(){
-  	window.location.reload(true);
-  },
+		$scope.total = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			total += (item.row[0].qty * item.row[0].price);
+			})
+			return total;
+		},
+	$scope.totalItem = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			total += item.row[0].itemno;
+			})
+			return total;
+		},
+		$scope.totalCut = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			total += item.row[0].cut*item.row[0].itemno;
+			})
+			return total;
+		},
+		$scope.totalWeight = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			total += item.row[0].qty;
+			})
+			return total;
+		},
+		$scope.totalNetWeight = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			total += item.row[0].qty-(item.row[0].cut*item.row[0].itemno);
+			})
+			return total;
+		},
+		$scope.totalCutAmo = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			total += item.row[0].price*item.row[0].itemno*item.row[0].cut;
+			})
+			return total;
+		},
+	  $scope.TotalAmount = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				total += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
+			})
+			return total-($scope.brokerage+$scope.fare);
+		},
+		$scope.totalOtherCut = function(){
+			var total = 0;
+			angular.forEach($scope.updatedData.selections, function(item){
+			  total += item.row[0].otherCut;
+			})
+			return total;
+		},
+		$scope.PaidAmount = function() {
+			var total =0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				//total += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
+				$scope.paids = (($scope.TotalAmount()).toFixed(2))-(($scope.DueAmount()).toFixed(2));
+			})
+			return $scope.paids;
+		}, 
+		$scope.paids = 0;
+		$scope.DueAmount = function() {
+			 var total =0;
+			 angular.forEach($scope.updatedData.selections, function(item){
+				total += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
+				$scope.due = (($scope.TotalAmount()).toFixed(2))-$scope.paid;
+			})
+			 return $scope.due;
+		},
+		$scope.paidStatus = function() {
+			var total =0;
+		  	var tot =0;
+			angular.forEach($scope.updatedData.selections, function(item){
+				tot += ((item.row[0].qty * item.row[0].price)-(item.row[0].itemno*item.row[0].cut*item.row[0].price)-(item.row[0].otherCut));
+				total  = ($scope.DueAmount()).toFixed(2);
+				if(total > 0){
+					 $scope.St = "Unpaid";
+				 }
+				 if(total == 0){
+					$scope.St = "Paid";
+				 }  
+				 if(tot == 0){
+		 			$scope.St = "Null";
+		 		 }
+			  })
+		     return $scope.St;
+		},
+$scope.count = 1;
+$scope.click = function(){
+	$scope.count++;
+},
+$scope.removeId = function(){
+	$scope.count--;
+},
+$scope.reset = function(){
+	window.location.reload(true);
+},
+  
 	  
-  $scope.purchase = function(){
-	  if(!$scope.myForm.$valid){
+  $scope.sell = function(){
+	 if(!$scope.myForm.$valid){
 			console.log("Invalid")
 			$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
 			}
 	  if($scope.myForm.$valid){
 		    var id = document.getElementById("ids").innerText;
-	 		var InvoiceNo = document.getElementById("Invoiceids").innerText;
+	 		var InvoiceNo = document.getElementById("InvoiceNo").innerText;
 	 		
 			var BillData={
 					"subTotalAmount" : $scope.total(),
@@ -445,46 +481,62 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 	     $scope.updatedData.selections[index].row[0].unit = val.productUnit;
 	    
 	    },
-	  
-	  $scope.deleteRow = function(index){
-			var id = document.getElementById("ids").innerText;
-	 		var InvoiceNo = document.getElementById("Invoiceids").innerText;
-	 		var itemBillId = document.getElementById("itemBillId").innerText;
-	 		$scope.DealerId = id;
-			$scope.InvoiceNo  = InvoiceNo;
-			$scope.itemBillId  = $scope.updatedData.selections[index].row[0].id;
-			$scope.removeId();
-			$scope.updatedData.selections.splice(index,1);
-			$scope.purchase ();
-			var URL0 = "http://localhost:8083/firmSell/deleteItemBill/dealers/"+$scope.DealerId+"/bill/"+$scope.InvoiceNo+"/itemBill/"+$scope.itemBillId+"";
-			console.log(URL0);
-			$http.get(URL0);
-			$scope.purchase ();
-	       
-	  
-	    },
-	   
-	    $scope.EnbDis = function (index) { 
-	    	 console.log(index);
-	    	 $scope.updatedData.selections[index].row[0].disabled = !$scope.updatedData.selections[index].row[0].disabled;
-	  } 
+////////////////////////////////////////////////////
+   	  $scope.status = '  ';
+  	$scope.customFullscreen = false;  
+	  $scope.deleteRow = function(ev,index){
+	    	$scope.itemBillId  = $scope.updatedData.selections[index].row[0].id;
+	    	  var confirm = $mdDialog.confirm()
+	    	    .title('Would You Like To Delete This Bill Item No : '+$scope.itemBillId+' ?')
+	    	    .textContent('Please Confirm Your Request!!!')
+	    	    .ariaLabel('')
+	    	    .targetEvent(ev)
+	    	    .ok('Delete')
+	    	    .cancel('Cancel');
+
+	    	  $mdDialog.show(confirm).then(function () {
+	    	    $scope.status = 'Deleted';
+	    	    if($scope.status = 'Deleted'){
+	    	    	var id = document.getElementById("ids").innerText;
+	    	 		var InvoiceNo = document.getElementById("InvoiceNo").innerText;
+	    	 		var itemBillId = document.getElementById("itemBillId").innerText;
+	    	 		$scope.DealerId = id;
+	    			$scope.InvoiceNo  = InvoiceNo;
+	    			$scope.itemBillId  = $scope.updatedData.selections[index].row[0].id;
+	    			$scope.removeId();
+	    			$scope.updatedData.selections.splice(index,1);
+	    			var URL0 = "http://localhost:8083/firmSell/deleteItemBill/dealers/"+$scope.DealerId+"/bill/"+$scope.InvoiceNo+"/itemBill/"+$scope.itemBillId+"";
+	    			console.log(URL0);
+	    			$http.get(URL0);
+	    			$scope.sell();
+	    	    }
+	    	    
+	    	  }, function () {
+	    	    $scope.status = 'Canceled';
+	    	  });
+	    	}; 
+
+	    	    
+
+	    	function DialogController($scope, $mdDialog) {
+	    	  $scope.hide = function () {
+	    	    $mdDialog.hide();
+	    	  };
+
+	    	  $scope.cancel = function () {
+	    	    $mdDialog.cancel();
+	    	  };
+
+	    	  $scope.answer = function (answer) {
+	    	    $mdDialog.hide(answer);
+	    	  };
+	    	} 
+	    	
 	});
   
   
-   $scope.getValues = function(val,index){
-     $scope.updatedData.selections[index].row[0].description = val.productDescription;
-     $scope.updatedData.selections[index].row[0].price = parseFloat(val.productPrice);
-     $scope.updatedData.selections[index].row[0].unit = val.productUnit;
-    
-    },
-  
-  $scope.deleteRow = function(index){
-	  $scope.removeId();
-       $scope.updatedData.selections.splice(index,1);
-       
-  
-    },
-   
+
+
     $scope.EnbDis = function (index) { 
     	 console.log(index);
     	 $scope.updatedData.selections[index].row[0].disabled = !$scope.updatedData.selections[index].row[0].disabled;
@@ -493,6 +545,15 @@ app.controller('MainCtrl', function($scope,$http,$window) {
     $scope.act = function (disables) { 
 		$scope.disables = !disables; 
     } 
+    
+   $scope.getValues = function(val,index){
+     $scope.updatedData.selections[index].row[0].description = val.productDescription;
+     $scope.updatedData.selections[index].row[0].price = parseFloat(val.productPrice);
+     $scope.updatedData.selections[index].row[0].unit = val.productUnit;
+    
+    };
+  
+ 
 });
 </script>
 </body>
