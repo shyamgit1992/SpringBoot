@@ -77,6 +77,16 @@ public class CustomerController {
 		return mv;
 		 
 	}
+    @GetMapping("/settlePaidState/{CustomerId}/{state}")
+   	public String SettlePaidState(@PathVariable Long CustomerId, @PathVariable String state, Model model, Pageable pageable) {
+   		System.out.println(state);
+   		Customer customer = customerRepository.findById(CustomerId).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + CustomerId));
+   		customer.setSettlePaidStatus(state);
+   		customerRepository.save(customer);
+   		//ModelAndView mv = new ModelAndView("redirect:/cust/customers");
+   		return null;
+   		 
+   	}
     
     @GetMapping("/customers/{id}")
     public Customer getCustomerByID(@PathVariable Long id) {
@@ -96,7 +106,12 @@ public class CustomerController {
           	ModelAndView mvc = new ModelAndView("redirect:/cust/customers");
           	String img = "first.jpg";
           	customer.setPhotos(img);
-          	
+			/*
+			 * if(customer.getSettlePaidStatus().isEmpty()) {
+			 * customer.setSettlePaidStatus("Disable");
+			 * 
+			 * }
+			 */
           	 if(customer.getAadhaarNo().isEmpty()) {
              	 customer.setAadhaarNo("None");
               }
@@ -109,6 +124,7 @@ public class CustomerController {
               if(customer.getNote().isEmpty()) {
              	 customer.setNote("None");
               }
+              customer.setSettlePaidStatus("Disable");
               customer.setCredibilityStatus("Good"); 
           	  customerRepository.save(customer);
       	      model.addAttribute("customer", customer);
@@ -127,6 +143,12 @@ public class CustomerController {
 		customer.setPhotos(filename);
      	model.addAttribute("customer_success", customer);
         
+		/*
+		 * if(customer.getSettlePaidStatus().isEmpty()) {
+		 * customer.setSettlePaidStatus("Disable");
+		 * 
+		 * }
+		 */
          if(customer.getAadhaarNo().isEmpty()) {
         	 customer.setAadhaarNo("None");
         	
@@ -140,6 +162,7 @@ public class CustomerController {
          if(customer.getNote().isEmpty()) {
         	 customer.setNote("None");
          }
+        customer.setSettlePaidStatus("Disable");
         customer.setCredibilityStatus("Good"); 
      	customerRepository.save(customer);
  	    model.addAttribute("customer", customer);

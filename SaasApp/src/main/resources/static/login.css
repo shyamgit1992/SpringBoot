@@ -34,6 +34,20 @@ margin-bottom: auto;
 width: 400px;
 background-color: rgba(0,0,0,0.5) !important;
 }
+.cardcustdebit{
+height: 370px;
+margin-top: auto;
+margin-bottom: auto;
+width: 400px;
+background-color: rgba(0,0,0,0.5) !important;
+}
+.cardcustdebitupdate{
+height: 430px;
+margin-top: auto;
+margin-bottom: auto;
+width: 520px;
+background-color: rgba(0,0,0,0.5) !important;
+}
 .cardpro{
 height: 590px;
 margin-top: auto;

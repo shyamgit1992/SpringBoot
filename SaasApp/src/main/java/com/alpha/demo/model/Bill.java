@@ -38,6 +38,8 @@ public class Bill implements Serializable{
 	private String InterestRate;
 	private String TotalInterestAmount;
 	private String Status;
+	private String SettleStatus;
+	private String SettleDays;
 	private String Note;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -56,6 +58,23 @@ public class Bill implements Serializable{
 	public Bill() {
 		
 	}
+	
+	public String getSettleStatus() {
+		return SettleStatus;
+	}
+
+	public void setSettleStatus(String settleStatus) {
+		SettleStatus = settleStatus;
+	}
+
+	public String getSettleDays() {
+		return SettleDays;
+	}
+
+	public void setSettleDays(String settleDays) {
+		SettleDays = settleDays;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -153,9 +172,10 @@ public class Bill implements Serializable{
 	public void setNote(String note) {
 		Note = note;
 	}
+	
 	public Bill(Long id, String guarantorName, String totalGSTAmount, String totalDiscountAmount, String subtotalAmount,
 			String totalAmount, String paidAmount, String dueAmount, String interestRate, String totalInterestAmount,
-			String status, String note, Date billingDate, Customer customer,
+			String status, String settleStatus, String settleDays, String note, Date billingDate, Customer customer,
 			Set<com.alpha.demo.model.BuyBill> buyBill) {
 		super();
 		this.id = id;
@@ -169,20 +189,24 @@ public class Bill implements Serializable{
 		InterestRate = interestRate;
 		TotalInterestAmount = totalInterestAmount;
 		Status = status;
+		SettleStatus = settleStatus;
+		SettleDays = settleDays;
 		Note = note;
 		BillingDate = billingDate;
 		this.customer = customer;
 		BuyBill = buyBill;
 	}
+
 	@Override
 	public String toString() {
 		return "Bill [id=" + id + ", guarantorName=" + guarantorName + ", TotalGSTAmount=" + TotalGSTAmount
 				+ ", TotalDiscountAmount=" + TotalDiscountAmount + ", SubtotalAmount=" + SubtotalAmount
 				+ ", TotalAmount=" + TotalAmount + ", PaidAmount=" + PaidAmount + ", DueAmount=" + DueAmount
 				+ ", InterestRate=" + InterestRate + ", TotalInterestAmount=" + TotalInterestAmount + ", Status="
-				+ Status + ", Note=" + Note + ", BillingDate=" + BillingDate + ", customer=" + customer + ", BuyBill="
-				+ BuyBill + "]";
+				+ Status + ", SettleStatus=" + SettleStatus + ", SettleDays=" + SettleDays + ", Note=" + Note
+				+ ", BillingDate=" + BillingDate + ", customer=" + customer + ", BuyBill=" + BuyBill + "]";
 	}
+
 	
 	
 	

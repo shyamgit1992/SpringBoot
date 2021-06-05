@@ -81,6 +81,7 @@ public class ProductController {
 		ModelAndView mv = new ModelAndView("editProducts.html");
 		Optional<Product> product = proRepository.findById(id);
 		model.addAttribute("product",product);
+		model.addAttribute("id",id);
 		return mv;
 	}
 	@PostMapping("/updateProduct/{id}")

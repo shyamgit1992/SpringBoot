@@ -307,6 +307,8 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 			var id = document.getElementById("ids").innerText;
 	 		var InvoiceNo = document.getElementById("InvoiceNo").innerText;
 	 		var CredibilityStatus = "very Good";
+	 		var SettleStatus = "Unpaid";
+	 		var SettleDays = 0;
 	 		if($scope.guarantorName == null){
 	 			$scope.guarantorName = "None";
 	 		}
@@ -328,6 +330,8 @@ app.controller('MainCtrl', function($scope,$http,$window) {
 		             "status" : $scope.paidStatus(),
 		             "interestRate" : parseFloat($scope.interestRate),
 		             "credibilityStatus" : CredibilityStatus, 
+		             "settleStatus" : SettleStatus, 
+		             "settleDays" : SettleDays, 
 		             "note"   : $scope.note
 		             };
 			console.log("BillData ::");

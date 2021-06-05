@@ -33,11 +33,17 @@ public class BuyBill implements Serializable {
     @JoinColumn(name = "bill_id", nullable = false)
     @JsonIgnore
     private Bill bill;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @JsonIgnore
+    private Customer customer;
+
+	
 
 	
 
 	public BuyBill(Long id, String proId, String name, String description, String qty, String unit, String price,
-			String dis, String gst, String amount, Bill bill) {
+			String dis, String gst, String amount, Bill bill, Customer customer) {
 		super();
 		this.id = id;
 		this.proId = proId;
@@ -50,6 +56,7 @@ public class BuyBill implements Serializable {
 		this.gst = gst;
 		this.amount = amount;
 		this.bill = bill;
+		this.customer = customer;
 	}
 
 	public BuyBill() {
@@ -141,6 +148,14 @@ public class BuyBill implements Serializable {
 
 	public String getProId() {
 		return proId;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public void setProId(String proId) {

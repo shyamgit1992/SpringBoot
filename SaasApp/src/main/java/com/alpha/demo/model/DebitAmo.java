@@ -31,6 +31,8 @@ public class DebitAmo implements Serializable{
 	private String DebitAmount;
 	private String DebitInt;
 	private String Status;
+	private String SettleStatus;
+	private String SettleDays;
 	private String Note;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
@@ -47,13 +49,42 @@ public class DebitAmo implements Serializable{
 	
 	
 
-	public DebitAmo(Long id, String debitAmount, String debitInt, String status, String note, Date debitDate,
-			Customer customer) {
+	public String getSettleStatus() {
+		return SettleStatus;
+	}
+
+
+
+	public void setSettleStatus(String settleStatus) {
+		SettleStatus = settleStatus;
+	}
+
+
+
+	public String getSettleDays() {
+		return SettleDays;
+	}
+
+
+
+	public void setSettleDays(String settleDays) {
+		SettleDays = settleDays;
+	}
+
+
+
+	
+
+
+	public DebitAmo(Long id, String debitAmount, String debitInt, String status, String settleStatus, String settleDays,
+			String note, Date debitDate, Customer customer) {
 		super();
 		this.id = id;
 		DebitAmount = debitAmount;
 		DebitInt = debitInt;
 		Status = status;
+		SettleStatus = settleStatus;
+		SettleDays = settleDays;
 		Note = note;
 		DebitDate = debitDate;
 		this.customer = customer;
@@ -130,10 +161,13 @@ public class DebitAmo implements Serializable{
 	@Override
 	public String toString() {
 		return "DebitAmo [id=" + id + ", DebitAmount=" + DebitAmount + ", DebitInt=" + DebitInt + ", Status=" + Status
-				+ ", Note=" + Note + ", DebitDate=" + DebitDate + ", customer=" + customer + "]";
+				+ ", SettleStatus=" + SettleStatus + ", SettleDays=" + SettleDays + ", Note=" + Note + ", DebitDate="
+				+ DebitDate + ", customer=" + customer + "]";
 	}
 
 
+
+	
 
 	
  

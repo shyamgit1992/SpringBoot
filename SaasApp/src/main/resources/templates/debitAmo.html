@@ -1,193 +1,199 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Debit Customer Amount</title>
-<!-- Latest compiled and minified CSS -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script> -->
-
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.5/angular.min.js"></script>
-<script src="http://code.angularjs.org/1.2.0rc1/angular-route.js"></script> -->
- <!-- Angular Scripts -->
- <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
-<script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script> -->
-
- <!-- JS Libraries -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js" type="text/javascript"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap.js" type="text/javascript"></script>
-
-  <!-- Angular Scripts -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-</head>
-<body data-ng-app="invoice" >
+<head th:insert="fragments.html :: headerfiles"></head>
+<head><title>Debit Customer Amount</title></head>
+<body ng-app="myApp" ng-controller="PageCtrl as list">
+<header th:insert="fragments.html :: nav"></header>
 <div class="container">
-<input type="button" value="Back To Bill"
-			th:onclick="'window.location.href = \'' + @{/cust/customersBillss/{id}(id=${ct.id})} + '\''"
+<br><div>
+            <input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
 				class="btn btn-primary" />
-<input type="button" value="Back To Customers"
+			<input type="button" value="Back To Bill"
+			th:onclick="'window.location.href = \'' + @{/cust/customersBillss/{id}(id=${ct.id})} + '\''"
+				class="btn btn-primary" />	
+	        <input type="button" value="Show Customers"
 			th:onclick="'window.location.href = \'' + @{/cust/customers} + '\''"
-				class="btn btn-primary" />				
-				<br><hr>
-<div class="row">
-
-    <div class="col-md-12" data-ng-controller="InvoiceController">
-
-        <form name="myForm">
-
-            <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <div class="card">
-                    <a hidden id="ids"><span th:text="${ct.id}"></span></a>
-                    <a hidden id="fullName"><span th:text="${ct.fullName}"></span></a>
-                        <div class="card-header bg-primary text-white">
-                            Debit Customer Amount
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="name">Full Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" data-ng-model="fullName" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="name">Debit Amount <span class="requerido"> *</span></label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" data-ng-model="debitAmount" placeholder="Debit Amount" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="name">Rate of Interest (%) <span class="requerido"> *</span></label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" data-ng-model="debitInt" placeholder="Rate of Interest" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="rut">Status<span class="requerido"> *</span></label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" data-ng-model="status" placeholder="Status" required>
-                                </div>
-                            </div>
+				class="btn btn-primary" />		
+				
+	</div>			
+				<hr>
+	<div class="d-flex justify-content-center h-50">
+		<div class="cardcustdebit">
+			<div class="card-header">
+				<h3>Debit Customer Amount</h3>
+				<!-- <div class="d-flex justify-content-start">
+					<span style="color:#fff;">Shyam Agro & Sons</span>
+				</div> -->
+				
+					
+				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
+			</div>
+			<div class="card-body">
+				<!-- <form method="POST" th:action="@{~/creditAmo/AddCreditAmo/{id}(id=${ct.id})}" th:object="${creditAmo}"> -->
+				 <form name="myForm">
+				 <span hidden id="ids" th:text="${ct.id}"></span>
+				 <span hidden id="fullName" th:text="${ct.fullName}"></span>
+					<div class="input-group form-group">
+                        <div class="input-group-prepend">
+						  <span class="input-group-text"><i class="fa fa-user"></i></span>
+						 </div>
+                          <input type="text" class="form-control" name="fullName" th:field="${ct.fullName}" disabled>
+                     </div>
                             
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label" for="rut">Note</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" data-ng-model="note" placeholder="Any Note">
-                                </div>
-                            </div>
-                            
+                       <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-money"></i></span>
+						  </div>
+                             <input type="number" class="form-control" name="debitAmount" data-ng-model="debitAmount" placeholder="Debit Amount" required>
+                      </div>  
+                      <div class="input-group form-group">
+                         <div class="input-group-prepend">
+						   <span class="input-group-text"><i class="fa fa-percent"></i></span>
+						  </div>
+                             <input type="number" class="form-control" name="debitInt" data-ng-model="debitInt" placeholder="Rate of Interest (%)">
+                      </div>     
+                      
+                      <!-- <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-file-alt"></i></span>
+						        </div>
+                              <input type="text" class="form-control" name="status" th:field="*{status}"  placeholder="Status" required>
+                              <select name="status" class="form-control" type="text" data-ng-model="status" required>
+                                <option value="" disabled selected>Please Select...</option>
+                                <option value="Paid">Paid</option>
+                                <option value="Unpaid">Unpaid</option>
+                             </select>
+                      </div> -->
+                       
+                       <div class="input-group form-group">
+                                <div class="input-group-prepend">
+							    <span class="input-group-text"><i class="fa fa-book"></i></span>
+						        </div>
+                               <input type="text" class="form-control" name="note" data-ng-model="note" placeholder="Any Note">
+                       </div>
+                      
+                     
                             <hr>
-                            <div class="form-group text-center">
-                                <button type="submit" data-ng-click="Debit()" class="btn btn-success">Debit Amount</button>
+                            <div class="input-group form-group text-center">
+                                <button type="submit" data-ng-click="Debit()"  class="btn float-right login_btn_credit">Debit Amount</button>
                             </div>
                            
-                        </div>
-                    </div>
-                </div>
-            
-            </div>
-        </form> 
-         <hr>
-  
-<div class="container-fluid">
-		<div class="col-md-12" data-ng-controller="InvoiceController as list">
-			<h2>Debit Amount List</h2>
-			<hr />
-            <div class="input-group">
-				<input type="search" class="form-control"  ng-model="search.id" placeholder="Enter your search Id" />
-			    <span class="input-group-addon">
-                <span class="glyphicon glyphicon-search"></span> </span>
+				</form>
+				
 			</div>
-			</br>
 			
-			<div><label>Total number of Debits : </label> <span th:text="${count_DebitAmo}"></span></div>	 
+		</div>
+	</div>
+</div>
+
+<div style="margin-top:-190px;"  class="container-fluid">
+	   <hr>
+		<div class="col-md-12">
+			<center><h4 style="text-decoration: underline;">Debit Amount List</h4></center>
+			<hr/>
+			  <div style="overflow-x:auto;">
+				<table class="table table-hover table-striped table-bordered">
+				  <thead class="thead-dark">
+                    <tr>
+                     <th scope="col">#</th>
+                     <th scope="col">First</th>
+                     <th scope="col">Last</th>
+                     <th scope="col">Handle</th>
+                   </tr>
+                </thead>
+                 <tr>
+                     <td scope="col">#</td>
+                     <td scope="col">First</td>
+                     <td scope="col">Last</td>
+                     <td scope="col">Handle</td>
+                   </tr>
+              </table>
+             </div>
+			<div class="input-group mb-3">
+             <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+            </div>
+            <input type="search" class="form-control" ng-model="search" placeholder="Enter your search name here..." aria-label="search" aria-describedby="basic-addon1">
+           </div>
+			
+			<input type="button" value="Add Customer"
+				onclick="window.location.href='/home/AddCustomerForm'; return false;"
+				class="btn btn-primary" />
+			<input type="button" value="Back To Home"
+			th:onclick="'window.location.href = \'' + @{/} + '\''"
+				class="btn btn-primary" />	
+				<br/>
+				<hr>	
+				
+			<div><label style="font-weight:bold;">Total number of Debits : </label> <span class="badge badge-success" th:text="${count_DebitAmo}"></span></div>	
+			<hr>
 			<div class="card">
 				<div class="card-header bg-primary text-white">
 					Debit Amount List
 				</div>
-				<div class="card-body">
+				<div style="overflow-x:auto;" class="card-body">
 					<table class="table table-hover table-striped table-bordered">
 						<tr>
-							<th scope="col"><a href="" ng-click="columnToOrder='id';reverse=!reverse">Id</a></th>
+							<th ng-click="sort('id')"><a href="#">Id</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
 							<th> Debit Amount </th>
 							<th> Rate Of Interest(%)</th>
 							<th> Due Days</th>
+							<th> Settle Days</th>
                             <th> Total Interest</th>
-							<th> Status </th>
+							<th> Settle Status</th>
                             <th> Note </th>
-                            <th> Debit Date/Time </th>
-                            <th> Action </th>
+							<th ng-click="sort('createDate')"><a href="#">Create Date & Time</a>
+								<span class="glyphicon sort-icon" ng-show="sortKey=='createDate'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th>Action</th>
 						</tr>
-                       <tr ng-repeat="i in db | orderBy:columnToOrder:forward">
-                        <td>{{i.id}}</td>
+               <tr dir-paginate="i in db|orderBy:sortKey:reverse|filter:search|itemsPerPage:5">
+                           <td>{{i.id}}</td>
                         <td>{{i.debitAmount | currency:"&#8377;"}}</td>
                         <td>{{i.debitInt}} %</td>
-                        <td>{{i.dueDays}}</td>
+                        <td>{{i.dueDays | number : 2}}</td>
+                        <td>{{i.settleDays | number : 2}}</td>
                         <td>{{i.totalInterestAmount | currency:"&#8377;"}}</td>
-                        <td>{{i.status}}</td>
+                        <td>{{i.settleStatus}}</td>
                         <td>{{i.note}}</td>
                         <td>{{i.debitDate | date:'d/M/yyyy hh:mm:ss'}}</td>
-                        <td>
-                          <div style='display: inline-block;'><a type="button" href="/debitAmo/editDebitAmo/{{CustomerId}}/db/{{i.id}}" class="btn btn-success btn-sm rounded-0" ><i class="fa fa-edit"></i></a></div>
-                          <div style='display: inline-block;'><a type="button" href="/debitAmo/deleteDebitAmo/{{CustomerId}}/db/{{i.id}}" class="btn btn-danger btn-sm rounded-0" ><i class="fa fa-trash"></i></a></div>
-                       </td>
-                      </tr>
+                     <td>
+                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                          <button type="button" ng-click="settle($event,i.id,i.settleStatus)" class="btn btn-secondary"><a><i class="fa fa-plus"></i> Settle</a></button>
+                          <button type="button" ng-click="showConfirmEdit($event,i.id)" class="btn btn-success"><a><i class="fa fa-edit"></i></a></button>
+                          <button type="button" ng-click="showConfirmDelete($event,i.id)" class="btn btn-danger"><a><i class="fa fa-trash"></i></a></button>
+                        </div>
+                     </div>
+                     </td>
+                     
+                     
+                 </tr>
 					</table>
-                
+                 <dir-pagination-controls
+					max-size="5"
+					direction-links="true"
+					boundary-links="true" >
+				</dir-pagination-controls>
+				
 				</div>
 			</div>
 		</div>
 
 	</div>
-    </div>
-</div>
-
-</div>
-
 </body>
+<script type="text/javascript" th:src="@{/js/dirPagination.js}"></script>
 <script type="text/javascript">
-var invoice = angular.module('invoice', []);
-invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
-	$scope.fullName = document.getElementById("fullName").innerText;
-	$scope.Debit = function(){
-		if(!$scope.myForm.$valid){
-			console.log("Invalid")
-			$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
-			}
-		 if($scope.myForm.$valid){
-		var id = document.getElementById("ids").innerText;
-		if($scope.note == null){
- 			$scope.note = "None";
- 		}
-		var data={
-				"debitAmount" : $scope.debitAmount,
-				"debitInt" : $scope.debitInt,
-				"status" : $scope.status,
-				"note" : $scope.note,
-				};
-		console.log("Data ::");
-		console.log(data);
-		$scope.CustomerId = id;
-		var URL = "http://localhost:8083/debitAmo/AddDebitAmo/"+$scope.CustomerId+"";
-		$http.post(URL, data); 
-		$window.location.href = "/creditAmo/getCreditAmoView/"+$scope.CustomerId+"";
-		$window.location.reload();
-	}
-	}
+var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'material.svgAssetsCache','angularUtils.directives.dirPagination']);
+
+app.controller('PageCtrl', function ($scope, $http, $mdDialog,$window) {
+	$scope.items = []; 
 	var id = document.getElementById("ids").innerText;
 	$scope.CustomerId = id;
-	 $http.get("http://localhost:8083/debitAmo/getAmo/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
+	$http.get("http://localhost:8083/debitAmo/getAmo/"+$scope.CustomerId+"").then(function(data, status, headers, config) {
 		$scope.items = data.data;
 		console.log($scope.items);
 		$scope.totalint=null;
@@ -200,22 +206,166 @@ invoice.controller('InvoiceController', function($scope,$window,$http,$timeout){
 			 cur = new Date();
 			 ex = new Date(value.debitDate);
 			 day=(cur-ex)/ 1000 / 60 / 60 / 24;
-			 $scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
+			 
+			 if(value.settleStatus=="Unpaid"){
+				 $scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
+				 }
+				 if(value.settleStatus=="Paid"){
+					 $scope.days=value.settleDays;
+			     }
+			 //$scope.days=(cur-ex)/ 1000 / 60 / 60 / 24;
 			 IntRate = value.debitInt;
 			 dAmo = value.debitAmount;
-			 $scope.totalint = (((((dAmo * IntRate)/100)*day))/30);
+			 $scope.totalint = (((((dAmo * IntRate)/100)* $scope.days))/30);
              $scope.db.push({ 
             	 id : value.id,
             	 debitAmount  : value.debitAmount,
             	 debitInt: value.debitInt,
-            	 dueDays: $scope.days.toFixed(2),
+            	 dueDays: $scope.days,
+            	 settleDays: value.settleDays,
             	 totalInterestAmount :  $scope.totalint,
             	 status : value.status,
+            	 settleStatus: value.settleStatus,
             	 note : value.note,
             	 debitDate : value.debitDate
             	 });
 		 });
 		}); 
+	//$scope.fullName = document.getElementById("fullName").innerText;
+	//console.log($scope.fullName);
+	$scope.Debit = function(){
+		 if(!$scope.myForm.$valid){
+				console.log("Invalid")
+				$scope.err = "Invaid Transaction Please Insert valid field or Refresh!!!";
+				}
+		  if($scope.myForm.$valid){
+		var id = document.getElementById("ids").innerText;
+		if($scope.note == null){
+ 			$scope.note = "None";
+ 		}
+		if($scope.debitInt == null){
+ 			$scope.debitInt = 0;
+ 		}
+		var SettleStatus = "Unpaid";
+		var SettleDays = 0;
+	    var data={
+	    		"debitAmount" : $scope.debitAmount,
+				"debitInt" : $scope.debitInt,
+				"settleStatus" : SettleStatus, 
+	            "settleDays" : SettleDays, 
+				"note" : $scope.note,
+				};
+		console.log("Data ::");
+		console.log(data);
+		$scope.CustomerId = id;
+		var URL = "http://localhost:8083/debitAmo/AddDebitAmo/"+$scope.CustomerId+"";
+		$http.post(URL, data); 
+		$window.location.href = "/debitAmo/getDebitAmoView/"+$scope.CustomerId+"";
+		$window.location.reload();
+	}
+		  }
+	$scope.sort = function(keyname){
+		$scope.sortKey = keyname;   //set the sortKey to the param passed
+		$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+	}
+	////////////////////////////////////////////////////
+	  $scope.status = '  ';
+    $scope.customFullscreen = false;
+
+    $scope.settle = function(ev,id,state) {
+  	  $scope.BillId = id;
+        var confirm = $mdDialog.confirm()
+          .title('Would You Like To Settel This Debit Bill No : '+$scope.BillId+' ?')
+          .textContent('Please Confirm Your Request!!!')
+          .ariaLabel('')
+          .targetEvent(ev)
+          .ok('Paid')
+          .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+          $scope.status = 'Paided';
+          //console.log($scope.settleDays);
+          $scope.settleStatus=state;
+          if($scope.status = 'Paided' && $scope.settleStatus=="Unpaid"){
+          	$scope.CustomerId = id;
+          	$scope.settleStatus= "Paid";
+          	$scope.settleDays= Number($scope.days).toFixed(2);
+          	var URL0 = "http://localhost:8083/debitAmo/debitAmount/state/"+$scope.BillId+"/"+$scope.settleStatus+"/"+$scope.settleDays+"";
+      		console.log(URL0);
+      		$http.get(URL0);
+      		window.location.reload();
+          }
+          else{
+          	alert('This Bill No : '+$scope.BillId+' is Already Setteled');
+          	
+          }
+        
+          
+        }, function () {
+          $scope.status = 'Canceled';
+        });
+      }; 
+
+    $scope.showConfirmDelete = function(ev,id) {
+      $scope.Id = id;
+      var confirm = $mdDialog.confirm()
+        .title('Would You Like To Delete This Id No. : '+$scope.Id+' ?')
+        .textContent('Please Confirm Your Request!!!')
+        .ariaLabel('')
+        .targetEvent(ev)
+        .ok('Delete')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function () {
+        $scope.status = 'Deleted';
+        if($scope.status = 'Deleted'){
+        	$window.location.href = "/debitAmo/deleteDebitAmo/"+$scope.CustomerId+"/db/"+$scope.Id+"";
+        }
+        
+      }, function () {
+        $scope.status = 'Canceled';
+      });
+    };
+    
+    $scope.showConfirmEdit = function(ev,id) {
+        $scope.Id = id;
+        var confirm = $mdDialog.confirm()
+          .title('Would You Like To Edit This Id No. : '+$scope.Id+' ?')
+          .textContent('Please Confirm Your Request!!!')
+          .ariaLabel('')
+          .targetEvent(ev)
+          .ok('Edit')
+          .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+          $scope.status = 'Edited';
+          if($scope.status = 'Edited'){
+          	$window.location.href = "/debitAmo/editDebitAmo/"+$scope.CustomerId+"/db/"+$scope.Id+"";
+          }
+          
+        }, function () {
+          $scope.status = 'Canceled';
+        });
+      };
+      
+ 
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function () {
+        $mdDialog.hide();
+      };
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
+
+      $scope.answer = function (answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    /////////////////////////////////////////////////////
+
+    
+    
 });
 </script>
 </html>

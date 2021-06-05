@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alpha.demo.Repository.CustomerRepository;
 import com.alpha.demo.Repository.DebitAmoRepository;
 import com.alpha.demo.exception.NotFoundException;
+import com.alpha.demo.model.Bill;
 import com.alpha.demo.model.Customer;
 import com.alpha.demo.model.DebitAmo;
 
@@ -95,5 +96,14 @@ public class DebitAmoController {
 	}
 
 
-
+	@GetMapping(value="/debitAmount/state/{id}/{settleStatus}/{settleDays}")
+	public DebitAmo updateSettleState(@PathVariable Long id,@PathVariable String settleStatus,@PathVariable String settleDays,@Valid DebitAmo dAmo) {
+		
+		  return debitAmoRepository.findById(id).map(db -> {
+			  db.setSettleStatus(dAmo.getSettleStatus());
+			  db.setSettleDays(dAmo.getSettleDays());
+			  return debitAmoRepository.save(db);
+		 }).orElseThrow(() -> new NotFoundException("Debit not found!"));
+		
+	    }
 }

@@ -53,7 +53,10 @@ public class BillController {
 	public List<BuyBill> showBuyBill() {
 		return buyBillRepository.findAll();
 	}
-
+	@GetMapping("/showBuyBillById/{id}")
+	public List<BuyBill> showBuyBillById(@PathVariable("id") long id) {
+		return buyBillRepository.findByCustomerId(id);
+	}
 	@GetMapping("/customersBuyBill/{id}")
 	public ModelAndView showUpdateForm(@PathVariable("id") long id, @ModelAttribute @Valid @RequestBody Bill bill,
 			@ModelAttribute @Valid @RequestBody BuyBill buyBill, Model model) {
@@ -102,6 +105,7 @@ public class BillController {
 		
 		return BillRepository.findById(invoiceNo).map(bills -> {
 			buyBill.setBill(bills);
+			buyBill.setCustomer(bills.getCustomer());
 			 buyBillRepository.save(buyBill);
 				ModelAndView mv = new ModelAndView("redirect:/customersBillss/{customerId}");
 				return mv;
@@ -272,7 +276,15 @@ public class BillController {
 		return mv;
 		 
 	}
-	
+	@GetMapping(value="/customers/{customerId}/state/{invoiceNo}/{settleStatus}/{settleDays}")
+	public Bill updateSettleState(@PathVariable Long customerId, @PathVariable Long invoiceNo,@PathVariable String settleStatus,@PathVariable String settleDays,@Valid Bill bill) {
+		
+		  return BillRepository.findById(invoiceNo).map(bills -> {
+		 bills.setSettleStatus(bill.getSettleStatus());
+		 bills.setSettleDays(bill.getSettleDays()); return BillRepository.save(bills);
+		 }).orElseThrow(() -> new NotFoundException("Customer not found!"));
+		
+	    }
 	
 	
 	}

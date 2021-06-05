@@ -42,6 +42,7 @@ public class Customer implements Serializable {
 	private String mobileNo;
 	private String note;
 	private String CredibilityStatus;
+	private String SettlePaidStatus;
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_date",updatable=false)
@@ -164,9 +165,16 @@ public class Customer implements Serializable {
 	
 	
 	
+	public String getSettlePaidStatus() {
+		return SettlePaidStatus;
+	}
+	public void setSettlePaidStatus(String settlePaidStatus) {
+		SettlePaidStatus = settlePaidStatus;
+	}
+	
 	public Customer(Long id, UUID uniqueId, String photos, String fullName, String aadhaarNo, String guarantor,
-			String address, String mobileNo, String note, String credibilityStatus, Date createDate,
-			Set<com.alpha.demo.model.Bill> bill, Set<com.alpha.demo.model.SBill> sBill,
+			String address, String mobileNo, String note, String credibilityStatus, String settlePaidStatus,
+			Date createDate, Set<com.alpha.demo.model.Bill> bill, Set<com.alpha.demo.model.SBill> sBill,
 			Set<com.alpha.demo.model.SerBill> serBill, Set<com.alpha.demo.model.CreditAmo> creditAmo,
 			Set<com.alpha.demo.model.DebitAmo> debitAmo) {
 		super();
@@ -180,6 +188,7 @@ public class Customer implements Serializable {
 		this.mobileNo = mobileNo;
 		this.note = note;
 		CredibilityStatus = credibilityStatus;
+		SettlePaidStatus = settlePaidStatus;
 		this.createDate = createDate;
 		Bill = bill;
 		SBill = sBill;

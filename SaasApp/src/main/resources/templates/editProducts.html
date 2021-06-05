@@ -28,7 +28,7 @@
 				<!--  <center><span style="color:red;font-weight:bold;" th:text="${credential_err}"></span></center> -->
 			</div>
 			<div class="card-body">
-				<form  action="#" th:action="@{/pro/addProduct}" method="post" th:object="${product}">
+				<form  action="#" th:action="@{/pro/updateProduct/{id}(id=${id})}" method="post" th:object="${product}">
 				
 					 <div class="input-group form-group">
                         <div class="input-group-prepend">

@@ -6,5 +6,6 @@ import com.alpha.demo.model.BuyBill;
 
 public interface BuyBillRepository extends JpaRepository<BuyBill, Long> {
 	List<BuyBill> findByBillId(Long BillId);
+	List<BuyBill> findByCustomerId(Long CustomerId);
 
 }
